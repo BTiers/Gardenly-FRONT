@@ -1,0 +1,92 @@
+{
+  "home": {
+    "welcome": "Bienvenue",
+    "intro": "Ceci est un <1>autre</1> text"
+  },
+  "register": {
+    "login": "Se connecter",
+    "invalidAccountCred": "Email ou mot de passe incorrects",
+    "sign_in": "Connectez-vous à votre compte",
+    "forgot_pass": "Mot de passe oublié?",
+    "sign_up": "Inscrivez vous !",
+    "email": "Email",
+    "pswd": "Mot de passe",
+    "valid_psw": "Confirmez le mot de passe",
+    "bad_email": "Adresse email invalide, doit etre formaté comme \"Test@gardenly.com\"",
+    "bad_password": "Le mot de passe doit être au minimum huit caractères avec au moins, une lettre majuscule, une lettre minuscule et un nombre",
+    "bad_usr": "Le nom d'utilisateur doit etre au minimum quatre caractères et doit commencer par une lettre",
+    "bad_valid_psw": "Les deux mots de passes ne sont pas identique",
+    "privacy_policy_txt": "En cliquant ici, vous acceptez la",
+    "privacy_policy_link": "Politique de confidentialité.",
+    "privacy_policy_error": "Vous devez acceptez la politique de confidentialité avant de continuer",
+    "email_already_use": "L'adresse mail entré est déjà utilisé",
+    "bad_form": "Vous devez remplir le formulaire pour vous inscrire",
+    "submit": "Je m'inscris"
+  },
+  "routing": {
+    "404error": "Ce n'est pas la page web que vous cherchez."
+  },
+  "navigation-link": {
+    "admin": "Administateur",
+    "software": "Création de jardin",
+    "pictures": "Photos",
+    "gardens": "Jardins",
+    "new_garden": "Nouveau jardin",
+    "loading": "Chargement"
+  },
+  "about": {
+    "presentation": "Présentation",
+    "articles": "Articles",
+    "tools": "Outils",
+    "community": "Communauté"
+  },
+  "picture_gallery": {
+    "title": "Titre",
+    "delete": "Supprimer",
+    "save": "Sauvegarder",
+    "back": "Retour",
+    "upload": "Uploader",
+    "choose_title": "Choisissez un titre pour votre photo",
+    "description": "Description",
+    "choose_description": "Decrivez votre photo",
+    "delete_validation": "Supprimer cette photo ?",
+    "no_retrieve_warning": "Vous ne pourrez pas la récupérer par la suite.",
+    "add_picture": "Ajouter une photo",
+    "invalid_file_type": "Type de fichier invalide, seul les fichiers .jpg .jpeg and .png sont acceptés",
+    "error_loading_pic": "Une erreur est survenue avec votre fichier, veuillez réessayer",
+    "successful_upload": "Photo télécharger avec succès"
+  },
+  "gardens": {
+    "garden": "Jardin",
+    "details": "Détails",
+    "no_garden": "Pas encore de jardin",
+    "create_one": "Créer mon jardin",
+    "new_garden": "Nouveau Jardin",
+    "must_have_name": "Un jardin doit avoir un nom",
+    "garden_name_placeholder": "Nom de votre jardin",
+    "garden_loc_placeholder": "Nom de votre pays",
+    "loc_successfull": "Localisation du jardin validée",
+    "geolocation_usage": "Comme aucune condition d'utilisation n'ont étaient rédigées, aucune protection de vos données n'est guarantie",
+    "disable_geoloc": "Désactivé la géolocalisation par le navigateur",
+    "create_garden": "Créer votre jardin",
+    "cancel": "Annuler"
+  },
+  "garden_editor": {
+    "unsaved_work_left_on": "Il reste du travail non sauvegarder sur",
+    "lost_unsaved": "Si vous quittez la page votre travail sera perdu"
+  },
+  "lunar": {
+    "lunar_phase": "Cycle lunaire",
+    "currently": "En ce moment",
+    "since_the": "Depuis le ",
+    "Full Moon": "Pleine Lune",
+    "First Quarter": "Premier Quartier",
+    "New Moon": "Nouvelle Lune",
+    "Last Quarter": "Dernier Quartier"
+  },
+  "garden_canvas": {
+    "more_info": "Sélectionner un élément sur le plan pour afficher plus d'information",
+    "flowerbed_name": "Nom du parterre",
+    "ground_type": "Type de sol"
+  }
+}

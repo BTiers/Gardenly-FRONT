@@ -1,0 +1,96 @@
+{
+  "home": {
+    "p1": "Understand your garden.",
+    "p2": "Find new Flowers.",
+    "p3": "Join a community."
+  },
+  "routing": {
+    "404error": "This is not the web page you are looking for."
+  },
+  "navigation-link": {
+    "admin": "Administator",
+    "software": "Garden creation",
+    "pictures": "Pictures",
+    "gardens": "Gardens",
+    "new_garden": "New garden",
+    "loading": "Loading"
+  },
+  "register": {
+    "login": "Login",
+    "sign_in": "Sign In to your account",
+    "forgot_pass": "Forgot password",
+    "sign_up": "Sign Up",
+    "invalidAccountCred": "Email or password invalid",
+    "email": "Email",
+    "pswd": "Password",
+    "valid_psw": "Confirm password",
+    "bad_email": "Invalid email format, must be like <1>\"Test@gardenly.com\"</1>",
+    "bad_password": "Password must be minimum eight characters, at least one uppercase letter, one lowercase letter, one number and a special caractere",
+    "bad_usr": "Username must be at least four characters and must start by a letter",
+    "bad_valid_psw": "The two password aren't the same",
+    "privacy_policy_txt": "I have reviewed and understand the ",
+    "privacy_policy_link": "Privacy Policy",
+    "privacy_policy_error": "You must accept the Privacy Policy.",
+    "email_already_use": "The email adress is already used",
+    "bad_form": "You must complete the form : ",
+    "bad_form_email": "    - You must enter an email",
+    "bad_form_username": "   - You must enter a username",
+    "bad_form_password": "   - You must enter a password",
+    "submit": "Create my account"
+  },
+  "about": {
+    "presentation": "Presentation",
+    "articles": "Articles",
+    "tools": "Tools",
+    "community": "Community"
+  },
+  "picture_gallery": {
+    "title": "Title",
+    "delete": "Delete",
+    "save": "Save",
+    "back": "Back",
+    "upload": "Upload",
+    "choose_title": "Choose the picture title",
+    "description": "Description",
+    "choose_description": "Describe your picture",
+    "delete_validation": "Delete this picture ?",
+    "no_retrieve_warning": "You will not be able to retrieve it afterward",
+    "add_picture": "Add a picture",
+    "invalid_file_type": "Invalid file submitted, only .jpg .jpeg and .png are accepted",
+    "error_loading_pic": "An error appear when loading your file, please retry",
+    "successful_upload": "Picture successfully uploaded"
+  },
+  "gardens": {
+    "garden": "Garden",
+    "details": "Details",
+    "no_garden": "No Garden yet",
+    "create_one": "Create it now",
+    "new_garden": "New Garden",
+    "must_have_name": "A garden must have a name",
+    "garden_name_placeholder": "Your garden name",
+    "garden_loc_placeholder": "Enter your country name",
+    "loc_successfull": "Successfully located",
+    "geolocation_usage": "As of no terms of use have been written we cannot ensure that your data is safe",
+    "disable_geoloc": "Disable browser geolocation",
+    "create_garden": "Create your garden",
+    "cancel": "Cancel"
+  },
+  "garden_editor": {
+    "unsaved_work_left_on": "There is unsaved work on",
+    "lost_unsaved": "Your unsaved work will be lost"
+  },
+  "lunar": {
+    "lunar_phase": "Lunar cycle",
+    "currently": "Currently",
+    "since_the": "Since the ",
+    "Full Moon": "Full Moon",
+    "First Quarter": "First Quarter",
+    "New Moon": "New Moon",
+    "Last Quarter": "Last Quarter"
+  },
+  "garden_canvas": {
+    "more_info": "Select an element in the plan to display more information",
+    "flowerbed_name": "Flowerbed name",
+    "ground_type": "Ground type"
+  }
+}

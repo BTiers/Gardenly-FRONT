@@ -1,0 +1,469 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const NightBackground = ({ size }) => (
+  <svg width={`${size.width}%`} height={`${size.height}%`} viewBox="0 0 300 150">
+    <defs>
+      <linearGradient id="prefix__a">
+        <stop offset={0} stopColor="#fefdff" />
+        <stop offset={1} stopColor="#fefdff" stopOpacity={0} />
+      </linearGradient>
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__w"
+        cx={162.53}
+        cy={287.173}
+        fx={162.53}
+        fy={287.173}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 -20.512)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__i"
+        cx={37.798}
+        cy={277.345}
+        fx={37.798}
+        fy={277.345}
+        r={0.661}
+        gradientTransform="matrix(1 0 0 1.42857 0 -118.862)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__o"
+        cx={81.265}
+        cy={275.077}
+        fx={81.265}
+        fy={275.077}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 -19.648)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__h"
+        cx={137.583}
+        cy={270.92}
+        fx={137.583}
+        fy={270.92}
+        r={0.661}
+        gradientTransform="matrix(1 0 0 1.42857 0 -116.108)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__k"
+        cx={204.107}
+        cy={258.446}
+        fx={204.107}
+        fy={258.446}
+        r={0.661}
+        gradientTransform="matrix(1 0 0 1.42857 0 -110.763)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__v"
+        cx={230.943}
+        cy={-262.226}
+        fx={230.943}
+        fy={-262.226}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 18.73)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__m"
+        cx={285.372}
+        cy={259.58}
+        fx={285.372}
+        fy={259.58}
+        r={0.661}
+        gradientTransform="matrix(1 0 0 1.42857 0 -111.249)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__s"
+        cx={270.253}
+        cy={221.405}
+        fx={270.253}
+        fy={221.405}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 -15.815)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__l"
+        cx={273.655}
+        cy={188.143}
+        fx={273.655}
+        fy={188.143}
+        r={0.661}
+        gradientTransform="matrix(1 0 0 1.42857 0 -80.633)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__x"
+        cx={283.104}
+        cy={162.44}
+        fx={283.104}
+        fy={162.44}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 -11.603)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__g"
+        cx={134.749}
+        cy={230.098}
+        fx={134.749}
+        fy={230.098}
+        r={0.661}
+        gradientTransform="matrix(1 0 0 1.42857 0 -98.613)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__p"
+        cx={112.259}
+        cy={229.342}
+        fx={112.259}
+        fy={229.342}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 -16.382)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__e"
+        cx={82.399}
+        cy={234.445}
+        fx={82.399}
+        fy={234.445}
+        r={0.661}
+        gradientTransform="matrix(1 0 0 1.42857 0 -100.476)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__n"
+        cx={97.14}
+        cy={207.042}
+        fx={97.14}
+        fy={207.042}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 -14.789)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__j"
+        cx={202.595}
+        cy={195.324}
+        fx={202.595}
+        fy={195.324}
+        r={0.661}
+        gradientTransform="matrix(1 0 0 1.42857 0 -83.71)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__d"
+        cx={133.048}
+        cy={195.041}
+        fx={133.048}
+        fy={195.041}
+        r={0.283}
+        gradientTransform="matrix(1 0 0 2.33333 0 -260.054)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__t"
+        cx={165.176}
+        cy={225.94}
+        fx={165.176}
+        fy={225.94}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 -16.139)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__r"
+        cx={241.527}
+        cy={180.961}
+        fx={241.527}
+        fy={180.961}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 -12.926)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__u"
+        cx={180.295}
+        cy={176.048}
+        fx={180.295}
+        fy={176.048}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 -12.575)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__q"
+        cx={129.646}
+        cy={175.292}
+        fx={129.646}
+        fy={175.292}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 -12.52)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__f"
+        cx={90.714}
+        cy={167.732}
+        fx={90.714}
+        fy={167.732}
+        r={0.661}
+        gradientTransform="matrix(1 0 0 1.42857 0 -71.885)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__c"
+        cx={48.664}
+        cy={182.001}
+        fx={48.664}
+        fy={182.001}
+        r={1.323}
+        gradientTransform="matrix(1 0 0 1.07143 0 -13)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlinkHref="#prefix__a"
+        id="prefix__b"
+        cx={34.868}
+        cy={165.653}
+        fx={34.868}
+        fy={165.653}
+        r={0.661}
+        gradientTransform="matrix(1 0 0 1.42857 0 -70.994)"
+        gradientUnits="userSpaceOnUse"
+      />
+    </defs>
+    <g transform="translate(0 -147)">
+      <path fill="#262a2e" strokeWidth={0.265} d="M.756 148.077h300v150h-300z" />
+      <ellipse
+        cx={34.868}
+        cy={165.653}
+        rx={0.661}
+        ry={0.945}
+        fill="url(#prefix__b)"
+        strokeWidth={0.025}
+      />
+      <ellipse
+        cx={48.664}
+        cy={182.001}
+        rx={1.323}
+        ry={1.417}
+        fill="url(#prefix__c)"
+        strokeWidth={0.044}
+      />
+      <ellipse
+        cx={133.048}
+        cy={195.041}
+        rx={0.283}
+        ry={0.661}
+        fill="url(#prefix__d)"
+        strokeWidth={0.014}
+      />
+      <ellipse
+        cx={82.399}
+        cy={234.445}
+        rx={0.661}
+        ry={0.945}
+        fill="url(#prefix__e)"
+        strokeWidth={0.025}
+      />
+      <ellipse
+        cx={90.714}
+        cy={167.732}
+        rx={0.661}
+        ry={0.945}
+        fill="url(#prefix__f)"
+        strokeWidth={0.025}
+      />
+      <ellipse
+        cx={134.749}
+        cy={230.098}
+        rx={0.661}
+        ry={0.945}
+        fill="url(#prefix__g)"
+        strokeWidth={0.025}
+      />
+      <ellipse
+        cx={137.583}
+        cy={270.92}
+        rx={0.661}
+        ry={0.945}
+        fill="url(#prefix__h)"
+        strokeWidth={0.025}
+      />
+      <ellipse
+        cx={37.798}
+        cy={277.345}
+        rx={0.661}
+        ry={0.945}
+        fill="url(#prefix__i)"
+        strokeWidth={0.025}
+      />
+      <ellipse cx={34.774} cy={235.39} rx={0.661} ry={0.945} fill="#fefdff" strokeWidth={0.025} />
+      <ellipse cx={231.699} cy={230.476} rx={0.661} ry={0.945} fill="#fefdff" strokeWidth={0.025} />
+      <ellipse
+        cx={202.595}
+        cy={195.324}
+        rx={0.661}
+        ry={0.945}
+        fill="url(#prefix__j)"
+        strokeWidth={0.025}
+      />
+      <ellipse
+        cx={204.107}
+        cy={258.446}
+        rx={0.661}
+        ry={0.945}
+        fill="url(#prefix__k)"
+        strokeWidth={0.025}
+      />
+      <ellipse
+        cx={273.655}
+        cy={188.143}
+        rx={0.661}
+        ry={0.945}
+        fill="url(#prefix__l)"
+        strokeWidth={0.025}
+      />
+      <ellipse
+        cx={285.372}
+        cy={259.58}
+        rx={0.661}
+        ry={0.945}
+        fill="url(#prefix__m)"
+        strokeWidth={0.025}
+      />
+      <ellipse
+        cx={97.14}
+        cy={207.042}
+        rx={1.323}
+        ry={1.417}
+        fill="url(#prefix__n)"
+        strokeWidth={0.044}
+      />
+      <ellipse
+        cx={81.265}
+        cy={275.077}
+        rx={1.323}
+        ry={1.417}
+        fill="url(#prefix__o)"
+        strokeWidth={0.044}
+      />
+      <ellipse
+        cx={112.259}
+        cy={229.342}
+        rx={1.323}
+        ry={1.417}
+        fill="url(#prefix__p)"
+        strokeWidth={0.044}
+      />
+      <ellipse
+        cx={129.646}
+        cy={175.292}
+        rx={1.323}
+        ry={1.417}
+        fill="url(#prefix__q)"
+        strokeWidth={0.044}
+      />
+      <ellipse
+        cx={241.527}
+        cy={180.961}
+        rx={1.323}
+        ry={1.417}
+        fill="url(#prefix__r)"
+        strokeWidth={0.044}
+      />
+      <ellipse
+        cx={270.253}
+        cy={221.405}
+        rx={1.323}
+        ry={1.417}
+        fill="url(#prefix__s)"
+        strokeWidth={0.044}
+      />
+      <ellipse
+        cx={165.176}
+        cy={225.94}
+        rx={1.323}
+        ry={1.417}
+        fill="url(#prefix__t)"
+        strokeWidth={0.044}
+      />
+      <ellipse
+        cx={180.295}
+        cy={176.048}
+        rx={1.323}
+        ry={1.417}
+        fill="url(#prefix__u)"
+        strokeWidth={0.044}
+      />
+      <ellipse
+        cx={230.943}
+        cy={-262.226}
+        rx={1.323}
+        ry={1.417}
+        transform="scale(1 -1)"
+        fill="url(#prefix__v)"
+        strokeWidth={0.044}
+      />
+      <ellipse
+        cx={162.53}
+        cy={287.173}
+        rx={1.323}
+        ry={1.417}
+        fill="url(#prefix__w)"
+        strokeWidth={0.044}
+      />
+      <ellipse
+        cx={283.104}
+        cy={162.44}
+        rx={1.323}
+        ry={1.417}
+        fill="url(#prefix__x)"
+        strokeWidth={0.044}
+      />
+    </g>
+  </svg>
+);
+
+NightBackground.defaultProps = {
+  size: { width: 100, height: 100 }
+};
+
+NightBackground.propTypes = {
+  size: PropTypes.shape({
+    width: PropTypes.number,
+    height: PropTypes.number
+  })
+};
+
+export default NightBackground;
