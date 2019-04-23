@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { withTranslation } from 'react-i18next';
-import { Row, Col, Modal, ModalBody, ModalHeader, Button } from 'reactstrap';
+import { Row, Col, Modal, ModalBody, ModalHeader } from 'reactstrap';
 
 import Dropzone from 'react-dropzone';
 

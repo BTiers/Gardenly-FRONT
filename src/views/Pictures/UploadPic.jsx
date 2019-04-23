@@ -33,7 +33,7 @@ const UploadOption = styled(Col)`
   flex-flow: column;
 `;
 
-function UploadPic({ t, file, setFiles, mobile, onUploadSuccess }) {
+function UploadPic({ t, file, setFiles }) {
   const [uploadError, setUploadError] = useState(false);
   const [imgInfos, setImgInfos] = useState({
     picture: null,
@@ -65,7 +65,9 @@ function UploadPic({ t, file, setFiles, mobile, onUploadSuccess }) {
         {blob ? (
           <React.Fragment>
             <Row className="justify-content-center mt-3">
-              <img src={file.preview} alt={file.name} className="img-fluid" />
+              <Col xs="12">
+                <img src={file.preview} alt={file.name} className="img-fluid" />
+              </Col>
             </Row>
             <hr />
             <Form>
@@ -135,7 +137,7 @@ function UploadPic({ t, file, setFiles, mobile, onUploadSuccess }) {
             </Row>
           </React.Fragment>
         ) : (
-          <LargeSpinner color="primary" className="align-middle" />
+          <LargeSpinner color="primary" className="center" />
         )}
       </div>
     </Col>
@@ -148,8 +150,7 @@ UploadPic.propTypes = {
     preview: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
   }).isRequired,
-  setFiles: PropTypes.func.isRequired,
-  onUploadSuccess: PropTypes.func.isRequired
+  setFiles: PropTypes.func.isRequired
 };
 
 export default withTranslation('picture_gallery')(UploadPic);

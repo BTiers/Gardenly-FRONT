@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
-import { Row, Col, Input, InputGroupAddon, Button, InputGroup, InputGroupText } from 'reactstrap';
+import { Row, Col, Input, InputGroupAddon, InputGroup, InputGroupText } from 'reactstrap';
 import { FiSearch } from 'react-icons/fi';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar';

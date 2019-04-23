@@ -1,9 +1,25 @@
 import gql from 'graphql-tag';
 
 export const CREATE_USER = gql`
-  mutation CreateUser($email: String!, $password: String!, $name: String!, $username: String!) {
-    createUser(input: { email: $email, password: $password, name: $name, username: $username }) {
-      errors
+  mutation CreateUser(
+    $email: String!
+    $password: String!
+    $username: String!
+    $firstname: String!
+    $lastname: String!
+  ) {
+    createUser(
+      input: {
+        email: $email
+        password: $password
+        username: $username
+        firstName: $firstname
+        lastName: $lastname
+      }
+    ) {
+      user {
+        id
+      }
     }
   }
 `;
@@ -19,14 +35,20 @@ export const CREATE_SESSION = gql`
 export const DELETE_SESSION = gql`
   mutation deleteSession {
     deleteSession(input: {}) {
-      errors
+      success
     }
   }
 `;
 
 export const CREATE_MEDIUM = gql`
-  mutation CreateMedium($picture: String!, $title: String!, $description: String) {
-    createMedium(input: { picture: $picture, title: $title, description: $description }) {
+  mutation CreateMedium(
+    $picture: String!
+    $title: String!
+    $description: String
+  ) {
+    createMedium(
+      input: { picture: $picture, title: $title, description: $description }
+    ) {
       medium {
         description
         id

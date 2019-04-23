@@ -1,10 +1,11 @@
-import React, { Component, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import Cookies from 'universal-cookie';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery, useMutation } from 'react-apollo-hooks';
 
 import { USER_GARDENS_NAMES } from 'apollo/queries/queries';
+import { DELETE_SESSION } from 'apollo/mutations/mutations';
 
 import {
   AppAside,
@@ -31,6 +32,9 @@ const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 function DefaultLayout(props) {
   const { data, error, loading } = useQuery(USER_GARDENS_NAMES);
+  const logOut = useMutation(DELETE_SESSION, {
+    variables: {}
+  });
   let navConfig = navigation;
 
   if (!loading && !error && data) {
@@ -44,10 +48,10 @@ function DefaultLayout(props) {
           };
         });
         item.children.push({
-          name: "Nouveau jardin",
+          name: 'Nouveau jardin',
           url: `/garden/create`,
           icon: 'icon-plus'
-        })
+        });
       }
       return item;
     });
@@ -59,6 +63,8 @@ function DefaultLayout(props) {
 
   const signOut = e => {
     e.preventDefault();
+    cookie.set('isLoggedIn', false, { path: '/' });
+    logOut();
     props.history.push('/login');
   };
 

@@ -44,6 +44,8 @@ function Login({ t }) {
   }
 
   function handleKeyPress(e) {
+    console.log(e.target.name);
+
     if (e.target.name === 'Password')
       setPasswordState({ value: e.target.value, error: false });
     else setEmailState({ value: e.target.value, error: false });
@@ -59,7 +61,7 @@ function Login({ t }) {
                 <CardBody>
                   <Form>
                     <FormGroup>
-                      <h1>{t('login')}</h1>
+                      <h3>{t('login_to_gdl')}</h3>
                       <p className="text-muted">{t('sign_in')}</p>
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
@@ -69,6 +71,7 @@ function Login({ t }) {
                         </InputGroupAddon>
                         <Input
                           type="text"
+                          name="Email"
                           placeholder={t('email')}
                           autoComplete="username"
                           invalid={emailState.error}
@@ -89,6 +92,7 @@ function Login({ t }) {
                         </InputGroupAddon>
                         <Input
                           type="password"
+                          name="Password"
                           placeholder={t('pswd')}
                           autoComplete="current-password"
                           invalid={passwordState.error}
@@ -134,7 +138,7 @@ function Login({ t }) {
                 <CardBody className="text-center">
                   <div>
                     <h2>{t('sign_up')}</h2>
-                    <p>Create your account and manage your garden.</p>
+                    <p>{t('sign_up_catch_phrase')}</p>
                     <Link to="/register">
                       <Button
                         color="primary"
@@ -142,7 +146,7 @@ function Login({ t }) {
                         active
                         tabIndex={-1}
                       >
-                        Register Now!
+                        {t('register_now')}
                       </Button>
                     </Link>
                   </div>
