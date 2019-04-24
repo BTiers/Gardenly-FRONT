@@ -68,7 +68,7 @@ function FlowerBed({ data, setFocus }) {
         }}
         fill="white"
         stroke={settings.borderColor}
-        strokeWidth="2"
+        strokeWidth={2}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         onClick={e =>

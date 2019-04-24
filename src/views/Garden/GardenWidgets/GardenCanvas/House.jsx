@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// FIXME
+//import PropTypes from 'prop-types';
 
 import { Shape, Group } from 'react-konva';
 
@@ -43,19 +44,20 @@ function House({ data }) {
         fill={status === 'loading' || status === 'failed' ? 'rgba(0,0,0,0)' : undefined}
         fillPatternImage={status === 'loaded' ? texture : undefined}
         stroke="#232323"
-        strokeWidth="2"
+        strokeWidth={2}
       />
     </Group>
   );
 }
 
-House.propTypes = {
-  data: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    points: PropTypes.arrayOf(
-      PropTypes.shape({ x: PropTypes.number.isRequired, y: PropTypes.number.isRequired })
-    )
-  }).isRequired
-};
+// FIXME: To be determined
+// House.propTypes = {
+//   data: PropTypes.shape({
+//     name: PropTypes.string.isRequired,
+//     points: PropTypes.arrayOf(
+//       PropTypes.shape({ x: PropTypes.number.isRequired, y: PropTypes.number.isRequired })
+//     )
+//   }).isRequired
+// };
 
 export default House;

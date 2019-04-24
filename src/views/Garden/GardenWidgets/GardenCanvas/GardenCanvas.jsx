@@ -26,8 +26,8 @@ export default function GardenCanvas({ onElementFocus, gardenData: { garden, bou
 
   useEffect(() => {
     const PADDING = 20;
-    const scaleX = stageSize.width / bounds.width;
-    const scaleY = stageSize.height / bounds.height;
+    const scaleX = stageSize.width / bounds.width || 1;
+    const scaleY = stageSize.height / bounds.height || 1;
 
     const calcScale = Math.min(scaleX, scaleY);
 

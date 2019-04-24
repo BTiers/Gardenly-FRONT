@@ -22,8 +22,6 @@ function LoginSubmit({
   });
 
   function submit() {
-    console.log(emailState, passwordState)
-
     if (emailState.value === '' || emailState.value === '') return;
     if (emailState.error === true || passwordState.error === true)
       setAccountCredState(true);

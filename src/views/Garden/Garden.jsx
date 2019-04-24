@@ -60,7 +60,7 @@ function Garden({ t, name, data }) {
         </Col>
       </SizedRow>
       <GardenActivity />
-      <Link to={`/app/garden/${name}/edit`}>
+      <Link to={`/garden/${name}/edit`}>
         <Button id="GoToEditor">
           <FiEdit />
         </Button>

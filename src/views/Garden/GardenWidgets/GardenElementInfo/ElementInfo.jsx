@@ -19,5 +19,7 @@ export default function ElementInfo({ element }) {
 }
 
 ElementInfo.propTypes = {
-  element: PropTypes.string.isRequired
+  element: PropTypes.shape({
+    name: PropTypes.string
+  })
 };

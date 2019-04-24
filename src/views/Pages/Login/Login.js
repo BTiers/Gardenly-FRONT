@@ -44,8 +44,6 @@ function Login({ t }) {
   }
 
   function handleKeyPress(e) {
-    console.log(e.target.name);
-
     if (e.target.name === 'Password')
       setPasswordState({ value: e.target.value, error: false });
     else setEmailState({ value: e.target.value, error: false });

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import logo from '../../assets/img/brand/gardenly_black.png'
-import sygnet from '../../assets/img/brand/gardenly_black.png'
+import sygnet from '../../assets/img/brand/gardenly_black_reduced.png'
 
 const propTypes = {
   children: PropTypes.node,

@@ -21,7 +21,7 @@ function Bounds({ data }) {
       fill={status === 'loading' || status === 'failed' ? 'rgba(0,0,0,0)' : undefined}
       fillPatternImage={status === 'loaded' ? texture : undefined}
       stroke="#232323"
-      strokeWidth="2"
+      strokeWidth={2}
     />
   );
 }
