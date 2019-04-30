@@ -38,7 +38,7 @@ function Garden({ t, name, data }) {
                 <Col md="6">
                   {focusElement ? (
                     <FiArrowLeftCircle
-                      size="1.2rem"
+                      size={18}
                       onClick={() => {
                         focusElement.releaseCallback();
                         setFocusElement(null);

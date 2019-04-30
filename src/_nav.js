@@ -29,6 +29,15 @@ export default {
       url: '/garden',
       icon: 'icon-drop',
       children: []
+    },
+    {
+      title: true,
+      name: 'Base de connaissance'
+    },
+    {
+      name: 'Fleurs',
+      url: '/flowers',
+      icon: 'icon-drop',
     }
   ]
 };

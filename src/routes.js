@@ -36,6 +36,7 @@ const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const GardenPage = React.lazy(() => import('./views/Garden/GardensPage'));
+const FlowerDB = React.lazy(() => import('./views/FlowerDB/FlowerDB'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -45,6 +46,7 @@ const routes = [
   { path: '/pictures/user', name: 'Pictures Gallery', component: PicturesGallery },
   { path: '/garden/:name', name: 'Garden Details', component: GardenPage },
   { path: '/garden/:name/edit', name: 'Garden Builder', component: GardenPage },
+  { path: '/flowers', name: 'Flowers', component: FlowerDB },
   { path: '/theme/typography', name: 'Typography', component: Typography },
   { path: '/base', exact: true, name: 'Base', component: Cards },
   { path: '/base/cards', name: 'Cards', component: Cards },

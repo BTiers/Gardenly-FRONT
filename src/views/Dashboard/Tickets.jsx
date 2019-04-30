@@ -10,6 +10,7 @@ import {
   Button
 } from 'reactstrap';
 import { FiSend } from 'react-icons/fi';
+import { GoBug, GoIssueOpened } from 'react-icons/go';
 
 const FakeDiscussion = {
   messages: [
@@ -167,7 +168,7 @@ function TicketEntry() {
           </div>
         </td>
         <td className="text-center col-1 align-middle">
-          <i className="flag-icon flag-icon-us h4 center" title="us" id="us" />
+          <GoBug className="flag-icon h4 center text-danger" title="bug" id="bug"/>
         </td>
         <td className="col-5">
           <div>
@@ -182,7 +183,7 @@ function TicketEntry() {
           <strong>10 sec ago</strong>
         </td>
         <td className="text-center col-1">
-          <i className="flag-icon flag-icon-us h4 center" title="us" id="us" />
+          <GoIssueOpened className="flag-icon h4 center text-warning" title="opened" id="opened"/>
         </td>
       </tr>
       <TicketFeed isOpen={open} />
