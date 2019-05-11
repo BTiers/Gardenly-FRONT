@@ -1,28 +1,44 @@
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
-import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import ApolloClient from 'apollo-boost';
-import Cookies from 'universal-cookie';
-
-const cookie = new Cookies();
+import { split } from 'apollo-link';
+import { getMainDefinition } from 'apollo-utilities';
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import ActionCable from 'actioncable';
+import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink';
+// import Cookies from 'universal-cookie';
 
 export default function Store({ children }) {
-  const cache = new InMemoryCache({});
+  // const cookie = new Cookies(); //TODO: pass down TOKENS
+
+  const cable = ActionCable.createConsumer('ws://localhost:3001/cable');
+  const cableLink = ActionCableLink({ cable });
+  const httpLink = new HttpLink({
+    uri: 'http://localhost:3001/graphql',
+  });
+
+  // using the ability to split links, you can send data to each link
+  // depending on what kind of operation is being sent
+  const link = split(
+    // split based on operation type
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === 'OperationDefinition' &&
+        definition.operation === 'subscription'
+      );
+    },
+    cableLink,
+    httpLink
+  );
 
   const client = new ApolloClient({
-    cache,
-    uri: `${process.env.REACT_APP_HOST}/graphql`,
-    request: operation => {
-      operation.setContext({
-        headers: {
-          authorization: `Bearer ${cookie.get('auth')}`,
-          'X-CSRF-Token': cookie.get('auth')
-        },
-        credentials: 'include'
-      });
-    }
+    link,
+    cache: new InMemoryCache(),
   });
+
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client}>{children}</ApolloHooksProvider>
