@@ -3,7 +3,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Progress,
   TabContent,
   TabPane,
   ListGroup,

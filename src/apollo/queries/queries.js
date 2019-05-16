@@ -63,6 +63,8 @@ export const GET_ALL_PLANTS = gql`
     $shapeIds: [ID!]
     $groundTypeIds: [ID!]
     $periodicityIds: [ID!]
+    $first: Int!
+    $after: String
   ) {
     getAllPlants(
       name: $name
@@ -71,7 +73,13 @@ export const GET_ALL_PLANTS = gql`
         groundTypeIds: $groundTypeIds
         periodicityIds: $periodicityIds
       }
+      first: $first
+      after: $after
     ) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
       edges {
         node {
           id

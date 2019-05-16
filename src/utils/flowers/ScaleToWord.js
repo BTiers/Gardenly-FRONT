@@ -16,6 +16,7 @@ export function GetRusticityTypeFromScale(scale) {
     case 7: return 'Type 1'
     case 8: return 'Type 1'
     case 9: return 'Type 1'
+    default: return 'Type 1'
   }
 }
 

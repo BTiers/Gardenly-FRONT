@@ -121,7 +121,7 @@ function Login({ t }) {
                     </Row>
                   </Form>
                   {accountCredState ? (
-                    <Alert className="text-center text-light bg-danger">
+                    <Alert className="mt-2 mb-0 text-center text-light bg-danger">
                       <strong>{t('invalidAccountCred')}</strong>
                     </Alert>
                   ) : (

@@ -138,11 +138,15 @@ export function AdvancedSearch({ onSearch }) {
     colors: []
   };
   const [filters, setFilters] = useState(DEFAULT_FILTER_STATE);
-  
+
+  const onKeyPress = e => {
+    if (e.key === 'Enter') onSearch(filters);
+  };
+
   return (
     <React.Fragment>
       <Row className="mt-2">
-        <Col className="my-2" xs="6" md="4" lg="3">
+        <Col className="my-2" xs="6" md="4" lg="3" onKeyPress={onKeyPress}>
           <SelectDropdown
             title="Type de sols"
             query={{

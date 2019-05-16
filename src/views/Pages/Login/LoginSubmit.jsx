@@ -12,13 +12,13 @@ function LoginSubmit({
   t,
   states: { passwordState, emailState },
   setAccountCredState,
-  history,
+  history
 }) {
   const createSession = useMutation(CREATE_SESSION, {
     variables: {
       email: emailState.value,
-      password: passwordState.value,
-    },
+      password: passwordState.value
+    }
   });
 
   function submit() {
@@ -26,19 +26,22 @@ function LoginSubmit({
     if (emailState.error === true || passwordState.error === true)
       setAccountCredState(true);
     else {
-      createSession()
-        .then(_result => {
+      createSession().then(
+        _result => {
           cookie.set('isLoggedIn', true, { path: '/' });
           history.push('/dashboard');
-        })
-        .catch(error => {
-          if (error == 'GraphQL error: Already loged') {
-            setAccountCredState(true);
+        },
+        error => {
+           // eslint-disable-next-line
+          if (error == 'Error: GraphQL error: Already loged') {
+            cookie.set('isLoggedIn', true, { path: '/' });
+            history.push('/dashboard');
             return;
           }
-
-          console.error(error);
-        });
+          console.log(error)
+          setAccountCredState(true);
+        }
+      );
     }
   }
 
@@ -57,8 +60,8 @@ function LoginSubmit({
   return (
     <React.Fragment>
       <Button
-        color='primary'
-        className='px-4'
+        color="primary"
+        className="px-4"
         onClick={() => {
           submit();
         }}
@@ -73,7 +76,7 @@ LoginSubmit.propTypes = {
   states: objectOf(object).isRequired,
   setAccountCredState: func.isRequired,
   t: func.isRequired,
-  history: shape({ push: func }).isRequired,
+  history: shape({ push: func }).isRequired
 };
 
 export default withRouter(LoginSubmit);

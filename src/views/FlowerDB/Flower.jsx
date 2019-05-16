@@ -16,8 +16,6 @@ import {
   ListGroupItem,
   UncontrolledTooltip
 } from 'reactstrap';
-import Tooltip from 'rc-tooltip';
-import Slider, { Range } from 'rc-slider';
 import { FillableDroplet } from '../../components/icons/FillableIcon';
 import {
   GetRusticityNamingFromScale,
@@ -208,7 +206,7 @@ function FlowerFull({ isOpen, flower }) {
                           <div className="font-weight-bold text-muted text-uppercase small">
                             Teinte(s):
                           </div>
-                          {flower.colors.map(({name}) => (
+                          {flower.colors.map(({ name }) => (
                             <React.Fragment key={`${name}${flower.id}`}>
                               <FiSquare
                                 className="ml-3 mt-2"

@@ -16,7 +16,7 @@ import {
 } from 'reactstrap';
 import { FiSearch, FiChevronDown } from 'react-icons/fi';
 import { FaTree } from 'react-icons/fa';
-import { useQuery, useApolloClient } from 'react-apollo-hooks';
+import { useQuery } from 'react-apollo-hooks';
 
 import { Mobile, Default } from 'components/responsive/responsive';
 import { GET_ALL_PLANTS } from '../../apollo/queries/queries';
@@ -25,7 +25,25 @@ import Flower from './Flower';
 import { AdvancedSearch } from './AdvancedSearch';
 
 function FlowersTable({ query: { query, variables } }) {
-  const { data, loading, error } = useQuery(query, { variables: variables });
+  const { data, loading, error, fetchMore } = useQuery(query, {
+    variables: { ...variables, first: 20 }
+  });
+  const { getAllPlants: plants } = data;
+
+  if (error)
+    return (
+      <FlowersEmptyTable
+        message={'Une erreur est survenue, essayez une autre recherche'}
+      />
+    );
+  if (loading)
+    return <FlowersEmptyTable children={<Spinner color="primary" />} />;
+  if (plants.edges.length === 0)
+    return (
+      <FlowersEmptyTable
+        message={'Aucune plante connue ne correspond à votre recherche'}
+      />
+    );
 
   return (
     <Table
@@ -41,31 +59,51 @@ function FlowersTable({ query: { query, variables } }) {
           <th className="col-6 border-0">Nom</th>
           <th className="col-2 border-0 text-center">Besoin en eau</th>
           <th className="col-2 border-0 text-center">Rusticité</th>
-          <th className="col-1 border-0 text-center">Plus</th>
+          <th className="col-1 border-0 text-center" />
         </tr>
       </thead>
       <tbody>
-        {error ? (
-          <tr className="d-flex text-uppercase text-warning small text-center my-3 justify-content-center">
-            Une erreur est survenue, veuillez recharger la page
+        {plants.edges.map(plant => (
+          <Flower flower={plant.node} key={plant.node.id} />
+        ))}
+        {plants.pageInfo.hasNextPage ? (
+          <tr className="d-flex text-uppercase text-white bg-primary small text-center my-3 justify-content-center">
+            <td
+              className="text-center col-12 border-0"
+              onClick={() => {
+                fetchMore({
+                  variables: { after: plants.pageInfo.endCursor },
+                  updateQuery: (prev, { fetchMoreResult }) => {
+                    const newEdges = fetchMoreResult.getAllPlants.edges;
+                    const pageInfo = fetchMoreResult.getAllPlants.pageInfo;
+
+                    return newEdges.length
+                      ? {
+                          getAllPlants: {
+                            __typename: prev.getAllPlants.__typename,
+                            edges: [...prev.getAllPlants.edges, ...newEdges],
+                            pageInfo
+                          }
+                        }
+                      : prev;
+                  }
+                });
+              }}
+            >
+              Charger plus de résultat
+            </td>
           </tr>
         ) : null}
-        {loading ? (
-          <tr className="d-flex my-3 justify-content-center">
-            <Spinner color="primary" />
-          </tr>
-        ) : null}
-        {loading || error
-          ? null
-          : data.getAllPlants.edges.map(plant => (
-              <Flower flower={plant.node} key={plant.node.id} />
-            ))}
       </tbody>
     </Table>
   );
 }
 
-function FlowersEmptyTable() {
+function FlowersEmptyTable({ warning, message, children }) {
+  const messageClassName = `d-flex text-uppercase ${
+    warning ? 'text-danger' : 'text-muted'
+  } small text-center my-3 justify-content-center`;
+
   return (
     <Table
       hover
@@ -80,12 +118,14 @@ function FlowersEmptyTable() {
           <th className="col-6 border-0">Nom</th>
           <th className="col-2 border-0 text-center">Besoin en eau</th>
           <th className="col-2 border-0 text-center">Rusticité</th>
-          <th className="col-1 border-0 text-center">Plus</th>
+          <th className="col-1 border-0 text-center" />
         </tr>
       </thead>
       <tbody>
-        <tr className="d-flex text-uppercase text-muted small text-center my-3 justify-content-center">
-          Saisissez votre recherche
+        <tr className={messageClassName}>
+          <td className="text-center col-12 border-0">
+            {message ? message : children}
+          </td>
         </tr>
       </tbody>
     </Table>
@@ -127,20 +167,25 @@ function FlowerDB({ t }) {
                 type="text"
                 placeholder="Rechercher une plante"
                 onChange={e => setSearchedName(e.target.value)}
+                onKeyPress={e => {
+                  if (e.key === 'Enter') onSearch();
+                }}
               />
-              <Button
-                color="primary"
-                className="rounded-right rounded-0"
-                onClick={() => onSearch()}
-              >
-                <Default>
-                  Search&nbsp;&nbsp;
-                  <FiSearch />
-                </Default>
-                <Mobile>
-                  <FiSearch />
-                </Mobile>
-              </Button>
+              {advancedOpen ? null : (
+                <Button
+                  color="primary"
+                  className="rounded-right rounded-0"
+                  onClick={() => onSearch()}
+                >
+                  <Default>
+                    Search&nbsp;&nbsp;
+                    <FiSearch />
+                  </Default>
+                  <Mobile>
+                    <FiSearch />
+                  </Mobile>
+                </Button>
+              )}
             </InputGroup>
           </Col>
         </Row>
@@ -158,9 +203,13 @@ function FlowerDB({ t }) {
           </Col>
         </Row>
         <Collapse isOpen={advancedOpen}>
-          <AdvancedSearch onSearch={onSearch}/>
+          <AdvancedSearch onSearch={onSearch} />
         </Collapse>
-        {query ? <FlowersTable query={query} /> : <FlowersEmptyTable />}
+        {query ? (
+          <FlowersTable query={query} />
+        ) : (
+          <FlowersEmptyTable message={'Saisissez votre recherce'} />
+        )}
       </CardBody>
     </Card>
   );
