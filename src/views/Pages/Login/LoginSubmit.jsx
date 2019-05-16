@@ -12,13 +12,13 @@ function LoginSubmit({
   t,
   states: { passwordState, emailState },
   setAccountCredState,
-  history
+  history,
 }) {
   const createSession = useMutation(CREATE_SESSION, {
     variables: {
       email: emailState.value,
-      password: passwordState.value
-    }
+      password: passwordState.value,
+    },
   });
 
   function submit() {
@@ -27,20 +27,16 @@ function LoginSubmit({
       setAccountCredState(true);
     else {
       createSession()
-        .then(result => {
-          const { errors } = result.data.createSession;
-
-          if (errors.length > 0) {
-            console.error(...errors);
-            if (errors[0] !== 'Already loged') {
-              setAccountCredState(true);
-              return;
-            }
-          }
+        .then(_result => {
           cookie.set('isLoggedIn', true, { path: '/' });
           history.push('/dashboard');
         })
         .catch(error => {
+          if (error == 'GraphQL error: Already loged') {
+            setAccountCredState(true);
+            return;
+          }
+
           console.error(error);
         });
     }
@@ -61,8 +57,8 @@ function LoginSubmit({
   return (
     <React.Fragment>
       <Button
-        color="primary"
-        className="px-4"
+        color='primary'
+        className='px-4'
         onClick={() => {
           submit();
         }}
@@ -77,7 +73,7 @@ LoginSubmit.propTypes = {
   states: objectOf(object).isRequired,
   setAccountCredState: func.isRequired,
   t: func.isRequired,
-  history: shape({ push: func }).isRequired
+  history: shape({ push: func }).isRequired,
 };
 
 export default withRouter(LoginSubmit);

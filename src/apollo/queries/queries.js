@@ -15,7 +15,7 @@ export const USER_GARDENS = gql`
 
 export const USER_GARDENS_NAMES = gql`
   query gardenlist {
-    gardens: getAllGardens {
+    gardens: getAllUserGardens {
       nodes {
         id
         name

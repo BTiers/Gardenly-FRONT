@@ -17,6 +17,7 @@ export default function Store({ children }) {
   const cableLink = ActionCableLink({ cable });
   const httpLink = new HttpLink({
     uri: 'http://localhost:3001/graphql',
+    credentials: 'include',
   });
 
   // using the ability to split links, you can send data to each link
