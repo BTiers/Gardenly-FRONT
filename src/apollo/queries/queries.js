@@ -15,7 +15,7 @@ export const USER_GARDENS = gql`
 
 export const USER_GARDENS_NAMES = gql`
   query gardenlist {
-    gardens: getAllGardens {
+    gardens: getAllUserGardens {
       nodes {
         id
         name
@@ -98,6 +98,23 @@ export const GET_ALL_PLANTS = gql`
           }
           phRangeLow
           phRangeHigh
+        }
+      }
+    }
+  }
+`;
+
+export const GET_USER_ROOMS_WITH_MESSAGES = gql`
+  {
+    getAllUserRooms {
+      nodes {
+        id
+        messages {
+          user {
+            username
+            avatar
+          }
+          content
         }
       }
     }

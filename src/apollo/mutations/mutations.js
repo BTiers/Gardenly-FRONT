@@ -27,7 +27,7 @@ export const CREATE_USER = gql`
 export const CREATE_SESSION = gql`
   mutation CreateSession($email: String!, $password: String!) {
     createSession(input: { email: $email, password: $password }) {
-      errors
+      expires
     }
   }
 `;
