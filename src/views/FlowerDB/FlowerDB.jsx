@@ -11,33 +11,110 @@ import {
   Button,
   InputGroup,
   Collapse,
-  ListGroup,
-  ListGroupItem
+  Table,
+  Spinner
 } from 'reactstrap';
-import { FiFilter, FiSearch, FiChevronDown } from 'react-icons/fi';
+import { FiSearch, FiChevronDown } from 'react-icons/fi';
+import { FaTree } from 'react-icons/fa';
+import { useQuery, useApolloClient } from 'react-apollo-hooks';
 
 import { Mobile, Default } from 'components/responsive/responsive';
-import SpeciesFilter from './Filters/SpeciesFilter';
-import CharacteristicsFilter from './Filters/CharacteristicsFilter';
+import { GET_ALL_PLANTS } from '../../apollo/queries/queries';
+
+import Flower from './Flower';
+import { AdvancedSearch } from './AdvancedSearch';
+
+function FlowersTable({ query: { query, variables } }) {
+  const { data, loading, error } = useQuery(query, { variables: variables });
+
+  return (
+    <Table
+      hover
+      responsive
+      className="table-outline mb-0 d-none d-sm-table mt-4"
+    >
+      <thead className="thead-light">
+        <tr className="d-flex">
+          <th className="text-center col-1 border-0">
+            <FaTree />
+          </th>
+          <th className="col-6 border-0">Nom</th>
+          <th className="col-2 border-0 text-center">Besoin en eau</th>
+          <th className="col-2 border-0 text-center">Rusticité</th>
+          <th className="col-1 border-0 text-center">Plus</th>
+        </tr>
+      </thead>
+      <tbody>
+        {error ? (
+          <tr className="d-flex text-uppercase text-warning small text-center my-3 justify-content-center">
+            Une erreur est survenue, veuillez recharger la page
+          </tr>
+        ) : null}
+        {loading ? (
+          <tr className="d-flex my-3 justify-content-center">
+            <Spinner color="primary" />
+          </tr>
+        ) : null}
+        {loading || error
+          ? null
+          : data.getAllPlants.edges.map(plant => (
+              <Flower flower={plant.node} key={plant.node.id} />
+            ))}
+      </tbody>
+    </Table>
+  );
+}
+
+function FlowersEmptyTable() {
+  return (
+    <Table
+      hover
+      responsive
+      className="table-outline mb-0 d-none d-sm-table mt-4"
+    >
+      <thead className="thead-light">
+        <tr className="d-flex">
+          <th className="text-center col-1 border-0">
+            <FaTree />
+          </th>
+          <th className="col-6 border-0">Nom</th>
+          <th className="col-2 border-0 text-center">Besoin en eau</th>
+          <th className="col-2 border-0 text-center">Rusticité</th>
+          <th className="col-1 border-0 text-center">Plus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr className="d-flex text-uppercase text-muted small text-center my-3 justify-content-center">
+          Saisissez votre recherche
+        </tr>
+      </tbody>
+    </Table>
+  );
+}
 
 function FlowerDB({ t }) {
-  const [advancedOpen, setAdvancedOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState('species');
-  const [filters, setFilters] = useState({
-    species: [],
-    characteristics: {
-      height: null,
-      exposure: null,
-      flowering: { from: null, to: null },
-      planting_period: { from: null, to: null },
-      rusticity: null
-    }
-  });
+  const [advancedOpen, setAdvancedOpen] = useState(true);
+  const [searchedName, setSearchedName] = useState('');
+  const [query, setQuery] = useState(null);
 
-  const activeClasses =
-    'list-group-item-accent-primary list-group-item-divider';
-  const inactiveClasses =
-    'list-group-item-accent-secondary list-group-item-divider';
+  const onSearch = state => {
+    const variables =
+      state !== undefined
+        ? {
+            shapeIds: state.shapes.map(obj => obj.id),
+            groundTypeIds: state.groundType.map(obj => obj.id),
+            periodicityIds: state.periodicities.map(obj => obj.id)
+          }
+        : null;
+
+    setQuery({
+      query: GET_ALL_PLANTS,
+      variables: {
+        name: searchedName,
+        ...variables
+      }
+    });
+  };
 
   return (
     <Card>
@@ -45,20 +122,17 @@ function FlowerDB({ t }) {
         <Row>
           <Col xs="12">
             <InputGroup>
-              <Button
-                color="secondary"
-                className="rounded"
-                onClick={() => setAdvancedOpen(!advancedOpen)}
-              >
-                <FiFilter />
-                <FiChevronDown />
-              </Button>
               <Input
-                className="form-control"
+                className="form-control font-weight-bold"
                 type="text"
-                placeholder="Rechercher un nom de plante"
+                placeholder="Rechercher une plante"
+                onChange={e => setSearchedName(e.target.value)}
               />
-              <Button color="primary" className="rounded">
+              <Button
+                color="primary"
+                className="rounded-right rounded-0"
+                onClick={() => onSearch()}
+              >
                 <Default>
                   Search&nbsp;&nbsp;
                   <FiSearch />
@@ -70,44 +144,23 @@ function FlowerDB({ t }) {
             </InputGroup>
           </Col>
         </Row>
+        <Row>
+          <Col xs="12">
+            <Button
+              color="primary"
+              className="bg-white mt-2 rounded-0 text-uppercase text-muted border-0"
+              style={{ fontSize: '80%' }}
+              onClick={() => setAdvancedOpen(!advancedOpen)}
+            >
+              Recherche avancée
+              <FiChevronDown className="ml-2" />
+            </Button>
+          </Col>
+        </Row>
         <Collapse isOpen={advancedOpen}>
-          <Row className="mt-3">
-            <Col xs="3">
-              <ListGroup className="list-group-accent" tag={'div'}>
-                <ListGroupItem
-                  action
-                  className={
-                    selectedFilter === 'species'
-                      ? activeClasses
-                      : inactiveClasses
-                  }
-                  onClick={() => setSelectedFilter('species')}
-                >
-                  <div>
-                    <strong>Par espèces</strong>
-                  </div>
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  className={
-                    selectedFilter === 'charac'
-                      ? activeClasses
-                      : inactiveClasses
-                  }
-                  onClick={() => setSelectedFilter('charac')}
-                >
-                  <div>
-                    <strong>Par caractéristiques</strong>
-                  </div>
-                </ListGroupItem>
-              </ListGroup>
-            </Col>
-            <Col xs="9">
-              <SpeciesFilter isActive={selectedFilter === 'species'} />
-              <CharacteristicsFilter isActive={selectedFilter === 'charact'} />
-            </Col>
-          </Row>
+          <AdvancedSearch onSearch={onSearch}/>
         </Collapse>
+        {query ? <FlowersTable query={query} /> : <FlowersEmptyTable />}
       </CardBody>
     </Card>
   );

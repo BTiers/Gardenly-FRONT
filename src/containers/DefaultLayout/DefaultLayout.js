@@ -113,7 +113,7 @@ function DefaultLayout(props) {
                     />
                   ) : null;
                 })}
-                <Redirect from="/" to="/dashboard" />
+                <Redirect from="/" to="/activities" />
               </Switch>
             </Suspense>
           </Container>

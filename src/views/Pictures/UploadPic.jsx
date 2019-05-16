@@ -17,7 +17,7 @@ import { withTranslation } from 'react-i18next';
 import { useMutation } from 'react-apollo-hooks';
 
 import { CREATE_MEDIUM } from 'apollo/mutations/mutations';
-import { GET_ALL_MEDIA } from 'apollo/queries/queries';
+import { GET_ALL_USER_MEDIA } from 'apollo/queries/queries';
 
 import getBase64FromImage from 'utils/image/getBase64FromImage';
 
@@ -47,7 +47,7 @@ function UploadPic({ t, file, setFiles }) {
       title: imgInfos.title,
       description: imgInfos.description
     },
-    refetchQueries: [{ query: GET_ALL_MEDIA }],
+    refetchQueries: [{ query: GET_ALL_USER_MEDIA }],
     update: () => setFiles({ acceptedFiles: [], rejectedFiles: [] })
   });
 

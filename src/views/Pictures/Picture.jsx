@@ -19,7 +19,7 @@ import { withTranslation } from 'react-i18next';
 import { useMutation } from 'react-apollo-hooks';
 
 import { UPDATE_MEDIUM, DELETE_MEDIUM } from 'apollo/mutations/mutations';
-import { GET_ALL_MEDIA } from 'apollo/queries/queries';
+import { GET_ALL_USER_MEDIA } from 'apollo/queries/queries';
 
 import CenterY from 'components/image/CenterY';
 
@@ -37,7 +37,7 @@ const PictureActionsLayout = styled.div`
   opacity: ${({ active }) => (active === 1 ? '0.35' : '0')};
 `;
 
-function Picture({ history, picture: { title, description, id, picture }, t }) {
+function Picture({ history, picture: { title, description, id, picture, thumbnail }, t }) {
   const [selected, setSelected] = useState(false);
   const [open, setOpen] = useState(false);
   const [titleState, setTitleState] = useState(title);
@@ -49,12 +49,12 @@ function Picture({ history, picture: { title, description, id, picture }, t }) {
 
   const deleteMedium = useMutation(DELETE_MEDIUM, {
     variables: { id },
-    refetchQueries: [{ query: GET_ALL_MEDIA }],
+    refetchQueries: [{ query: GET_ALL_USER_MEDIA }],
     update: () => onDelete()
   });
   const updateMedium = useMutation(UPDATE_MEDIUM, {
     variables: { id, title: titleState, description: descState },
-    refetchQueries: [{ query: GET_ALL_MEDIA }]
+    refetchQueries: [{ query: GET_ALL_USER_MEDIA }]
   });
 
   const toggle = () => {
@@ -79,7 +79,7 @@ function Picture({ history, picture: { title, description, id, picture }, t }) {
         }}
       >
         <CenterY>
-          <img src={picture} alt={title} className="img-fluid" />
+          <img src={thumbnail} alt={title} className="img-fluid" />
         </CenterY>
         <PictureActionsLayout active={selected ? 1 : 0} />
         <Modal isOpen={open} toggle={toggle} className="modal-lg modal-primary">

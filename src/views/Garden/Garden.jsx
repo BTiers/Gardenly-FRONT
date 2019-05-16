@@ -20,6 +20,8 @@ const SizedRow = styled(Row)`
 function Garden({ t, name, data }) {
   const [focusElement, setFocusElement] = useState(null);
 
+  console.log(data)
+
   return (
     <div className="animated fadeIn">
       <SizedRow className="w-100 p-3" noGutters>
