@@ -57,3 +57,20 @@ export const GET_LUNAR_PHASES = gql`
     }
   }
 `;
+
+export const GET_USER_ROOMS_WITH_MESSAGES = gql`
+  {
+    getAllUserRooms {
+      nodes {
+        id
+        messages {
+          user {
+            username
+            avatar
+          }
+          content
+        }
+      }
+    }
+  }
+`;
