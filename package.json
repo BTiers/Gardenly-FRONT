@@ -27,8 +27,6 @@
     "core-js": "^2.6.5",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
-    "eslint-config-prettier": "^4.1.0",
-    "eslint-plugin-prettier": "^3.0.1",
     "faker": "^4.1.0",
     "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
