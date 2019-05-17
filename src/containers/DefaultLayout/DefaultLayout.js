@@ -23,6 +23,7 @@ import {
 import navigation from '../../_nav';
 // routes config
 import routes from '../../routes';
+import { GET_USERS } from '../../apollo/queries/queries';
 
 const cookie = new Cookies();
 
@@ -32,13 +33,18 @@ const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 function DefaultLayout(props) {
   const { data, error, loading } = useQuery(USER_GARDENS_NAMES);
+  const { data: userData, error: userError, loading: userLoading } = useQuery(
+    GET_USERS
+  );
+
   const logOut = useMutation(DELETE_SESSION, {
     variables: {}
   });
   let navConfig = navigation;
 
-  if (!loading && !error && data) {
+  if (!loading && !error && data && !userLoading && !userError && userData) {
     navConfig.items = navConfig.items.map(item => {
+      if (item.admin && !userData.getCurrentUser.isModerator) return null;
       if (item.name === 'Jardins') {
         item.children = data.gardens.nodes.map(({ name }) => {
           return {
@@ -55,6 +61,8 @@ function DefaultLayout(props) {
       }
       return item;
     });
+
+    navConfig.items = navConfig.items.filter(e => e !== null);
   }
 
   const onLoading = () => (
@@ -93,16 +101,16 @@ function DefaultLayout(props) {
                 {routes.map((route, idx) => {
                   const isLoggedIn = cookie.get('isLoggedIn') || 'false';
 
-                  if (
-                    route.requireAuth !== undefined &&
-                    route.requireAuth === true
-                  ) {
-                    if (route.requireAuth === true) {
-                      if (isLoggedIn === 'false')
-                        return <Redirect key={idx} to={route.redirectTo} />;
-                    } else if (isLoggedIn === 'true')
-                      return <Redirect key={idx} to={route.redirectTo} />;
-                  }
+                  if (route.requireAuth && isLoggedIn === 'false')
+                    return <Redirect key={idx} to={route.redirectTo} />;
+                  else if (
+                    route.adminOnly &&
+                    !userLoading &&
+                    !userError &&
+                    !userData.getCurrentUser.isModerator
+                  )
+                    return null;
+
                   return route.component ? (
                     <Route
                       key={idx}

@@ -27,6 +27,7 @@ export const USER_GARDENS_NAMES = gql`
 export const GET_USERS = gql`
   query getUser {
     getCurrentUser {
+      isModerator
       username
     }
   }

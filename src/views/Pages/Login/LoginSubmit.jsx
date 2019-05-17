@@ -29,16 +29,16 @@ function LoginSubmit({
       createSession().then(
         _result => {
           cookie.set('isLoggedIn', true, { path: '/' });
-          history.push('/dashboard');
+          history.push('/activities');
         },
         error => {
            // eslint-disable-next-line
           if (error == 'Error: GraphQL error: Already loged') {
             cookie.set('isLoggedIn', true, { path: '/' });
-            history.push('/dashboard');
+            history.push('/activities');
             return;
           }
-          console.log(error)
+          console.log(error);
           setAccountCredState(true);
         }
       );
