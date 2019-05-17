@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import { I18nextProvider } from 'react-i18next';
 import i18next from './i18next';
 
+import Cookies from 'universal-cookie';
 import Client from './apollo/client';
 // import { renderRoutes } from 'react-router-config';
 import './App.scss';
 
+const cookie = new Cookies();
 const loading = () => (
   <div className="animated fadeIn pt-3 text-center">Loading...</div>
 );
@@ -23,6 +25,8 @@ const Page500 = React.lazy(() => import('./views/Pages/Page500'));
 
 class App extends Component {
   render() {
+    const isLoggedIn = cookie.get('isLoggedIn') || 'false';
+
     return (
       <I18nextProvider i18n={i18next}>
         <Client>
@@ -33,13 +37,21 @@ class App extends Component {
                   exact
                   path="/login"
                   name="Login Page"
-                  render={props => <Login {...props} />}
+                  render={props => {
+                    if (isLoggedIn === 'true')
+                      return <Redirect to="/activities" />;
+                    return <Login {...props} />;
+                  }}
                 />
                 <Route
                   exact
                   path="/register"
                   name="Register Page"
-                  render={props => <Register {...props} />}
+                  render={props => {
+                    if (isLoggedIn === 'true')
+                      return <Redirect to="/activities" />;
+                    return <Register {...props} />;
+                  }}
                 />
                 <Route
                   exact
