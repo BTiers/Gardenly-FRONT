@@ -37,10 +37,12 @@ const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const GardenPage = React.lazy(() => import('./views/Garden/GardensPage'));
 const FlowerDB = React.lazy(() => import('./views/FlowerDB/FlowerDB'));
+const Activities = React.lazy(() => import ('./views/Activities/Activities'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
+  { path: '/activities', name: 'Activities', component: Activities },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard, requireAuth: true, redirectTo: '/login' },
   { path: '/pictures', exact: true, name: 'Pictures Gallery', component: PicturesGallery },
   { path: '/pictures/user', name: 'Pictures Gallery', component: PicturesGallery },

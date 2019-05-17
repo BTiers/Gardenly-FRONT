@@ -608,7 +608,7 @@ class Dashboard extends Component {
               </CardBody>
               <CardFooter>
                 <Row className="text-center">
-                  <Col sm={12} md className="mb-sm-2 mb-0">
+                  <Col sm={12} className="mb-sm-2 mb-0">
                     <div className="text-muted">Visits</div>
                     <strong>29.703 Users (40%)</strong>
                     <Progress className="progress-xs mt-2" color="success" value="40" />

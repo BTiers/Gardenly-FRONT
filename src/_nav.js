@@ -10,6 +10,11 @@ export default {
       name: 'Activitées'
     },
     {
+      name: 'Activitées',
+      url: '/activities',
+      icon: 'icon-camera'
+    },
+    {
       name: 'Photos',
       url: '/pictures',
       icon: 'icon-camera'
@@ -37,7 +42,7 @@ export default {
     {
       name: 'Fleurs',
       url: '/flowers',
-      icon: 'icon-drop',
+      icon: 'icon-drop'
     }
   ]
 };

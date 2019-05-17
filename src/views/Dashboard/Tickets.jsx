@@ -154,7 +154,7 @@ function TicketEntry() {
         <td className="text-center col-1">
           <div className="avatar">
             <img
-              src={'assets/img/avatars/1.jpg'}
+              src={'assets/img/avatars/6.jpg'}
               className="img-avatar"
               alt="admin@bootstrapmaster.com"
             />
