@@ -63,6 +63,7 @@ export const GET_ALL_PLANTS = gql`
     $shapeIds: [ID!]
     $groundTypeIds: [ID!]
     $periodicityIds: [ID!]
+    $typeIds: [ID!]
     $first: Int!
     $after: String
   ) {
@@ -72,6 +73,7 @@ export const GET_ALL_PLANTS = gql`
         shapeIds: $shapeIds
         groundTypeIds: $groundTypeIds
         periodicityIds: $periodicityIds
+        typeIds: $typeIds
       }
       first: $first
       after: $after

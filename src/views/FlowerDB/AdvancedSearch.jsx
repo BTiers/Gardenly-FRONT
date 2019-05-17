@@ -7,7 +7,7 @@ import {
   DropdownItem,
   DropdownToggle,
   DropdownMenu,
-  ButtonGroup
+  ButtonGroup,
 } from 'reactstrap';
 import { FiChevronDown } from 'react-icons/fi';
 import { useQuery } from 'react-apollo-hooks';
@@ -15,14 +15,14 @@ import {
   GET_PLANT_GROUNDTYPES,
   GET_PLANT_PERIODICITIES,
   GET_PLANT_SHAPES,
-  GET_PLANT_TYPES
+  GET_PLANT_TYPES,
 } from 'apollo/queries/plant_category.js';
 
 function SelectDropdown({
   title,
   query: { query, accessKey },
   setState,
-  state
+  state,
 }) {
   const [open, setOpen] = useState(false);
   const { data, error, loading } = useQuery(query);
@@ -51,7 +51,7 @@ function SelectDropdown({
   if (error) return "Une erreur c'est produite";
 
   return (
-    <Dropdown className="" direction="down" isOpen={open} toggle={toggle}>
+    <Dropdown className='' direction='down' isOpen={open} toggle={toggle}>
       <DropdownToggle
         style={{ fontSize: '85%' }}
         className={`text-left text-truncate text-uppercase btn-block rounded-0 bg-white pr-5 ${
@@ -61,19 +61,19 @@ function SelectDropdown({
         {state.length > 0 ? itemList() : title}
         <FiChevronDown
           style={{ left: '92%' }}
-          className="position-absolute text-muted"
+          className='position-absolute text-muted'
         />
       </DropdownToggle>
       {state.length > 0 ? (
-        <span className="small text-muted">
-          <span className="text-primary">{state.length}</span> filtre(s)
+        <span className='small text-muted'>
+          <span className='text-primary'>{state.length}</span> filtre(s)
           actif(s)
         </span>
       ) : null}
-      <DropdownMenu className="w-100">
+      <DropdownMenu className='w-100'>
         {loading ? (
-          <DropdownItem className="px-3 py-2">
-            <span className="font-weight-bold small text-muted">
+          <DropdownItem className='px-3 py-2'>
+            <span className='font-weight-bold small text-muted'>
               Chargement...
             </span>
           </DropdownItem>
@@ -81,21 +81,21 @@ function SelectDropdown({
           data[accessKey].map(item => (
             <DropdownItem
               key={`${title}-${item.name}`}
-              className="px-3 py-2"
+              className='px-3 py-2'
               onClick={e => {
                 e.gar_drop_item = true;
                 toggleItem(item);
                 e.preventDefault();
               }}
             >
-              <span className="font-weight-bold small text-muted">
+              <span className='font-weight-bold small text-muted'>
                 {item.name}
               </span>
-              <div className="custom-control custom-checkbox float-right">
+              <div className='custom-control custom-checkbox float-right'>
                 <input
-                  type="checkbox"
-                  className="custom-control-input"
-                  id="customCheck1"
+                  type='checkbox'
+                  className='custom-control-input'
+                  id='customCheck1'
                   checked={isActive(item)}
                   onChange={e => {
                     e.gar_drop_item = true;
@@ -104,8 +104,8 @@ function SelectDropdown({
                   }}
                 />
                 <label
-                  className="custom-control-label"
-                  htmlFor="customCheck1"
+                  className='custom-control-label'
+                  htmlFor='customCheck1'
                 />
               </div>
             </DropdownItem>
@@ -134,8 +134,8 @@ export function AdvancedSearch({ onSearch }) {
     periodicities: [],
     shapes: [],
     groundType: [],
-    flowerType: [],
-    colors: []
+    typeIds: [],
+    colors: [],
   };
   const [filters, setFilters] = useState(DEFAULT_FILTER_STATE);
 
@@ -145,66 +145,66 @@ export function AdvancedSearch({ onSearch }) {
 
   return (
     <React.Fragment>
-      <Row className="mt-2">
-        <Col className="my-2" xs="6" md="4" lg="3" onKeyPress={onKeyPress}>
+      <Row className='mt-2'>
+        <Col className='my-2' xs='6' md='4' lg='3' onKeyPress={onKeyPress}>
           <SelectDropdown
-            title="Type de sols"
+            title='Type de sols'
             query={{
               query: GET_PLANT_GROUNDTYPES,
-              accessKey: 'getGroundTypes'
+              accessKey: 'getGroundTypes',
             }}
             state={filters.groundType}
             setState={items => setFilters({ ...filters, groundType: items })}
           />
         </Col>
-        <Col className="my-2" xs="6" md="4" lg="3">
+        <Col className='my-2' xs='6' md='4' lg='3'>
           <SelectDropdown
-            title="Periodicité"
+            title='Periodicité'
             query={{
               query: GET_PLANT_PERIODICITIES,
-              accessKey: 'getPeriodicities'
+              accessKey: 'getPeriodicities',
             }}
             state={filters.periodicities}
             setState={items => setFilters({ ...filters, periodicities: items })}
           />
         </Col>
-        <Col className="my-2" xs="6" md="4" lg="3">
+        <Col className='my-2' xs='6' md='4' lg='3'>
           <SelectDropdown
-            title="Silhouette"
+            title='Silhouette'
             query={{
               query: GET_PLANT_SHAPES,
-              accessKey: 'getShapes'
+              accessKey: 'getShapes',
             }}
             state={filters.shapes}
             setState={items => setFilters({ ...filters, shapes: items })}
           />
         </Col>
-        <Col className="my-2" xs="6" md="4" lg="3">
+        <Col className='my-2' xs='6' md='4' lg='3'>
           <SelectDropdown
-            title="Type de plante"
+            title='Type de plante'
             query={{
               query: GET_PLANT_TYPES,
-              accessKey: 'getTypes'
+              accessKey: 'getTypes',
             }}
-            state={filters.flowerType}
-            setState={items => setFilters({ ...filters, flowerType: items })}
+            state={filters.typeIds}
+            setState={items => setFilters({ ...filters, typeIds: items })}
           />
         </Col>
       </Row>
-      <Row className="mt-3 justify-content-end">
-        <Col xs="4" md="3" lg="2">
-          <ButtonGroup className="float-right">
+      <Row className='mt-3 justify-content-end'>
+        <Col xs='4' md='3' lg='2'>
+          <ButtonGroup className='float-right'>
             <Button
               style={{ fontSize: '80%' }}
-              className="bg-white rounded-0 text-uppercase text-muted border-0"
+              className='bg-white rounded-0 text-uppercase text-muted border-0'
               onClick={() => setFilters(DEFAULT_FILTER_STATE)}
             >
               Reset
             </Button>
             <Button
-              color="primary"
+              color='primary'
               style={{ fontSize: '80%' }}
-              className="rounded-0 text-uppercase border-0"
+              className='rounded-0 text-uppercase border-0'
               onClick={() => onSearch(filters)}
             >
               Rechercher

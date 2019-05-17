@@ -12,7 +12,7 @@ import {
   InputGroup,
   Collapse,
   Table,
-  Spinner
+  Spinner,
 } from 'reactstrap';
 import { FiSearch, FiChevronDown } from 'react-icons/fi';
 import { FaTree } from 'react-icons/fa';
@@ -26,7 +26,7 @@ import { AdvancedSearch } from './AdvancedSearch';
 
 function FlowersTable({ query: { query, variables } }) {
   const { data, loading, error, fetchMore } = useQuery(query, {
-    variables: { ...variables, first: 20 }
+    variables: { ...variables, first: 20 },
   });
   const { getAllPlants: plants } = data;
 
@@ -37,7 +37,7 @@ function FlowersTable({ query: { query, variables } }) {
       />
     );
   if (loading)
-    return <FlowersEmptyTable children={<Spinner color="primary" />} />;
+    return <FlowersEmptyTable children={<Spinner color='primary' />} />;
   if (plants.edges.length === 0)
     return (
       <FlowersEmptyTable
@@ -49,17 +49,17 @@ function FlowersTable({ query: { query, variables } }) {
     <Table
       hover
       responsive
-      className="table-outline mb-0 d-none d-sm-table mt-4"
+      className='table-outline mb-0 d-none d-sm-table mt-4'
     >
-      <thead className="thead-light">
-        <tr className="d-flex">
-          <th className="text-center col-1 border-0">
+      <thead className='thead-light'>
+        <tr className='d-flex'>
+          <th className='text-center col-1 border-0'>
             <FaTree />
           </th>
-          <th className="col-6 border-0">Nom</th>
-          <th className="col-2 border-0 text-center">Besoin en eau</th>
-          <th className="col-2 border-0 text-center">Rusticité</th>
-          <th className="col-1 border-0 text-center" />
+          <th className='col-6 border-0'>Nom</th>
+          <th className='col-2 border-0 text-center'>Besoin en eau</th>
+          <th className='col-2 border-0 text-center'>Rusticité</th>
+          <th className='col-1 border-0 text-center' />
         </tr>
       </thead>
       <tbody>
@@ -67,9 +67,9 @@ function FlowersTable({ query: { query, variables } }) {
           <Flower flower={plant.node} key={plant.node.id} />
         ))}
         {plants.pageInfo.hasNextPage ? (
-          <tr className="d-flex text-uppercase text-white bg-primary small text-center my-3 justify-content-center">
+          <tr className='d-flex text-uppercase text-white bg-primary small text-center my-3 justify-content-center'>
             <td
-              className="text-center col-12 border-0"
+              className='text-center col-12 border-0'
               onClick={() => {
                 fetchMore({
                   variables: { after: plants.pageInfo.endCursor },
@@ -82,11 +82,11 @@ function FlowersTable({ query: { query, variables } }) {
                           getAllPlants: {
                             __typename: prev.getAllPlants.__typename,
                             edges: [...prev.getAllPlants.edges, ...newEdges],
-                            pageInfo
-                          }
+                            pageInfo,
+                          },
                         }
                       : prev;
-                  }
+                  },
                 });
               }}
             >
@@ -108,22 +108,22 @@ function FlowersEmptyTable({ warning, message, children }) {
     <Table
       hover
       responsive
-      className="table-outline mb-0 d-none d-sm-table mt-4"
+      className='table-outline mb-0 d-none d-sm-table mt-4'
     >
-      <thead className="thead-light">
-        <tr className="d-flex">
-          <th className="text-center col-1 border-0">
+      <thead className='thead-light'>
+        <tr className='d-flex'>
+          <th className='text-center col-1 border-0'>
             <FaTree />
           </th>
-          <th className="col-6 border-0">Nom</th>
-          <th className="col-2 border-0 text-center">Besoin en eau</th>
-          <th className="col-2 border-0 text-center">Rusticité</th>
-          <th className="col-1 border-0 text-center" />
+          <th className='col-6 border-0'>Nom</th>
+          <th className='col-2 border-0 text-center'>Besoin en eau</th>
+          <th className='col-2 border-0 text-center'>Rusticité</th>
+          <th className='col-1 border-0 text-center' />
         </tr>
       </thead>
       <tbody>
         <tr className={messageClassName}>
-          <td className="text-center col-12 border-0">
+          <td className='text-center col-12 border-0'>
             {message ? message : children}
           </td>
         </tr>
@@ -143,7 +143,8 @@ function FlowerDB({ t }) {
         ? {
             shapeIds: state.shapes.map(obj => obj.id),
             groundTypeIds: state.groundType.map(obj => obj.id),
-            periodicityIds: state.periodicities.map(obj => obj.id)
+            periodicityIds: state.periodicities.map(obj => obj.id),
+            typeIds: state.typeIds.map(obj => obj.id),
           }
         : null;
 
@@ -151,8 +152,8 @@ function FlowerDB({ t }) {
       query: GET_ALL_PLANTS,
       variables: {
         name: searchedName,
-        ...variables
-      }
+        ...variables,
+      },
     });
   };
 
@@ -160,12 +161,12 @@ function FlowerDB({ t }) {
     <Card>
       <CardBody>
         <Row>
-          <Col xs="12">
+          <Col xs='12'>
             <InputGroup>
               <Input
-                className="form-control font-weight-bold"
-                type="text"
-                placeholder="Rechercher une plante"
+                className='form-control font-weight-bold'
+                type='text'
+                placeholder='Rechercher une plante'
                 onChange={e => setSearchedName(e.target.value)}
                 onKeyPress={e => {
                   if (e.key === 'Enter') onSearch();
@@ -173,8 +174,8 @@ function FlowerDB({ t }) {
               />
               {advancedOpen ? null : (
                 <Button
-                  color="primary"
-                  className="rounded-right rounded-0"
+                  color='primary'
+                  className='rounded-right rounded-0'
                   onClick={() => onSearch()}
                 >
                   <Default>
@@ -190,15 +191,15 @@ function FlowerDB({ t }) {
           </Col>
         </Row>
         <Row>
-          <Col xs="12">
+          <Col xs='12'>
             <Button
-              color="primary"
-              className="bg-white mt-2 rounded-0 text-uppercase text-muted border-0"
+              color='primary'
+              className='bg-white mt-2 rounded-0 text-uppercase text-muted border-0'
               style={{ fontSize: '80%' }}
               onClick={() => setAdvancedOpen(!advancedOpen)}
             >
               Recherche avancée
-              <FiChevronDown className="ml-2" />
+              <FiChevronDown className='ml-2' />
             </Button>
           </Col>
         </Row>
@@ -216,7 +217,7 @@ function FlowerDB({ t }) {
 }
 
 FlowerDB.propTypes = {
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
 };
 
 export default withTranslation('flower_search')(FlowerDB);
