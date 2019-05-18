@@ -10,7 +10,8 @@ import {
   FormGroup,
   Label,
   Input,
-  Button
+  Button,
+  Progress
 } from 'reactstrap';
 
 import { withTranslation } from 'react-i18next';
@@ -35,6 +36,7 @@ const UploadOption = styled(Col)`
 
 function UploadPic({ t, file, setFiles }) {
   const [uploadError, setUploadError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [imgInfos, setImgInfos] = useState({
     picture: null,
     title: '',
@@ -48,7 +50,10 @@ function UploadPic({ t, file, setFiles }) {
       description: imgInfos.description
     },
     refetchQueries: [{ query: GET_ALL_USER_MEDIA }],
-    update: () => setFiles({ acceptedFiles: [], rejectedFiles: [] })
+    update: () => {
+      setLoading(false);
+      setFiles({ acceptedFiles: [], rejectedFiles: [] });
+    }
   });
 
   useEffect(() => {
@@ -64,7 +69,7 @@ function UploadPic({ t, file, setFiles }) {
       <div className="w-75 rounded mb-3 mx-auto">
         {blob ? (
           <React.Fragment>
-            <Row className="justify-content-center mt-3">
+            <Row className="text-center mt-3">
               <Col xs="12">
                 <img src={file.preview} alt={file.name} className="img-fluid" />
               </Col>
@@ -114,17 +119,18 @@ function UploadPic({ t, file, setFiles }) {
               </UploadOption>
               <UploadOption xs={4}>
                 <Button
-                  disabled={!blob}
+                  disabled={!blob || loading}
                   color="primary"
-                  onClick={() =>
+                  onClick={() => {
+                    setLoading(true);
                     createMedium({
                       variables: {
                         picture: blob,
                         title: imgInfos.title,
                         description: imgInfos.description
                       }
-                    })
-                  }
+                    });
+                  }}
                 >
                   <span
                     style={{ fontSize: '1rem' }}
@@ -135,6 +141,16 @@ function UploadPic({ t, file, setFiles }) {
                 </Button>
               </UploadOption>
             </Row>
+            {loading ? (
+              <Row>
+                <Progress
+                  className="mt-3 w-100"
+                  color="primary"
+                  animated
+                  value="100"
+                />
+              </Row>
+            ) : null}
           </React.Fragment>
         ) : (
           <LargeSpinner color="primary" className="center" />

@@ -13,7 +13,8 @@ import {
   Form,
   FormGroup,
   Input,
-  Label
+  Label,
+  Spinner
 } from 'reactstrap';
 import { withTranslation } from 'react-i18next';
 import { useMutation } from 'react-apollo-hooks';
@@ -37,11 +38,17 @@ const PictureActionsLayout = styled.div`
   opacity: ${({ active }) => (active === 1 ? '0.35' : '0')};
 `;
 
-function Picture({ history, picture: { title, description, id, picture, thumbnail }, t }) {
+function Picture({
+  history,
+  picture: { title, description, id, picture, thumbnail },
+  t
+}) {
   const [selected, setSelected] = useState(false);
   const [open, setOpen] = useState(false);
   const [titleState, setTitleState] = useState(title);
   const [descState, setDescState] = useState(description);
+  const [deleting, setDeleting] = useState(false);
+  const [updating, setUpdating] = useState(false);
 
   const onDelete = () => {
     history.push(`/app/pictures`);
@@ -54,7 +61,8 @@ function Picture({ history, picture: { title, description, id, picture, thumbnai
   });
   const updateMedium = useMutation(UPDATE_MEDIUM, {
     variables: { id, title: titleState, description: descState },
-    refetchQueries: [{ query: GET_ALL_USER_MEDIA }]
+    refetchQueries: [{ query: GET_ALL_USER_MEDIA }],
+    update: () => setUpdating(false)
   });
 
   const toggle = () => {
@@ -120,11 +128,13 @@ function Picture({ history, picture: { title, description, id, picture, thumbnai
             <Col xs="6">
               <Button
                 color="danger"
+                disable={deleting}
                 onClick={() => {
+                  setDeleting(true);
                   deleteMedium();
                 }}
               >
-                {t('delete')}
+                {deleting ? <Spinner size="sm" className="mx-4"  /> : t('delete')}
               </Button>
             </Col>
             <Col xs="6">
@@ -132,12 +142,11 @@ function Picture({ history, picture: { title, description, id, picture, thumbnai
                 className="float-right"
                 color="primary"
                 onClick={() => {
-                  updateMedium({
-                    variables: { id, title: titleState, description: descState }
-                  });
+                  setUpdating(true);
+                  updateMedium();
                 }}
               >
-                {t('save')}
+                {updating ? <Spinner size="sm" className="mx-4"  /> : t('save')}
               </Button>
             </Col>
           </ModalFooter>
