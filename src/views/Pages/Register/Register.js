@@ -45,29 +45,25 @@ function Register({ t, history }) {
   const createUser = useMutation(CREATE_USER, {
     variables: { username, firstname, lastname, email, password },
     update: (proxy, mutationResult) => {
-      console.log(proxy, mutationResult);
       history.push('/login');
     }
   });
 
   const isAnyError =
     Object.keys(errors).find(key => errors[key].active) !== undefined ||
+    firstname === '' ||
+    lastname === '' ||
     username === '' ||
     email === '' ||
     password === '' ||
     passwordRepeat === '';
   const validateForm = () =>
-    validateRegister(
-      t,
-      email,
-      password,
-      passwordRepeat,
-      username,
-      firstname,
-      lastname
-    );
+    validateRegister(t, email, password, passwordRepeat, username, firstname, lastname);
   const submit = () => {
-    if (!isAnyError) createUser().catch(error => { console.log(error)});
+    if (!isAnyError)
+      createUser().catch(error => {
+        console.log(error);
+      });
   };
 
   return (
@@ -186,17 +182,10 @@ function Register({ t, history }) {
                         onBlur={() => setErrors(validateForm())}
                         invalid={errors.passwordRepeat.active}
                       />
-                      <FormFeedback>
-                        {errors.passwordRepeat.reason}
-                      </FormFeedback>
+                      <FormFeedback>{errors.passwordRepeat.reason}</FormFeedback>
                     </InputGroup>
                   </FormGroup>
-                  <Button
-                    disabled={isAnyError}
-                    color="success"
-                    block
-                    onClick={submit}
-                  >
+                  <Button disabled={isAnyError} color="success" block onClick={submit}>
                     {t('submit')}
                   </Button>
                 </Form>

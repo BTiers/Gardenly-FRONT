@@ -13,11 +13,11 @@ import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink';
 export default function Store({ children }) {
   // const cookie = new Cookies(); //TODO: pass down TOKENS
 
-  const cable = ActionCable.createConsumer('ws://localhost:3001/cable');
+  const cable = ActionCable.createConsumer(`${process.env.REACT_APP_HOST_CABLE}cable`);
   const cableLink = ActionCableLink({ cable });
   const httpLink = new HttpLink({
-    uri: 'http://localhost:3001/graphql',
-    credentials: 'include',
+    uri: `${process.env.REACT_APP_HOST_GRAPQHL}graphql`,
+    credentials: 'include'
   });
 
   // using the ability to split links, you can send data to each link
@@ -26,10 +26,7 @@ export default function Store({ children }) {
     // split based on operation type
     ({ query }) => {
       const definition = getMainDefinition(query);
-      return (
-        definition.kind === 'OperationDefinition' &&
-        definition.operation === 'subscription'
-      );
+      return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
     },
     cableLink,
     httpLink
@@ -37,7 +34,7 @@ export default function Store({ children }) {
 
   const client = new ApolloClient({
     link,
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache()
   });
 
   return (

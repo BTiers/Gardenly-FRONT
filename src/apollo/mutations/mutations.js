@@ -41,14 +41,8 @@ export const DELETE_SESSION = gql`
 `;
 
 export const CREATE_MEDIUM = gql`
-  mutation CreateMedium(
-    $picture: String!
-    $title: String!
-    $description: String
-  ) {
-    createMedium(
-      input: { picture: $picture, title: $title, description: $description }
-    ) {
+  mutation CreateMedium($picture: String!, $title: String!, $description: String) {
+    createMedium(input: { picture: $picture, title: $title, description: $description }) {
       medium {
         description
         id
@@ -125,6 +119,12 @@ export const CREATE_GARDEN = gql`
         items: $items
       }
     ) {
+      garden {
+        id
+        name
+        country
+        datas: data
+      }
       errors
     }
   }

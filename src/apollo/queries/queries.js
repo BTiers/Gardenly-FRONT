@@ -29,6 +29,14 @@ export const GET_USERS = gql`
     getCurrentUser {
       isModerator
       username
+      firstName
+      lastName
+      id
+      phoneNumber
+      age
+      dateOfBirth
+      address
+      avatar
     }
   }
 `;

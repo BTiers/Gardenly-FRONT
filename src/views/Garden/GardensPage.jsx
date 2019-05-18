@@ -71,7 +71,7 @@ function GardensPage({ history }) {
                 country={foundEntry.country}
               />
             );
-            history.push(`/404`);
+//            history.push(`/404`);
             return null;
         }}
       />

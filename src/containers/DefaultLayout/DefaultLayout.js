@@ -33,9 +33,7 @@ const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 function DefaultLayout(props) {
   const { data, error, loading } = useQuery(USER_GARDENS_NAMES);
-  const { data: userData, error: userError, loading: userLoading } = useQuery(
-    GET_USERS
-  );
+  const { data: userData, error: userError, loading: userLoading } = useQuery(GET_USERS);
 
   const logOut = useMutation(DELETE_SESSION, {
     variables: {}
@@ -65,9 +63,7 @@ function DefaultLayout(props) {
     navConfig.items = navConfig.items.filter(e => e !== null);
   }
 
-  const onLoading = () => (
-    <div className="animated fadeIn pt-1 text-center">Loading...</div>
-  );
+  const onLoading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
   const signOut = e => {
     e.preventDefault();
@@ -80,7 +76,7 @@ function DefaultLayout(props) {
     <div className="app">
       <AppHeader fixed>
         <Suspense fallback={onLoading()}>
-          <DefaultHeader onLogout={e => signOut(e)} />
+          <DefaultHeader onLogout={e => signOut(e)} history={props.history} />
         </Suspense>
       </AppHeader>
       <div className="app-body">

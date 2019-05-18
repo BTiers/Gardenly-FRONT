@@ -43,7 +43,8 @@ function CreateGarden({ t, open, toggleModal, onCreate }) {
       items: 0
     },
     refetchQueries: [{ query: USER_GARDENS }],
-    update: () => onCreate(name, '')
+    awaitRefetchQueries: true,
+    update: () => onCreate(name)
   });
   const toggle = () => {
     toggleModal(!open);
