@@ -3,7 +3,8 @@ export default {
     {
       name: 'Administrateur',
       url: '/dashboard',
-      icon: 'icon-speedometer'
+      icon: 'icon-speedometer',
+      admin: true
     },
     {
       title: true,
