@@ -119,12 +119,16 @@ export const GET_USER_ROOMS_WITH_MESSAGES = gql`
     getAllUserRooms {
       nodes {
         id
+        name
         messages {
           user {
+            id
             username
             avatar
           }
+          id
           content
+          createdAt
         }
       }
     }

@@ -13,8 +13,6 @@ import AddPicture from './AddPicture';
 export default function PicturesGallery({ history }) {
   const { data, error, loading } = useQuery(GET_ALL_USER_MEDIA);
 
-  console.log(error, data, loading);
-
   if (loading) return null;
   if (error) return <Redirect to="/500" />;
 

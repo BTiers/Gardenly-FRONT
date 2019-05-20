@@ -5,7 +5,8 @@
   "rules": {
     "prettier/prettier": ["error"],
     "no-console": ["error", { "allow": ["error", "warn"] }],
-    "allowForLoopAfterthoughts": true
+    "allowForLoopAfterthoughts": true,
+    "import/no-extraneous-dependencies": ["error", { "packageDir": "." }]
   },
   "env": {
     "browser": true
