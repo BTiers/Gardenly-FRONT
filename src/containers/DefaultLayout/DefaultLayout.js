@@ -97,7 +97,7 @@ function DefaultLayout(props) {
                 {routes.map((route, idx) => {
                   const isLoggedIn = cookie.get('isLoggedIn') || 'false';
 
-                  if (route.requireAuth && isLoggedIn === 'false')
+                  if ((route.requireAuth && isLoggedIn === 'false') || (route.requireAuth === false && isLoggedIn === 'true'))
                     return <Redirect key={idx} to={route.redirectTo} />;
                   else if (
                     route.adminOnly &&

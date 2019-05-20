@@ -21,7 +21,7 @@ function LoginSubmit({
     }
   });
 
-  function submit() {
+  function onSubmit() {
     if (emailState.value === '' || emailState.value === '') return;
     if (emailState.error === true || passwordState.error === true)
       setAccountCredState(true);
@@ -38,7 +38,7 @@ function LoginSubmit({
             history.push('/activities');
             return;
           }
-          console.log(error);
+          console.error(error);
           setAccountCredState(true);
         }
       );
@@ -47,7 +47,8 @@ function LoginSubmit({
 
   function keypressHandler(e) {
     if (e.keyCode === 13) {
-      submit();
+      onSubmit();
+      e.preventDefault();
     }
   }
 
@@ -63,7 +64,7 @@ function LoginSubmit({
         color="primary"
         className="px-4"
         onClick={() => {
-          submit();
+          onSubmit();
         }}
       >
         {t('login')}
