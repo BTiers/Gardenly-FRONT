@@ -129,3 +129,33 @@ export const CREATE_GARDEN = gql`
     }
   }
 `;
+
+export const UPDATE_USER = gql`
+  mutation UpdateUser(
+    $firstName: String
+    $lastName: String
+    $email: String
+    $username: String
+    $age: Int
+    $address: String
+    $dateOfBirth: String
+    $phoneNumber: String
+  ) {
+    updateUser(
+      input: {
+        firstName: $firstName
+        lastName: $lastName
+        email: $email
+        username: $username
+        age: $age
+        address: $address
+        dateOfBirth: $dateOfBirth
+        phoneNumber: $phoneNumber
+      }
+    ) {
+      user {
+        id
+      }
+    }
+  }
+`;

@@ -19,13 +19,14 @@ import {
   TabContent,
   TabPane,
   Modal,
-  ModalHeader,
   ModalBody,
-  ModalFooter
+  Spinner
 } from 'reactstrap';
 
 import { withTranslation } from 'react-i18next';
 import { useQuery, useMutation } from 'react-apollo-hooks';
+
+import { UPDATE_USER } from 'apollo/mutations/mutations';
 
 import {
   validateEmail,
@@ -72,7 +73,7 @@ const GardenOverview = React.memo(({ gardens }) => (
   <Row>
     <div className="font-weight-bold text-muted text-uppercase mb-3 d-block w-100">Vos jardins</div>
     {gardens.map((garden, index) => {
-      if (index < 4) return <GardenDetails {...garden} />;
+      if (index < 4) return <GardenDetails key={garden.name} {...garden} />;
       return null;
     })}
   </Row>
@@ -188,6 +189,13 @@ const AccountQuickAccess = withTranslation('register')(
     const [bio, setBio] = useState(defaultBio);
     const [email, setEmail] = useState(defaultEmail);
 
+    const [loading, setLoading] = useState(false);
+
+    const updateUser = useMutation(UPDATE_USER, {
+      variables: { username, email },
+      update: () => setLoading(false)
+    });
+
     const [reset, shouldReset] = useState(false);
 
     return (
@@ -230,8 +238,15 @@ const AccountQuickAccess = withTranslation('register')(
           reset={reset}
         />
         <ListGroupItem tag="a" className="border-left-0">
-          <Button color="primary" className="mx-2">
-            Sauvegarder
+          <Button
+            color="primary"
+            className="mx-2"
+            onClick={() => {
+              setLoading(true);
+              updateUser();
+            }}
+          >
+            {loading ? <Spinner size="sm" className="mx-4"  /> : "Sauvegarder"}
           </Button>
           <Button className="mx-2" onClick={() => shouldReset(true)}>
             Annuler
