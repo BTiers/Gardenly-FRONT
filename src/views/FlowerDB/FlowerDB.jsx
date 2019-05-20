@@ -31,26 +31,13 @@ function FlowersTable({ query: { query, variables } }) {
   const { getAllPlants: plants } = data;
 
   if (error)
-    return (
-      <FlowersEmptyTable
-        message={'Une erreur est survenue, essayez une autre recherche'}
-      />
-    );
-  if (loading)
-    return <FlowersEmptyTable children={<Spinner color="primary" />} />;
+    return <FlowersEmptyTable message="Une erreur est survenue, essayez une autre recherche" />;
+  if (loading) return <FlowersEmptyTable children={<Spinner color="primary" />} />;
   if (plants.edges.length === 0)
-    return (
-      <FlowersEmptyTable
-        message={'Aucune plante connue ne correspond à votre recherche'}
-      />
-    );
+    return <FlowersEmptyTable message="Aucune plante connue ne correspond à votre recherche" />;
 
   return (
-    <Table
-      hover
-      responsive
-      className="table-outline mb-0 d-none d-sm-table mt-4"
-    >
+    <Table hover responsive className="table-outline mb-0 d-none d-sm-table mt-4">
       <thead className="thead-light">
         <tr className="d-flex">
           <th className="text-center col-1 border-0">
@@ -105,11 +92,7 @@ function FlowersEmptyTable({ warning, message, children }) {
   } small text-center my-3 justify-content-center`;
 
   return (
-    <Table
-      hover
-      responsive
-      className="table-outline mb-0 d-none d-sm-table mt-4"
-    >
+    <Table hover responsive className="table-outline mb-0 d-none d-sm-table mt-4">
       <thead className="thead-light">
         <tr className="d-flex">
           <th className="text-center col-1 border-0">
@@ -123,9 +106,7 @@ function FlowersEmptyTable({ warning, message, children }) {
       </thead>
       <tbody>
         <tr className={messageClassName}>
-          <td className="text-center col-12 border-0">
-            {message ? message : children}
-          </td>
+          <td className="text-center col-12 border-0">{message || children}</td>
         </tr>
       </tbody>
     </Table>
@@ -209,7 +190,7 @@ function FlowerDB({ t }) {
         {query ? (
           <FlowersTable query={query} />
         ) : (
-          <FlowersEmptyTable message={'Saisissez votre recherce'} />
+          <FlowersEmptyTable message="Saisissez votre recherce" />
         )}
       </CardBody>
     </Card>

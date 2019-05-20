@@ -16,42 +16,26 @@ import {
   ListGroupItem,
   UncontrolledTooltip
 } from 'reactstrap';
+import { FiSquare, FiPlus, FiMinus } from 'react-icons/fi';
 import { FillableDroplet } from '../../components/icons/FillableIcon';
 import {
   GetRusticityNamingFromScale,
   GetRusticityTypeFromScale,
   GetWaterNeedNamingFromScale
 } from '../../utils/flowers/ScaleToWord';
-import { FiSquare, FiPlus, FiMinus } from 'react-icons/fi';
 import { MonthPeriod, MonthHeader } from './MonthPeriod';
 import { PHSlider } from './PHSlider';
 
 function WaterNeed(scale, id) {
-  let output = [];
+  const output = [];
   const dropCount = scale / 3;
 
   for (let i = dropCount; i >= 0; i -= 1) {
-    output.push(
-      <FillableDroplet
-        color="#63c2de"
-        fillAt={10}
-        size={18}
-        id={id}
-        key={id + i}
-      />
-    );
+    output.push(<FillableDroplet color="#63c2de" fillAt={10} size={18} id={id} key={id + i} />);
   }
 
   for (let j = 1; j + dropCount < 4; j += 1) {
-    output.push(
-      <FillableDroplet
-        color="#63c2de"
-        fillAt={0}
-        size={18}
-        id={id + j}
-        key={id + -j}
-      />
-    );
+    output.push(<FillableDroplet color="#63c2de" fillAt={0} size={18} id={id + j} key={id + -j} />);
   }
 
   return output;
@@ -66,11 +50,7 @@ function FlowerFull({ isOpen, flower }) {
         <td className="col-12">
           <Row>
             <Col xs="12" md="3" className="text-center align-self-center">
-              <img
-                className="img-fluid"
-                src={flower.thumbnail}
-                alt={flower.name + ' thumbnail'}
-              />
+              <img className="img-fluid" src={flower.thumbnail} alt={`${flower.name} thumbnail`} />
             </Col>
             <Col xs="12" md="9">
               <Nav tabs>
@@ -113,41 +93,23 @@ function FlowerFull({ isOpen, flower }) {
               </Nav>
               <TabContent activeTab={activeTab}>
                 <TabPane tabId="1">
-                  <ListGroup
-                    className="list-group-accent list-group-item-action"
-                    tag={'div'}
-                  >
+                  <ListGroup className="list-group-accent list-group-item-action" tag="div">
                     <ListGroupItem className="list-group-item-accent-secondary bg-light font-weight-bold text-muted text-uppercase small">
                       Description
                     </ListGroupItem>
                     <ListGroupItem tag="a" className="list-group-item-divider">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      At modo dixeras nihil in istis rebus esse, quod
-                      interesset. Dic in quovis conventu te omnia facere, ne
-                      doleas. Duo Reges: constructio interrete. At habetur! Et
-                      ego id scilicet nesciebam! Sed ut sit, etiamne post mortem
-                      coletur? Polemoni et iam ante Aristoteli ea prima visa
-                      sunt, quae paulo ante dixi. Quicquid porro animo cernimus,
-                      id omne oritur a sensibus; Laboro autem non sine causa;
+                      {flower.description}
                     </ListGroupItem>
                     <ListGroupItem className="list-group-item-accent-secondary bg-light font-weight-bold text-muted text-uppercase small">
                       Conseils d'entretien
                     </ListGroupItem>
                     <ListGroupItem tag="a" className="list-group-item-divider">
-                      Taillez avec parcimonie: la taille s'effectue en fin
-                      d'hiver, au redémarrage de la végétation. Elle doit être
-                      légère pour ne pas freiner la croissance de la plante. Il
-                      est préférable de recourber les branches à l'horizontale
-                      ou vers le sol. Cette technique stimulant d'ailleurs
-                      efficacement la ramification.sa;
+                      {flower.tips}
                     </ListGroupItem>
                   </ListGroup>
                 </TabPane>
                 <TabPane tabId="2">
-                  <ListGroup
-                    className="list-group-accent list-group-item-action"
-                    tag={'div'}
-                  >
+                  <ListGroup className="list-group-accent list-group-item-action" tag="div">
                     <ListGroupItem className="list-group-item-accent-secondary bg-light font-weight-bold text-muted text-uppercase small">
                       Calendrier d'entretien
                     </ListGroupItem>
@@ -161,11 +123,7 @@ function FlowerFull({ isOpen, flower }) {
                           Période de <strong>floraison</strong>
                         </Col>
                         <Col md="10">
-                          {MonthPeriod(
-                            flower.blossomingStart,
-                            flower.blossomingEnd,
-                            '#63c2de'
-                          )}
+                          {MonthPeriod(flower.blossomingStart, flower.blossomingEnd, '#63c2de')}
                         </Col>
                       </Row>
                       <Row className="mt-2">
@@ -173,11 +131,7 @@ function FlowerFull({ isOpen, flower }) {
                           Période de <strong>taille</strong>
                         </Col>
                         <Col md="10">
-                          {MonthPeriod(
-                            flower.blossomingStart,
-                            flower.blossomingEnd,
-                            '#4dbd74'
-                          )}
+                          {MonthPeriod(flower.blossomingStart, flower.blossomingEnd, '#4dbd74')}
                         </Col>
                       </Row>
                       <Row className="mt-2">
@@ -185,18 +139,14 @@ function FlowerFull({ isOpen, flower }) {
                           Période de <strong>plantation</strong>
                         </Col>
                         <Col md="10">
-                          {MonthPeriod(
-                            flower.blossomingStart,
-                            flower.blossomingEnd,
-                            '#ffc107'
-                          )}
+                          {MonthPeriod(flower.blossomingStart, flower.blossomingEnd, '#ffc107')}
                         </Col>
                       </Row>
                     </ListGroupItem>
                   </ListGroup>
                 </TabPane>
                 <TabPane tabId="3">
-                  <ListGroup className="list-group-accent" tag={'div'}>
+                  <ListGroup className="list-group-accent" tag="div">
                     <ListGroupItem
                       tag="a"
                       className="list-group-item-divider list-group-item-action"
@@ -213,10 +163,7 @@ function FlowerFull({ isOpen, flower }) {
                                 size="15"
                                 id={`${name}${flower.id}`}
                               />
-                              <UncontrolledTooltip
-                                placement="top"
-                                target={`${name}${flower.id}`}
-                              >
+                              <UncontrolledTooltip placement="top" target={`${name}${flower.id}`}>
                                 {name}
                               </UncontrolledTooltip>
                             </React.Fragment>
@@ -230,15 +177,14 @@ function FlowerFull({ isOpen, flower }) {
                             De:
                           </span>
                           <span className="font-weight-bold small mt-2 mr-2">
-                            {flower.heightLow / 10}cm
+                            {flower.heightLow / 10}
+                            cm
                           </span>
                           <span className="font-weight-bold text-muted text-uppercase small mt-2 mr-2">
                             A
                           </span>
                           <span className="font-weight-bold small mt-2 mr-2">
-                            {flower.heightHigh
-                              ? flower.heightHigh / 10
-                              : flower.heightLow / 10}
+                            {flower.heightHigh ? flower.heightHigh / 10 : flower.heightLow / 10}
                             cm
                           </span>
                         </Col>
@@ -277,9 +223,7 @@ function FlowerFull({ isOpen, flower }) {
                               className="font-weight-bold small mt-2 mr-2"
                               key={`${shape.name}${flower.id}`}
                             >
-                              {shape.name === '-1'
-                                ? 'Non renseignée'
-                                : shape.name}
+                              {shape.name === '-1' ? 'Non renseignée' : shape.name}
                             </span>
                           ))}
                         </Col>
@@ -287,10 +231,7 @@ function FlowerFull({ isOpen, flower }) {
                           <div className="font-weight-bold text-muted text-uppercase small">
                             Ph:
                           </div>
-                          <PHSlider
-                            min={flower.phRangeLow}
-                            max={flower.phRangeHigh}
-                          />
+                          <PHSlider min={flower.phRangeLow} max={flower.phRangeHigh} />
                         </Col>
                       </Row>
                     </ListGroupItem>
@@ -305,7 +246,7 @@ function FlowerFull({ isOpen, flower }) {
   );
 }
 
-const Flower = React.memo(function({ flower }) {
+const Flower = React.memo(({ flower }) => {
   const [open, setOpen] = useState(false);
 
   const toggle = () => setOpen(!open);
@@ -328,29 +269,22 @@ const Flower = React.memo(function({ flower }) {
             <strong>{flower.name}</strong>
           </div>
           <div className="small text-muted">
-            Périodicité: <strong>{flower.periodicities[0].name}</strong>
+            Périodicité:{' '}
+            <strong>{flower.periodicities[0].name}</strong>
           </div>
         </td>
         <td className="col-2 text-center">
           <div>
             {WaterNeed(flower.waterNeed, flower.id)}
-            <div className="small text-muted">
-              {GetWaterNeedNamingFromScale(flower.waterNeed)}
-            </div>
+            <div className="small text-muted">{GetWaterNeedNamingFromScale(flower.waterNeed)}</div>
           </div>
         </td>
         <td className="text-center col-2">
           <strong>{GetRusticityNamingFromScale(flower.rusticity)}</strong>
-          <div className="small text-muted">
-            {GetRusticityTypeFromScale(flower.rusticity)}
-          </div>
+          <div className="small text-muted">{GetRusticityTypeFromScale(flower.rusticity)}</div>
         </td>
         <td className="text-center col-1">
-          {open ? (
-            <FiMinus size={18} className="mt-2" />
-          ) : (
-            <FiPlus size={18} className="mt-2" />
-          )}
+          {open ? <FiMinus size={18} className="mt-2" /> : <FiPlus size={18} className="mt-2" />}
         </td>
       </tr>
       <FlowerFull isOpen={open} flower={flower} />
