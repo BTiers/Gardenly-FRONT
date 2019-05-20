@@ -44,6 +44,7 @@ export const GET_USERS = gql`
 export const GET_ALL_USER_MEDIA = gql`
   query GetCurrentUser {
     getCurrentUser {
+      id
       media {
         id
         title
