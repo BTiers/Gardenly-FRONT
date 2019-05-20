@@ -103,6 +103,8 @@ export const GET_ALL_PLANTS = gql`
         node {
           id
           name
+          description
+          tips
           thumbnail
           rusticity
           waterNeed
