@@ -1,21 +1,19 @@
 import gql from 'graphql-tag';
 
-const NEW_ARTICLES = gql`
+const CHAT_SUBSCRIPTION = gql`
   subscription {
-    onArticle {
-      id
-    }
-  }
-`;
-
-const ARTICLES = gql`
-  query {
-    getAllArticles {
-      nodes {
+    chatSubscription {
+      room {
         id
       }
+      user {
+        username
+        avatar
+      }
+      id
+      content
     }
   }
 `;
 
-export { NEW_ARTICLES, ARTICLES };
+export { CHAT_SUBSCRIPTION };
