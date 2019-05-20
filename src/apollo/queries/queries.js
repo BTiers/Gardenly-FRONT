@@ -28,6 +28,7 @@ export const GET_USERS = gql`
   query getUser {
     getCurrentUser {
       isModerator
+      email
       username
       firstName
       lastName
@@ -37,6 +38,12 @@ export const GET_USERS = gql`
       dateOfBirth
       address
       avatar
+      gardens {
+        name
+        updatedAt
+        createdAt
+        country
+      }
     }
   }
 `;
@@ -44,6 +51,7 @@ export const GET_USERS = gql`
 export const GET_ALL_USER_MEDIA = gql`
   query GetCurrentUser {
     getCurrentUser {
+      id
       media {
         id
         title

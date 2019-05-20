@@ -72,8 +72,6 @@ class Software extends Component {
         >
           {updateGarden => {
             this.unityContent.on('save', data => {
-              console.log('OnSave: ', data);
-
               updateGarden({
                 variables: {
                   id,
@@ -89,16 +87,13 @@ class Software extends Component {
         <ApolloConsumer>
           {client => {
             this.unityContent.on('query', async payload => {
-              console.log(payload);
               const p_payload = JSON.parse(payload);
-              console.log(p_payload);
               const { data, errors } = await client.query({
                 query: gql`
                   ${p_payload.query}
                 `,
                 variables: p_payload.variables
               });
-              console.log(JSON.stringify({ data: { ...data } }));
 
               this.unityContent.send(
                 'ReactProxy',
