@@ -2,17 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
-import {
-  Row,
-  Col,
-  Spinner,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-  Progress
-} from 'reactstrap';
+import { Row, Col, Spinner, Form, FormGroup, Label, Input, Button, Progress } from 'reactstrap';
 
 import { withTranslation } from 'react-i18next';
 import { useMutation } from 'react-apollo-hooks';
@@ -39,7 +29,7 @@ function UploadPic({ t, file, setFiles }) {
   const [loading, setLoading] = useState(false);
   const [imgInfos, setImgInfos] = useState({
     picture: null,
-    title: '',
+    title: 'Default',
     description: ''
   });
   const [blob, setBlob] = useState(null);
@@ -57,11 +47,7 @@ function UploadPic({ t, file, setFiles }) {
   });
 
   useEffect(() => {
-    getBase64FromImage(
-      file.preview,
-      b64 => setBlob(b64),
-      () => setUploadError(true)
-    );
+    getBase64FromImage(file.preview, b64 => setBlob(b64), () => setUploadError(true));
   }, [file]);
 
   return (
@@ -84,9 +70,7 @@ function UploadPic({ t, file, setFiles }) {
                   <Input
                     type="text"
                     placeholder={t('choose_title')}
-                    onChange={e =>
-                      setImgInfos({ ...imgInfos, title: e.target.value })
-                    }
+                    onChange={e => setImgInfos({ ...imgInfos, title: e.target.value })}
                   />
                 </Col>
                 <Label for="description" sm={12}>
@@ -96,9 +80,7 @@ function UploadPic({ t, file, setFiles }) {
                   <Input
                     type="text"
                     placeholder={t('choose_description')}
-                    onChange={e =>
-                      setImgInfos({ ...imgInfos, description: e.target.value })
-                    }
+                    onChange={e => setImgInfos({ ...imgInfos, description: e.target.value })}
                   />
                 </Col>
               </FormGroup>
@@ -108,9 +90,7 @@ function UploadPic({ t, file, setFiles }) {
               <UploadOption xs={4}>
                 <Button
                   color="danger"
-                  onClick={() =>
-                    setFiles({ acceptedFiles: [], rejectedFiles: [] })
-                  }
+                  onClick={() => setFiles({ acceptedFiles: [], rejectedFiles: [] })}
                 >
                   <span style={{ fontSize: '1rem' }} className="icon-trash" />
                   &nbsp;
@@ -126,16 +106,13 @@ function UploadPic({ t, file, setFiles }) {
                     createMedium({
                       variables: {
                         picture: blob,
-                        title: imgInfos.title,
+                        title: imgInfos.title === '' ? 'Default' : imgInfos.title,
                         description: imgInfos.description
                       }
                     });
                   }}
                 >
-                  <span
-                    style={{ fontSize: '1rem' }}
-                    className="icon-cloud-upload"
-                  />
+                  <span style={{ fontSize: '1rem' }} className="icon-cloud-upload" />
                   &nbsp;
                   {t('upload')}
                 </Button>
@@ -143,12 +120,7 @@ function UploadPic({ t, file, setFiles }) {
             </Row>
             {loading ? (
               <Row>
-                <Progress
-                  className="mt-3 w-100"
-                  color="primary"
-                  animated
-                  value="100"
-                />
+                <Progress className="mt-3 w-100" color="primary" animated value="100" />
               </Row>
             ) : null}
           </React.Fragment>
