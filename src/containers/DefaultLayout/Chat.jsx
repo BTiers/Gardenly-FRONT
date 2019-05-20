@@ -21,12 +21,13 @@ const ChatLayout = styled.div`
 
 export default function Chat({ className, chatRoom, setChatRoom }) {
   const messageRef = useRef();
+  const lastMessageRef = useRef();
 
   const sendMessage = useMutation(CREATE_MESSAGE);
   const me = useQuery(GET_USERS);
 
   useEffect(() => {
-    if (messageRef.current) messageRef.current.scrollIntoView();
+    if (lastMessageRef.current) lastMessageRef.current.scrollIntoView();
   });
 
   function messageCheckSend() {
@@ -53,17 +54,21 @@ export default function Chat({ className, chatRoom, setChatRoom }) {
         </button>
         <hr />
       </div>
-      <div style={{ height: '90%' }}>
+      <div style={{ height: '85%' }}>
         <div style={{ height: '100%' }}>
           <PerfectScrollbar>
             <table className="container h-auto">
               <tbody>
                 <tr className="collapse show">
                   <td className="col-12">
-                    {chatRoom.messages.map(message => {
+                    {chatRoom.messages.map((message, idx) => {
                       if (message.user.username === me.data.getCurrentUser.username)
                         return (
-                          <div className="outgoing_msg" key={message.id}>
+                          <div
+                            className="outgoing_msg"
+                            key={message.id}
+                            ref={idx === chatRoom.messages.length - 1 ? lastMessageRef : undefined}
+                          >
                             <div className="sent_msg">
                               <p>
                                 <span style={{ whiteSpace: 'pre-line' }}>{message.content}</span>
@@ -77,7 +82,11 @@ export default function Chat({ className, chatRoom, setChatRoom }) {
                           </div>
                         );
                       return (
-                        <div className="incoming_msg p-3" key={message.id}>
+                        <div
+                          className="incoming_msg p-3"
+                          key={message.id}
+                          ref={idx === chatRoom.messages.length - 1 ? lastMessageRef : undefined}
+                        >
                           <div className="float-left">
                             <img
                               src="assets/img/avatars/1.jpg"
@@ -100,33 +109,33 @@ export default function Chat({ className, chatRoom, setChatRoom }) {
                         </div>
                       );
                     })}
-                    <div className="input-group mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Entrez votre message ici..."
-                        aria-label="Entrez votre message ici..."
-                        aria-describedby="basic-addon2"
-                        ref={messageRef}
-                        onKeyPress={e => {
-                          if (e.key === 'Enter') messageCheckSend();
-                        }}
-                      />
-                      <div className="input-group-append">
-                        <button
-                          className="btn btn-outline-secondary bg-primary"
-                          type="button"
-                          onClick={messageCheckSend}
-                        >
-                          Envoyer
-                        </button>
-                      </div>
-                    </div>
                   </td>
                 </tr>
               </tbody>
             </table>
           </PerfectScrollbar>
+        </div>
+        <div style={{ height: '5%' }} className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control h-100"
+            placeholder="Entrez votre message ici..."
+            aria-label="Entrez votre message ici..."
+            aria-describedby="basic-addon2"
+            ref={messageRef}
+            onKeyPress={e => {
+              if (e.key === 'Enter') messageCheckSend();
+            }}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary bg-primary"
+              type="button"
+              onClick={messageCheckSend}
+            >
+              Envoyer
+            </button>
+          </div>
         </div>
       </div>
     </ChatLayout>

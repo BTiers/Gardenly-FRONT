@@ -17,11 +17,7 @@ export default function AsideChatPreview({ setChatRoom, chatRoom }) {
       </div>
     );
   }
-  return (
-    <div>
-      <Rooms setChatRoom={setChatRoom} chatRoom={chatRoom} rooms={data.getAllUserRooms.nodes} />
-    </div>
-  );
+  return <Rooms setChatRoom={setChatRoom} chatRoom={chatRoom} rooms={data.getAllUserRooms.nodes} />;
 }
 
 function Rooms({ rooms: initialRooms, chatRoom, setChatRoom }) {
@@ -46,33 +42,44 @@ function Rooms({ rooms: initialRooms, chatRoom, setChatRoom }) {
     }
   });
 
+  const truncateToLength = (str, charNb) => {
+    if (str.length > charNb) return `${str.substring(0, charNb)}...`;
+    return str;
+  };
+
   const faker = require('faker');
   return (
-    <div>
-      {rooms.map(element => {
-        const lastMessage = element.messages[element.messages.length - 1];
+    <React.Fragment>
+      {rooms.map(room => {
+        const lastMessage = room.messages[room.messages.length - 1] || {
+          user: { username: 'Aucun' },
+          content: 'Pas encore de message'
+        };
 
         return (
-          <div className="message" key={element.id} onClick={() => setChatRoom(element)}>
-            <div className="py-3 pb-5 mr-3 float-left">
-              <div className="avatar">
-                <img
-                  src={faker.image.avatar()}
-                  className="img-avatar"
-                  alt="admin@bootstrapmaster.com"
-                />
-                <span className="avatar-status badge-warning" />
+          <React.Fragment>
+            <div className="message clearfix" key={room.id} onClick={() => setChatRoom(room)}>
+              <div className="py-3 mr-3 float-left">
+                <div className="avatar">
+                  <img
+                    src={faker.image.avatar()}
+                    className="img-avatar"
+                    alt="admin@bootstrapmaster.com"
+                  />
+                  <span className="avatar-status badge-warning" />
+                </div>
               </div>
+              <div>
+                <small className="text-muted">{room.name}</small>
+                <small className="text-muted float-right mt-1">13h31</small>
+              </div>
+              <div className="text-truncate font-weight-bold">{lastMessage.user.username}</div>
+              <small className="text-muted">{truncateToLength(lastMessage.content, 40)}</small>
             </div>
-            <div>
-              <small className="text-muted">{element.name}</small>
-              <small className="text-muted float-right mt-1">13h31</small>
-            </div>
-            <div className="text-truncate font-weight-bold">{lastMessage.user.username}</div>
-            <small className="text-muted">{lastMessage.content}</small>
-          </div>
+            <hr />
+          </React.Fragment>
         );
       })}
-    </div>
+    </React.Fragment>
   );
 }
