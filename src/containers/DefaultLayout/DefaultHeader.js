@@ -45,7 +45,7 @@ class DefaultHeader extends Component {
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
               <img
-                src={'../../assets/img/avatars/6.jpg'}
+                src="../../assets/img/avatars/6.jpg"
                 className="img-avatar"
                 alt="admin@bootstrapmaster.com"
               />
@@ -55,10 +55,12 @@ class DefaultHeader extends Component {
                 <strong>Account</strong>
               </DropdownItem>
               <DropdownItem>
-                <i className="fa fa-envelope-o" /> Messages<Badge color="success">42</Badge>
+                <i className="fa fa-envelope-o" /> Messages
+                <Badge color="success">42</Badge>
               </DropdownItem>
               <DropdownItem>
-                <i className="fa fa-tasks" /> Tasks<Badge color="danger">42</Badge>
+                <i className="fa fa-tasks" /> Tasks
+                <Badge color="danger">42</Badge>
               </DropdownItem>
               <DropdownItem header tag="div" className="text-center">
                 <strong>Settings</strong>
@@ -79,7 +81,7 @@ class DefaultHeader extends Component {
           </AppHeaderDropdown>
         </Nav>
         <AppAsideToggler className="d-md-down-none" />
-        {/*<AppAsideToggler className="d-lg-none" mobile />*/}
+        {/* <AppAsideToggler className="d-lg-none" mobile /> */}
       </React.Fragment>
     );
   }

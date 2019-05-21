@@ -45,10 +45,7 @@ class Software extends Component {
     const canvas = document.getElementById('#canvas');
 
     if (canvas !== null && appContent !== null) {
-      if (
-        canvas.width !== appContent.offsetWidth ||
-        canvas.height !== appContent.offsetHeight
-      ) {
+      if (canvas.width !== appContent.offsetWidth || canvas.height !== appContent.offsetHeight) {
         canvas.width = appContent.offsetWidth;
         canvas.height = appContent.offsetHeight;
       }
@@ -66,10 +63,7 @@ class Software extends Component {
             ${t('lost_unsaved')}
           `}
         />
-        <Mutation
-          mutation={UPDATE_GARDEN}
-          refetchQueries={[{ query: USER_GARDENS }]}
-        >
+        <Mutation mutation={UPDATE_GARDEN} refetchQueries={[{ query: USER_GARDENS }]}>
           {updateGarden => {
             this.unityContent.on('save', data => {
               updateGarden({
