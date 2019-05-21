@@ -37,7 +37,7 @@ function DefaultLayout(props) {
 
   const logOut = useMutation(DELETE_SESSION, {
     update: () => {
-      cookie.set('isLoggedIn', false, { path: '/' });
+      cookie.set('isLoggedIn', "false", { path: '/' });
       props.history.push('/login');
     }
   });
@@ -96,8 +96,9 @@ function DefaultLayout(props) {
                 {routes.map((route, idx) => {
                   const isLoggedIn = cookie.get('isLoggedIn') || 'false';
 
-                  if (route.requireAuth && isLoggedIn === 'false')
+                  if (route.requireAuth && isLoggedIn === 'false') {
                     return <Redirect key={idx} to={route.redirectTo} />;
+                  }
                   if (
                     route.adminOnly &&
                     !userLoading &&

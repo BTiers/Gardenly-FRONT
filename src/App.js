@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import { I18nextProvider } from 'react-i18next';
+import Cookies from 'universal-cookie';
 import i18next from './i18next';
 
-import Cookies from 'universal-cookie';
 import Client from './apollo/client';
 // import { renderRoutes } from 'react-router-config';
 import './App.scss';
 
 const cookie = new Cookies();
-const loading = () => (
-  <div className="animated fadeIn pt-3 text-center">Loading...</div>
-);
+const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout'));
@@ -25,8 +23,6 @@ const Page500 = React.lazy(() => import('./views/Pages/Page500'));
 
 class App extends Component {
   render() {
-    const isLoggedIn = cookie.get('isLoggedIn') || 'false';
-
     return (
       <I18nextProvider i18n={i18next}>
         <Client>
@@ -38,8 +34,9 @@ class App extends Component {
                   path="/login"
                   name="Login Page"
                   render={props => {
-                    if (isLoggedIn === 'true')
-                      return <Redirect to="/activities" />;
+                    const isLoggedIn = cookie.get('isLoggedIn') || 'false';
+
+                    if (isLoggedIn === 'true') return <Redirect to="/activities" />;
                     return <Login {...props} />;
                   }}
                 />
@@ -48,28 +45,15 @@ class App extends Component {
                   path="/register"
                   name="Register Page"
                   render={props => {
-                    if (isLoggedIn === 'true')
-                      return <Redirect to="/activities" />;
+                    const isLoggedIn = cookie.get('isLoggedIn') || 'false';
+
+                    if (isLoggedIn === 'true') return <Redirect to="/activities" />;
                     return <Register {...props} />;
                   }}
                 />
-                <Route
-                  exact
-                  path="/404"
-                  name="Page 404"
-                  render={props => <Page404 {...props} />}
-                />
-                <Route
-                  exact
-                  path="/500"
-                  name="Page 500"
-                  render={props => <Page500 {...props} />}
-                />
-                <Route
-                  path="/"
-                  name="Home"
-                  render={props => <DefaultLayout {...props} />}
-                />
+                <Route exact path="/404" name="Page 404" render={props => <Page404 {...props} />} />
+                <Route exact path="/500" name="Page 500" render={props => <Page500 {...props} />} />
+                <Route path="/" name="Home" render={props => <DefaultLayout {...props} />} />
               </Switch>
             </React.Suspense>
           </HashRouter>
