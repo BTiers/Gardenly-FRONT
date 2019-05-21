@@ -36,21 +36,22 @@ function DefaultLayout(props) {
   const { data: userData, error: userError, loading: userLoading } = useQuery(GET_USERS);
 
   const logOut = useMutation(DELETE_SESSION, {
-    variables: {}
+    update: () => {
+      cookie.set('isLoggedIn', false, { path: '/' });
+      props.history.push('/login');
+    }
   });
-  let navConfig = navigation;
+  const navConfig = navigation;
 
   if (!loading && !error && data && !userLoading && !userError && userData) {
     navConfig.items = navConfig.items.map(item => {
       if (item.admin && !userData.getCurrentUser.isModerator) return null;
       if (item.name === 'Jardins') {
-        item.children = data.gardens.nodes.map(({ name }) => {
-          return {
-            name: `${name}`,
-            url: `/garden/${name}`,
-            icon: 'icon-drop'
-          };
-        });
+        item.children = data.gardens.nodes.map(({ name }) => ({
+          name: `${name}`,
+          url: `/garden/${name}`,
+          icon: 'icon-drop'
+        }));
         item.children.push({
           name: 'Nouveau jardin',
           url: `/garden/create`,
@@ -67,9 +68,7 @@ function DefaultLayout(props) {
 
   const signOut = e => {
     e.preventDefault();
-    cookie.set('isLoggedIn', false, { path: '/' });
     logOut();
-    props.history.push('/login');
   };
 
   return (
@@ -97,9 +96,9 @@ function DefaultLayout(props) {
                 {routes.map((route, idx) => {
                   const isLoggedIn = cookie.get('isLoggedIn') || 'false';
 
-                  if ((route.requireAuth && isLoggedIn === 'false') || (route.requireAuth === false && isLoggedIn === 'true'))
+                  if (route.requireAuth && isLoggedIn === 'false')
                     return <Redirect key={idx} to={route.redirectTo} />;
-                  else if (
+                  if (
                     route.adminOnly &&
                     !userLoading &&
                     !userError &&
