@@ -19,8 +19,7 @@ import {
   TabContent,
   TabPane,
   Modal,
-  ModalBody,
-  Spinner
+  ModalBody
 } from 'reactstrap';
 
 import { withTranslation } from 'react-i18next';
