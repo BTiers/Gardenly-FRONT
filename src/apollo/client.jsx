@@ -13,10 +13,12 @@ import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink';
 export default function Store({ children }) {
   // const cookie = new Cookies(); //TODO: pass down TOKENS
 
-  const cable = ActionCable.createConsumer(`${process.env.REACT_APP_HOST_CABLE}cable`);
+  const cable = ActionCable.createConsumer(
+    `${process.env[`REACT_APP_HOST_CABLE_${process.env.NODE_ENV}`]}cable`
+  );
   const cableLink = ActionCableLink({ cable });
   const httpLink = new HttpLink({
-    uri: `${process.env.REACT_APP_HOST_GRAPQHL}graphql`,
+    uri: `${process.env[`REACT_APP_HOST_GRAPQHL_${process.env.NODE_ENV}`]}graphql`,
     credentials: 'include'
   });
 
