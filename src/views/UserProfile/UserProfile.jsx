@@ -19,7 +19,8 @@ import {
   TabContent,
   TabPane,
   Modal,
-  ModalBody
+  ModalBody,
+  Spinner
 } from 'reactstrap';
 
 import { withTranslation } from 'react-i18next';
@@ -36,7 +37,6 @@ import {
 
 import InputWithValidation from 'components/input/InputWithValidation';
 import { GET_USERS } from '../../apollo/queries/queries';
-import LoadingButton from '../../components/buttons/LoadingButton';
 
 const GardenDetails = React.memo(({ name, updatedAt, createdAt, country }) => (
   <Col md="12" lg="6" className="mb-3">
@@ -238,17 +238,16 @@ const AccountQuickAccess = withTranslation('register')(
           reset={reset}
         />
         <ListGroupItem tag="a" className="border-left-0">
-          <LoadingButton
+          <Button
             color="primary"
             className="mx-2"
             onClick={() => {
               setLoading(true);
               updateUser();
             }}
-            loading={loading}
           >
-            <span>Sauvegarder</span>
-          </LoadingButton>
+            {loading ? <Spinner size="sm" className="mx-4"  /> : "Sauvegarder"}
+          </Button>
           <Button className="mx-2" onClick={() => shouldReset(true)}>
             Annuler
           </Button>

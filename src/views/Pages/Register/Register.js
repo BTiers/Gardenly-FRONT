@@ -44,7 +44,6 @@ function Register({ t, history }) {
 
   const createUser = useMutation(CREATE_USER, {
     variables: { username, firstname, lastname, email, password },
-    errorPolicy: 'all',
     update: (proxy, mutationResult) => {
       history.push('/login');
     }
@@ -61,7 +60,10 @@ function Register({ t, history }) {
   const validateForm = () =>
     validateRegister(t, email, password, passwordRepeat, username, firstname, lastname);
   const submit = () => {
-    if (!isAnyError) createUser().then(data => console.log(data), error => console.log(error));
+    if (!isAnyError)
+      createUser().catch(error => {
+        console.log(error);
+      });
   };
 
   return (
