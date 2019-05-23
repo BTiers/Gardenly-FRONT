@@ -4,22 +4,25 @@ import { useMutation, useQuery } from 'react-apollo-hooks';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Moment from 'react-moment';
+import useMedia from 'hooks/UseMedia';
 
 import { CREATE_MESSAGE } from 'apollo/mutations/chat';
 import { GET_USERS } from 'apollo/queries/queries';
 import 'moment/locale/fr';
 
 const ChatLayout = styled.div`
+  top: ${({ mobile }) => (mobile ? '0' : 'undefined')};
+  left: 0;
   z-index: inherit;
   background: white;
-  transform: translateX(calc(-250px - 36%));
-  width: 155%;
-  height: 90%;
+  transform: translateX(calc(${({ mobile }) => (mobile ? '-100vw' : '-40vw')}));
+  width: ${({ mobile }) => (mobile ? '100vw' : '40vw')};
+  height: ${({ mobile }) => (mobile ? '95vh' : '90vh')};
   border: 1px solid #c8ced3;
-  /* overflow-y: scroll; */
 `;
 
 export default function Chat({ className, chatRoom, setChatRoom }) {
+  const mobile = useMedia('(max-width: 768px)');
   const messageRef = useRef();
   const lastMessageRef = useRef();
 
@@ -41,20 +44,23 @@ export default function Chat({ className, chatRoom, setChatRoom }) {
 
   if (!chatRoom) return null;
   return (
-    <ChatLayout className={`${className} position-absolute p-1 `}>
-      <div className="text-center" style={{ height: '10%' }}>
-        <h3 className="d-inline-block">{chatRoom.name}</h3>
+    <ChatLayout mobile={mobile} className="position-absolute">
+      <div style={{ height: '10%' }}>
+        {/* TODO: Weird font */}
+        <h3 className="d-inline-block ml-2 mt-2">{chatRoom.name}</h3>
         <button
           type="button"
-          className="close"
+          className="close m-2"
           aria-label="Close"
           onClick={() => setChatRoom(null)}
         >
-          <span aria-hidden="true">&times;</span>
+          <span className="mr-1" aria-hidden="true" style={{ fontSize: '2rem' }}>
+            &times;
+          </span>
         </button>
-        <hr />
+        <hr className="m-2" />
       </div>
-      <div style={{ height: '85%' }}>
+      <div style={{ height: '81%' }}>
         <div style={{ height: '100%' }}>
           <PerfectScrollbar>
             <table className="container h-auto">
@@ -115,7 +121,7 @@ export default function Chat({ className, chatRoom, setChatRoom }) {
             </table>
           </PerfectScrollbar>
         </div>
-        <div style={{ height: '5%' }} className="input-group mb-3">
+        <div className="input-group m-auto mb-1" style={{ height: '5%', width: '90%' }}>
           <input
             type="text"
             className="form-control h-100"
@@ -127,7 +133,7 @@ export default function Chat({ className, chatRoom, setChatRoom }) {
               if (e.key === 'Enter') messageCheckSend();
             }}
           />
-          <div className="input-group-append">
+          <div className="input-group-append h-100">
             <button
               className="btn btn-outline-secondary bg-primary"
               type="button"
