@@ -11,7 +11,11 @@
     "sign_up": "Inscrivez vous !",
     "register_now": "S'inscrire!",
     "sign_up_catch_phrase": "Créez votre compte et commencez à gérer votre jardin.",
+    "create_account": "Créez votre compte",
     "invalidAccountCred": "Email ou mot de passe incorrects",
+    "username": "Nom d'utilisateur",
+    "firstname": "Prénom",
+    "lastname": "Nom",
     "email": "Email",
     "pswd": "Mot de passe",
     "valid_psw": "Confirmez le mot de passe",
@@ -26,7 +30,8 @@
     "privacy_policy_error": "Vous devez acceptez la politique de confidentialité avant de continuer",
     "email_already_use": "L'adresse mail entré est déjà utilisé",
     "bad_form": "Vous devez remplir le formulaire pour vous inscrire",
-    "submit": "Je m'inscris"
+    "submit": "Je m'inscris",
+    "successfully_register": "Votre compte a été créé avec succès, saisissez vos identifiants pour vous connecter"
   },
   "routing": {
     "404error": "Ce n'est pas la page web que vous cherchez."

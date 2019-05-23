@@ -17,12 +17,14 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Row
+  Row,
+  UncontrolledAlert
 } from 'reactstrap';
 
 import LoginSubmit from './LoginSubmit';
 
-function Login({ t }) {
+function Login({ t, registrationCompleted }) {
+  const [hasJustRegister, toggle] = useState(registrationCompleted);
   const [emailState, setEmailState] = useState({ value: '', error: false });
   const [passwordState, setPasswordState] = useState({
     value: '',
@@ -44,8 +46,7 @@ function Login({ t }) {
   }
 
   function handleKeyPress(e) {
-    if (e.target.name === 'Password')
-      setPasswordState({ value: e.target.value, error: false });
+    if (e.target.name === 'Password') setPasswordState({ value: e.target.value, error: false });
     else setEmailState({ value: e.target.value, error: false });
   }
 
@@ -54,6 +55,21 @@ function Login({ t }) {
       <Container>
         <Row className="justify-content-center">
           <Col md="8">
+            <Alert
+              isOpen={hasJustRegister}
+              toggle={() => toggle(false)}
+              color="info"
+              className="mb-0"
+            >
+              {t('successfully_register')}
+            </Alert>
+            {accountCredState ? (
+              <UncontrolledAlert color="secondary" className="mb-0 text-center text-muted">
+                {t('invalidAccountCred')}
+              </UncontrolledAlert>
+            ) : (
+              ''
+            )}
             <CardGroup>
               <Card className="p-4">
                 <CardBody>
@@ -77,9 +93,7 @@ function Login({ t }) {
                           onChange={handleKeyPress}
                         />
                       </InputGroup>
-                      <FormFeedback invalid={1}>
-                        {t('email_invalid')}
-                      </FormFeedback>
+                      <FormFeedback invalid={1}>{t('email_invalid')}</FormFeedback>
                     </FormGroup>
                     <FormGroup>
                       <InputGroup className="mb-4">
@@ -98,9 +112,7 @@ function Login({ t }) {
                           onChange={handleKeyPress}
                         />
                       </InputGroup>
-                      <FormFeedback invalid={1}>
-                        {t('password_invalid')}
-                      </FormFeedback>
+                      <FormFeedback invalid={1}>{t('password_invalid')}</FormFeedback>
                     </FormGroup>
                     <Row className="align-items-center">
                       <Col xs="6">
@@ -118,32 +130,18 @@ function Login({ t }) {
                           {t('forgot_pass')}
                         </Button>
                       </Col>
+                      <Col xs="12 mt-3">{t('sign_up')}</Col>
                     </Row>
                   </Form>
-                  {accountCredState ? (
-                    <Alert className="mt-2 mb-0 text-center text-light bg-danger">
-                      <strong>{t('invalidAccountCred')}</strong>
-                    </Alert>
-                  ) : (
-                    ''
-                  )}
                 </CardBody>
               </Card>
-              <Card
-                className="text-white bg-primary py-5 d-md-down-none"
-                style={{ width: '44%' }}
-              >
+              <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
                 <CardBody className="text-center">
                   <div>
                     <h2>{t('sign_up')}</h2>
                     <p>{t('sign_up_catch_phrase')}</p>
                     <Link to="/register">
-                      <Button
-                        color="primary"
-                        className="mt-3"
-                        active
-                        tabIndex={-1}
-                      >
+                      <Button color="primary" className="mt-3" active tabIndex={-1}>
                         {t('register_now')}
                       </Button>
                     </Link>
@@ -159,7 +157,8 @@ function Login({ t }) {
 }
 
 Login.propTypes = {
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  registrationCompleted: PropTypes.bool.isRequired
 };
 
 export default withTranslation('register')(Login);

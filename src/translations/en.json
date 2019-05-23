@@ -23,7 +23,11 @@
     "sign_up": "Sign up",
     "register_now": "Register Now!",
     "sign_up_catch_phrase": "Create your account and manage your garden.",
+    "create_account": "Create your account",
     "invalidAccountCred": "Email or password invalid",
+    "username": "Username",
+    "firstname": "First name",
+    "lastname": "Last name",
     "email": "Email",
     "pswd": "Password",
     "valid_psw": "Confirm password",
@@ -41,7 +45,8 @@
     "bad_form_email": "    - You must enter an email",
     "bad_form_username": "   - You must enter a username",
     "bad_form_password": "   - You must enter a password",
-    "submit": "Create my account"
+    "submit": "Create my account",
+    "successfully_register": "Your account has been successfully registered, use your credentials to connect to your account"
   },
   "about": {
     "presentation": "Presentation",
