@@ -130,10 +130,12 @@ function Login({ t, registrationCompleted }) {
                           {t('forgot_pass')}
                         </Button>
                       </Col>
-                      <Col xs="12 mt-3">{t('sign_up')}</Col>
                     </Row>
                   </Form>
                 </CardBody>
+                <Alert color="primary" className="mb-0 text-center d-lg-none">
+                  <Link to="/register">{t('no_account')}</Link>
+                </Alert>
               </Card>
               <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
                 <CardBody className="text-center">

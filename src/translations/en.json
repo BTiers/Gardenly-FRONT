@@ -46,7 +46,8 @@
     "bad_form_username": "   - You must enter a username",
     "bad_form_password": "   - You must enter a password",
     "submit": "Create my account",
-    "successfully_register": "Your account has been successfully registered, use your credentials to connect to your account"
+    "successfully_register": "Your account has been successfully registered, use your credentials to connect to your account",
+    "no_account": "Join Gardenly today."
   },
   "about": {
     "presentation": "Presentation",

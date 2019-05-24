@@ -52,17 +52,15 @@ function LoginSubmit({ t, states: { passwordState, emailState }, setAccountCredS
   });
 
   return (
-    <React.Fragment>
-      <Button
-        color="primary"
-        className="px-4"
-        onClick={() => {
-          onSubmit();
-        }}
-      >
-        {t('login')}
-      </Button>
-    </React.Fragment>
+    <Button
+      color="primary"
+      className="px-4"
+      onClick={() => {
+        onSubmit();
+      }}
+    >
+      {t('login')}
+    </Button>
   );
 }
 
