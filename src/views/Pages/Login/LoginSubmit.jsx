@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
-import { Button } from 'reactstrap';
+import React, { useEffect, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { withRouter } from 'react-router-dom';
 import { CREATE_SESSION } from 'apollo/mutations/mutations';
 import { objectOf, object, func, shape } from 'prop-types';
 import { useMutation } from 'react-apollo-hooks';
+
+import LoadingButton from 'components/buttons/LoadingButton';
 
 const cookie = new Cookies();
 
@@ -15,11 +16,13 @@ function LoginSubmit({ t, states: { passwordState, emailState }, setAccountCredS
       password: passwordState.value
     }
   });
+  const [loading, setLoading] = useState(false);
 
   function onSubmit() {
-    if (emailState.value === '' || emailState.value === '') return;
+    if (emailState.value === '' || passwordState.value === '') return;
     if (emailState.error === true || passwordState.error === true) setAccountCredState(true);
     else {
+      setLoading(true);
       createSession().then(
         () => {
           cookie.set('isLoggedIn', true, { path: '/' });
@@ -33,6 +36,7 @@ function LoginSubmit({ t, states: { passwordState, emailState }, setAccountCredS
             return;
           }
           console.error(error);
+          setLoading(false);
           setAccountCredState(true);
         }
       );
@@ -52,15 +56,17 @@ function LoginSubmit({ t, states: { passwordState, emailState }, setAccountCredS
   });
 
   return (
-    <Button
+    <LoadingButton
       color="primary"
       className="px-4"
+      block
+      loading={loading}
       onClick={() => {
         onSubmit();
       }}
     >
-      {t('login')}
-    </Button>
+      <span>{t('login')}</span>
+    </LoadingButton>
   );
 }
 

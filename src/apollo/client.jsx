@@ -18,7 +18,7 @@ export default function Store({ children }) {
   );
   const cableLink = ActionCableLink({ cable });
   const httpLink = new HttpLink({
-    uri: `${process.env[`REACT_APP_HOST_GRAPQHL_${process.env.NODE_ENV}`]}graphql`,
+    uri: `${process.env[`REACT_APP_HOST_GRAPHQL_${process.env.NODE_ENV}`]}graphql`,
     credentials: 'include'
   });
 

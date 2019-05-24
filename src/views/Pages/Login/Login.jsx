@@ -67,9 +67,7 @@ function Login({ t, registrationCompleted }) {
               <UncontrolledAlert color="secondary" className="mb-0 text-center text-muted">
                 {t('invalidAccountCred')}
               </UncontrolledAlert>
-            ) : (
-              ''
-            )}
+            ) : null}
             <CardGroup>
               <Card className="p-4">
                 <CardBody>

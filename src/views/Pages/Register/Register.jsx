@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card, CardBody, Col, Container, Form, Row, CardImg, ListGroup } from 'reactstrap';
+import { Card, CardBody, Col, Container, Form, Row, CardImg, ListGroup } from 'reactstrap';
 
 import { withTranslation } from 'react-i18next';
 import { useMutation } from 'react-apollo-hooks';
@@ -17,6 +17,7 @@ import {
 } from 'utils/input_validation/input_validation';
 
 import InputWithValidation from 'components/input/InputWithValidation';
+import LoadingButton from 'components/buttons/LoadingButton';
 
 function Register({ t, history, onCompleted }) {
   const [inputStates, setInputStates] = useState({
@@ -173,9 +174,9 @@ function Register({ t, history, onCompleted }) {
                       updateOnChange={lastToFill === 'passwordRepeat'}
                     />
                   </ListGroup>
-                  <Button disabled={isAnyError} color="primary" block onClick={submit}>
-                    {t('submit')}
-                  </Button>
+                  <LoadingButton disabled={isAnyError} color="primary" block onClick={submit}>
+                    <span>{t('submit')}</span>
+                  </LoadingButton>
                 </Form>
               </CardBody>
             </Card>
