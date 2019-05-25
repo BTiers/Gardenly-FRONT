@@ -15,10 +15,11 @@ const ChatLayout = styled.div`
   left: 0;
   z-index: inherit;
   background: white;
-  transform: translateX(calc(${({ mobile }) => (mobile ? '-100vw' : '-40vw')}));
-  width: ${({ mobile }) => (mobile ? '100vw' : '40vw')};
+  transform: translateX(calc(${({ mobile }) => (mobile ? '-100vw' : '-25vw')}));
+  width: ${({ mobile }) => (mobile ? '100vw' : '25vw')};
   height: ${({ mobile }) => (mobile ? '95vh' : '90vh')};
   border: 1px solid #c8ced3;
+  border-top: unset;
 `;
 
 export default function Chat({ className, chatRoom, setChatRoom }) {
@@ -45,103 +46,99 @@ export default function Chat({ className, chatRoom, setChatRoom }) {
   if (!chatRoom) return null;
   return (
     <ChatLayout mobile={mobile} className="position-absolute">
-      <div style={{ height: '10%' }}>
-        {/* TODO: Weird font */}
-        <h3 className="d-inline-block ml-2 mt-2">{chatRoom.name}</h3>
-        <button
-          type="button"
-          className="close m-2"
-          aria-label="Close"
-          onClick={() => setChatRoom(null)}
-        >
-          <span className="mr-1" aria-hidden="true" style={{ fontSize: '2rem' }}>
-            &times;
-          </span>
-        </button>
-        <hr className="m-2" />
-      </div>
-      <div style={{ height: '81%' }}>
-        <div style={{ height: '100%' }}>
-          <PerfectScrollbar>
-            <table className="container h-auto">
-              <tbody>
-                <tr className="collapse show">
-                  <td className="col-12">
-                    {chatRoom.messages.map((message, idx) => {
-                      if (message.user.username === me.data.getCurrentUser.username)
-                        return (
-                          <div
-                            className="outgoing_msg"
-                            key={message.id}
-                            ref={idx === chatRoom.messages.length - 1 ? lastMessageRef : undefined}
-                          >
-                            <div className="sent_msg">
-                              <p>
-                                <span style={{ whiteSpace: 'pre-line' }}>{message.content}</span>
-                              </p>
-                              <span className="time_date text-right">
-                                <Moment locale="fr" element="strong" fromNow>
-                                  {message.createdAt}
-                                </Moment>
-                              </span>
-                            </div>
-                          </div>
-                        );
-                      return (
-                        <div
-                          className="incoming_msg p-3"
-                          key={message.id}
-                          ref={idx === chatRoom.messages.length - 1 ? lastMessageRef : undefined}
-                        >
-                          <div className="float-left">
-                            <img
-                              src="assets/img/avatars/1.jpg"
-                              className="img-avatar float-left"
-                              alt="admin@bootstrapmaster.com"
-                            />
-                          </div>
-                          <div className="received_msg" style={{ display: 'table-cell' }}>
-                            <div className="received_withd_msg" style={{ width: '100%' }}>
-                              <p>
-                                <span style={{ whiteSpace: 'pre-line' }}>{message.content}</span>
-                              </p>
-                              <span className="time_date">
-                                <Moment locale="fr" element="strong" fromNow>
-                                  {message.createdAt}
-                                </Moment>
-                              </span>
-                            </div>
-                          </div>
+      {/* TODO: Weird font & Adding paricipants */}
+      <h3 className="d-inline-block ml-2 mt-2">{chatRoom.name}</h3>
+      <button
+        className="close ml-2 mt-2 mr-2"
+        type="button"
+        aria-label="Close"
+        onClick={() => setChatRoom(null)}
+      >
+        <span className="mr-1" aria-hidden="true" style={{ fontSize: '2rem', fontWeight: '100' }}>
+          &times;
+        </span>
+      </button>
+      <hr className="m-0 p-0" />
+      <PerfectScrollbar style={{ height: '80vh' }}>
+        <table className="container h-auto">
+          <tbody>
+            <tr className="collapse show">
+              <td className="col-12">
+                {chatRoom.messages.map((message, idx) => {
+                  if (message.user.username === me.data.getCurrentUser.username)
+                    return (
+                      <div
+                        className="outgoing_msg "
+                        key={message.id}
+                        ref={idx === chatRoom.messages.length - 1 ? lastMessageRef : undefined}
+                      >
+                        <div className="sent_msg w-auto">
+                          <p>
+                            <span style={{ whiteSpace: 'pre-line', textAlign: 'right' }}>
+                              {message.content}
+                            </span>
+                          </p>
+                          <span className="time_date text-right">
+                            <Moment locale="fr" element="strong" fromNow>
+                              {message.createdAt}
+                            </Moment>
+                          </span>
                         </div>
-                      );
-                    })}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </PerfectScrollbar>
-        </div>
-        <div className="input-group m-auto mb-1" style={{ height: '5%', width: '90%' }}>
-          <input
-            type="text"
-            className="form-control h-100"
-            placeholder="Entrez votre message ici..."
-            aria-label="Entrez votre message ici..."
-            aria-describedby="basic-addon2"
-            ref={messageRef}
-            onKeyPress={e => {
-              if (e.key === 'Enter') messageCheckSend();
-            }}
-          />
-          <div className="input-group-append h-100">
-            <button
-              className="btn btn-outline-secondary bg-primary"
-              type="button"
-              onClick={messageCheckSend}
-            >
-              Envoyer
-            </button>
-          </div>
+                      </div>
+                    );
+                  return (
+                    <div
+                      className="incoming_msg p-3"
+                      key={message.id}
+                      ref={idx === chatRoom.messages.length - 1 ? lastMessageRef : undefined}
+                    >
+                      <div className="float-left">
+                        <img
+                          src="assets/img/avatars/1.jpg"
+                          className="img-avatar float-left"
+                          alt="admin@bootstrapmaster.com"
+                        />
+                      </div>
+                      <div className="received_msg" style={{ display: 'table-cell' }}>
+                        <div className="received_withd_msg" style={{ width: '100%' }}>
+                          <p>
+                            <span style={{ whiteSpace: 'pre-line' }}>{message.content}</span>
+                          </p>
+                          <span className="time_date">
+                            <Moment locale="fr" element="strong" fromNow>
+                              {message.createdAt}
+                            </Moment>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </PerfectScrollbar>
+      <div className="input-group m-auto mb-1 pb-1" style={{ width: '90%' }}>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Entrez votre message ici..."
+          aria-label="Entrez votre message ici..."
+          aria-describedby="basic-addon2"
+          ref={messageRef}
+          onKeyPress={e => {
+            if (e.key === 'Enter') messageCheckSend();
+          }}
+        />
+        <div className="input-group-append">
+          <button
+            className="btn btn-outline-secondary bg-primary"
+            type="button"
+            onClick={messageCheckSend}
+          >
+            Envoyer
+          </button>
         </div>
       </div>
     </ChatLayout>
