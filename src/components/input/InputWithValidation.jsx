@@ -61,7 +61,7 @@ const InputWithValidation = React.memo(
             placeholder={placeholder}
             autoComplete={autoComplete}
             onChange={e => {
-              if (updateOnChange && validate(e.target.value)) onUpdate(value);
+              if (updateOnChange && validate(e.target.value)) onUpdate(e.target.value);
               setValue(e.target.value);
               setInvalid(false);
             }}
