@@ -1,14 +1,14 @@
-import React, { useRef, useEffect } from 'react';
-import styled from 'styled-components';
-import { useMutation, useQuery } from 'react-apollo-hooks';
-import 'react-perfect-scrollbar/dist/css/styles.css';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import Moment from 'react-moment';
-import useMedia from 'hooks/UseMedia';
-
 import { CREATE_MESSAGE } from 'apollo/mutations/chat';
 import { GET_USERS } from 'apollo/queries/queries';
+import useMedia from 'hooks/UseMedia';
 import 'moment/locale/fr';
+import React, { useEffect, useRef } from 'react';
+import { useMutation, useQuery } from 'react-apollo-hooks';
+import { withTranslation } from 'react-i18next';
+import Moment from 'react-moment';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import styled from 'styled-components';
 
 const ChatLayout = styled.div`
   top: ${({ mobile }) => (mobile ? '0' : 'undefined')};
@@ -22,7 +22,7 @@ const ChatLayout = styled.div`
   border-top: unset;
 `;
 
-export default function Chat({ className, chatRoom, setChatRoom }) {
+export default withTranslation('chat')(({ className, chatRoom, setChatRoom, t }) => {
   const mobile = useMedia('(max-width: 768px)');
   const messageRef = useRef();
   const lastMessageRef = useRef();
@@ -123,8 +123,8 @@ export default function Chat({ className, chatRoom, setChatRoom }) {
         <input
           type="text"
           className="form-control"
-          placeholder="Entrez votre message ici..."
-          aria-label="Entrez votre message ici..."
+          placeholder={t('enter_message')}
+          aria-label={t('enter_message')}
           aria-describedby="basic-addon2"
           ref={messageRef}
           onKeyPress={e => {
@@ -137,10 +137,10 @@ export default function Chat({ className, chatRoom, setChatRoom }) {
             type="button"
             onClick={messageCheckSend}
           >
-            Envoyer
+            {t('send')}
           </button>
         </div>
       </div>
     </ChatLayout>
   );
-}
+});
