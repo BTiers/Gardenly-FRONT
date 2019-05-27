@@ -95,7 +95,7 @@ export const UPDATE_GARDEN = gql`
         country: $country
       }
     ) {
-      errors
+      clientMutationId
     }
   }
 `;
@@ -125,7 +125,7 @@ export const CREATE_GARDEN = gql`
         country
         datas: data
       }
-      errors
+      clientMutationId
     }
   }
 `;
