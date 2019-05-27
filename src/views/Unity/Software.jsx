@@ -22,8 +22,8 @@ class Software extends Component {
     };
 
     this.unityContent = new UnityContent(
-      'https://s3.greefine.ovh/unity/Build/Build.json',
-      'https://s3.greefine.ovh/unity/Build/UnityLoader.js',
+      `${process.env.REACT_APP_HOST_SOFTWARE}Build.json`,
+      `${process.env.REACT_APP_HOST_SOFTWARE}UnityLoader.js`,
       {
         adjustOnWindowResize: false
       }
