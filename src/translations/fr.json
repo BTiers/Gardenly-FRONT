@@ -57,9 +57,13 @@
     "delete_validation": "Supprimer cette photo ?",
     "no_retrieve_warning": "Vous ne pourrez pas la récupérer par la suite.",
     "add_picture": "Ajouter une photo",
+    "crop-image": "Redimensionner votre image",
+    "infos": "Informations supplémentaires",
     "invalid_file_type": "Type de fichier invalide, seul les fichiers .jpg .jpeg and .png sont acceptés",
     "error_loading_pic": "Une erreur est survenue avec votre fichier, veuillez réessayer",
-    "successful_upload": "Photo télécharger avec succès"
+    "successful_upload": "Photo télécharger avec succès",
+    "drag-and-drop-pic": "Glissez-déposez une photo",
+    "or-click": "ou cliquez pour la télécharger"
   },
   "gardens": {
     "garden": "Jardin",
@@ -93,5 +97,9 @@
     "more_info": "Sélectionner un élément sur le plan pour afficher plus d'information",
     "flowerbed_name": "Nom du parterre",
     "ground_type": "Type de sol"
+  },
+  "crop": {
+    "validate": "Valider",
+    "cancel": "Annuler"
   }
 }

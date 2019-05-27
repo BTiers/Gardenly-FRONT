@@ -38,11 +38,7 @@ const PictureActionsLayout = styled.div`
   opacity: ${({ active }) => (active === 1 ? '0.35' : '0')};
 `;
 
-function Picture({
-  history,
-  picture: { title, description, id, picture, thumbnail },
-  t
-}) {
+function Picture({ history, picture: { title, description, id, picture, thumbnail }, t }) {
   const [selected, setSelected] = useState(false);
   const [open, setOpen] = useState(false);
   const [titleState, setTitleState] = useState(title);
@@ -72,8 +68,8 @@ function Picture({
 
   return (
     <Col
-      xl="3"
-      md="4"
+      lg="2"
+      md="3"
       sm="6"
       xs="12"
       className="mb-4"
@@ -111,9 +107,7 @@ function Picture({
               </FormGroup>
               <FormGroup row>
                 <Col sm="12">
-                  <Label htmlFor="image-description">
-                    {t('choose_description')}
-                  </Label>
+                  <Label htmlFor="image-description">{t('choose_description')}</Label>
                   <Input
                     type="text"
                     placeholder={t('choose_description')}
@@ -134,7 +128,7 @@ function Picture({
                   deleteMedium();
                 }}
               >
-                {deleting ? <Spinner size="sm" className="mx-4"  /> : t('delete')}
+                {deleting ? <Spinner size="sm" className="mx-4" /> : t('delete')}
               </Button>
             </Col>
             <Col xs="6">
@@ -146,7 +140,7 @@ function Picture({
                   updateMedium();
                 }}
               >
-                {updating ? <Spinner size="sm" className="mx-4"  /> : t('save')}
+                {updating ? <Spinner size="sm" className="mx-4" /> : t('save')}
               </Button>
             </Col>
           </ModalFooter>

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import className from 'classnames';
 
-import { Row, Card, CardHeader, CardBody } from 'reactstrap';
+import { Row, Card, CardBody } from 'reactstrap';
 import { useQuery } from 'react-apollo-hooks';
 
 import { GET_ALL_USER_MEDIA } from 'apollo/queries/queries';
@@ -20,24 +21,24 @@ export default function PicturesGallery({ history }) {
     getCurrentUser: { media }
   } = data;
 
+  const hasMedia = media.length > 0;
+
   return (
     <div className="animated fadeIn">
       <Card>
-        <CardHeader>
-          <i className="icon-camera" />
-          <strong>Pictures</strong>
-          {media.length > 0 ? (
-            <div className="card-header-actions">
-              <AddPicture asIcon />
-            </div>
-          ) : null}
-        </CardHeader>
-        <CardBody>
-          <Row>
-            {media.length > 0 ? null : <AddPicture />}
-            {media.map(picture => {
-              return <Picture picture={picture} key={picture.id} />;
+        <CardBody style={{ minHeight: 'calc(100vh - 204px)' }}>
+          <Row
+            className={className({
+              'justify-content-center': !hasMedia,
+              'align-items-center': !hasMedia
             })}
+            style={{ minHeight: 'calc(100vh - 204px)' }}
+          >
+            {media.length > 0 ? (
+              media.map(picture => <Picture picture={picture} key={picture.id} />)
+            ) : (
+              <AddPicture asButton/>
+            )}
           </Row>
         </CardBody>
       </Card>
