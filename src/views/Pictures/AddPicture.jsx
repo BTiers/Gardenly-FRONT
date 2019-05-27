@@ -2,33 +2,26 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { withTranslation } from 'react-i18next';
-import { Row, Col, Modal, ModalBody, ModalHeader, Button } from 'reactstrap';
-import { FiPlus } from 'react-icons/fi';
+import { Row, Col, Modal, ModalBody, ModalHeader, Button, Badge } from 'reactstrap';
+import { FiPlus, FiImage } from 'react-icons/fi';
 
 import Dropzone from 'react-dropzone';
 
-import CenterY from 'components/image/CenterY';
-
-import UploadPic from './UploadPic';
 import DropZone from './DropZone';
 import Cropper from './Cropper';
+
+import STEPS from './_AddPictureSteps';
 
 function AddPicture({ t, asButton }) {
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState({ acceptedFiles: [], rejectedFiles: [] });
-  const [acceptedCrop, setAcceptedCrop] = useState(false);
+  const [currentStep, setStep] = useState(STEPS.DROP);
 
   useEffect(() => () => files.acceptedFiles.forEach(file => URL.revokeObjectURL(file.preview)), []);
 
   const toggle = () => {
     setOpen(!open);
     setFiles({ acceptedFiles: [], rejectedFiles: [] });
-  };
-
-  const getModalTitle = () => {
-    if (acceptedCrop) return t('infos');
-    if (files.acceptedFiles.length) return t('crop-image');
-    return t('add_picture');
   };
 
   return (
@@ -43,34 +36,40 @@ function AddPicture({ t, asButton }) {
           <FiPlus />
         </Button>
       ) : (
-        <Col xs="12" className="mb-4 h-100">
-          <div
-            className="cursor-clickable h-100 bg-light w-100 rounded mx-auto"
-            style={{ minHeight: 200 }}
+        <Col xs="12" className="py-3" style={{ minHeight: 'calc(100vh - 204px)' }}>
+          <Row
+            className="align-items-center h-100 text-muted"
             onClick={toggle}
-            onKeyPress={toggle}
             role="button"
             tabIndex={0}
+            onKeyPress={toggle}
           >
-            <CenterY>
-              <Row className="justify-content-center">
-                <span style={{ fontSize: '3rem' }} className="icon-camera" />
-                <span style={{ fontSize: '1rem' }} className="text-primary icon-plus" />
-              </Row>
-              <Row className="justify-content-center mt-3">
-                <h5 className="text-primary">
-                  <strong>{t('add_picture')}</strong>
-                </h5>
-              </Row>
-            </CenterY>
-          </div>
+            <Col className="mx-auto">
+              <div className="my-4 text-center">
+                <span>
+                  <div className="font-weight-light">
+                    <FiImage size={60} className="text-info" />
+                    <Badge color="info" className="position-absolute text-light">
+                      <FiPlus />
+                    </Badge>
+                  </div>
+                  <div className="m-1">
+                    <h4>{t('no_picture_yet')}</h4>
+                  </div>
+                  <div className="m-1 text-secondary">
+                    <h5>{t('get_started_uploading')}</h5>
+                  </div>
+                </span>
+              </div>
+            </Col>
+          </Row>
         </Col>
       )}
       <Modal centered isOpen={open} toggle={toggle} className="modal-lg text-muted">
         <ModalHeader toggle={toggle}>
-          <span className="small text-uppercase">{getModalTitle()}</span>
+          <span className="small text-uppercase">{t(currentStep)}</span>
         </ModalHeader>
-        <ModalBody>
+        <ModalBody className="p-0 p-sm-2 p-md-3">
           <Row style={{ minHeight: 300 }} className="mx-2 my-2">
             <Dropzone
               multiple={false}
@@ -95,7 +94,7 @@ function AddPicture({ t, asButton }) {
                     <Cropper
                       file={files.acceptedFiles[0]}
                       onCancel={() => setFiles({ acceptedFiles: [], rejectedFiles: [] })}
-                      onValidate={() => setAcceptedCrop(true)}
+                      onStepChange={step => setStep(step)}
                     />
                   );
                 //                return <UploadPic file={files.acceptedFiles[0]} setFiles={setFiles} />;

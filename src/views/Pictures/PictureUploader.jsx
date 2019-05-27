@@ -7,6 +7,7 @@ import { Row, Col, ListGroup, ListGroupItem, Button } from 'reactstrap';
 
 import InputWithValidation from 'components/input/InputWithValidation';
 import LoadingButton from 'components/buttons/LoadingButton';
+import Option from 'components/input/Option';
 
 const uploadStatus = {
   NONE: -1,
@@ -42,16 +43,23 @@ const PictureUploader = ({ t, blob, onCancel }) => {
             type="text"
             title={t('description')}
           />
+          <ListGroupItem className="border-0">
+            <Option
+              title="Rendre privée"
+              description="Une photo privée ne peut être vue que par vos amis"
+              color="primary"
+            />
+          </ListGroupItem>
           <ListGroupItem tag="div" className="border-0 text-center">
             <LoadingButton
               color="primary"
               className="mx-2"
               loading={uploadState === uploadStatus.LOADING}
             >
-              <span>{t('validate')}</span>
+              <span>{t('upload')}</span>
             </LoadingButton>
             <Button className="mx-2" onClick={onCancel}>
-              {t('cancel')}
+              {t('back')}
             </Button>
           </ListGroupItem>
         </ListGroup>

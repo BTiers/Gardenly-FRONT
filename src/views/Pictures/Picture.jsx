@@ -78,9 +78,10 @@ function Picture({ history, picture: { title, description, id, picture, thumbnai
     >
       <div
         className="w-100 h-100 rounded mx-auto my-auto text-center align-middle"
-        onClick={() => {
-          toggle();
-        }}
+        role="button"
+        tabIndex={0}
+        onKeyPress={() => toggle()}
+        onClick={() => toggle()}
       >
         <CenterY>
           <img src={thumbnail} alt={title} className="img-fluid" />

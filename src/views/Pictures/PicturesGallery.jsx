@@ -27,17 +27,11 @@ export default function PicturesGallery({ history }) {
     <div className="animated fadeIn">
       <Card>
         <CardBody style={{ minHeight: 'calc(100vh - 204px)' }}>
-          <Row
-            className={className({
-              'justify-content-center': !hasMedia,
-              'align-items-center': !hasMedia
-            })}
-            style={{ minHeight: 'calc(100vh - 204px)' }}
-          >
+          <Row noGutters>
             {media.length > 0 ? (
               media.map(picture => <Picture picture={picture} key={picture.id} />)
             ) : (
-              <AddPicture asButton/>
+              <AddPicture asButton={hasMedia} />
             )}
           </Row>
         </CardBody>
