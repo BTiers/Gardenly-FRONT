@@ -57,7 +57,7 @@ export default withTranslation('chat')(({ chatRoom, setChatRoom, t }) => {
           >
             <div className="sent_msg w-auto">
               <p>
-                <span style={{ whiteSpace: 'pre-line', textAlign: 'right' }}>
+                <span style={{ whiteSpace: 'pre-wrap', textAlign: 'right' }}>
                   {message.content}
                 </span>
               </p>
@@ -85,7 +85,7 @@ export default withTranslation('chat')(({ chatRoom, setChatRoom, t }) => {
           <div className="received_msg" style={{ display: 'table-cell' }}>
             <div className="received_withd_msg" style={{ width: '100%' }}>
               <p>
-                <span style={{ whiteSpace: 'pre-line' }}>{message.content}</span>
+                <span style={{ whiteSpace: 'pre-wrap' }}>{message.content}</span>
               </p>
               <span className="time_date">
                 <Moment locale="fr" element="strong" fromNow>
@@ -104,7 +104,7 @@ export default withTranslation('chat')(({ chatRoom, setChatRoom, t }) => {
     const { value } = messageRef.current;
 
     if (value) {
-      const trimedMessage = value.replace(/(\h+$|\n\h*\n)/g, '');
+      const trimedMessage = value.replace(/(^\h+$|\n\h*\n)/g, '');
       if (trimedMessage)
         sendMessage({ variables: { content: trimedMessage, roomId: chatRoom.id } });
       setInputHeight(DEFAULT_INPUT_HEIGHT);
