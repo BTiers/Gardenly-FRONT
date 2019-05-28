@@ -23,11 +23,12 @@ const LoadingButton = React.memo(
     }, [loading]);
 
     return (
-      <Button {...rest} className="clearfix">
+      <Button {...rest} className="clearfix position-relative">
         {loading && spin ? (
           <Spinner
+            tag="span"
             style={{ left: 'calc(50% - .5rem)', top: 'calc(50% - .5rem)' }}
-            className="position-absolute "
+            className="position-absolute"
             size="sm"
           />
         ) : null}

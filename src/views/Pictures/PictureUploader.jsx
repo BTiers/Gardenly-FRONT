@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { withTranslation } from 'react-i18next';
 
-import { Row, Col, ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { Row, Col, ListGroup, ListGroupItem, Button, UncontrolledAlert } from 'reactstrap';
 
 import { useMutation } from 'react-apollo-hooks';
 import { CREATE_MEDIUM } from 'apollo/mutations/mutations';
@@ -39,12 +39,20 @@ const PictureUploader = ({ t, b64, onCancel }) => {
 
   return (
     <React.Fragment>
-      <Col xs="12" md="6" className="bg-info">
+      <Col xs="12" lg="6" className="bg-info">
         <Row className="align-items-center h-100">
           <img src={b64} alt="to upload" className="img-fluid mx-auto shadow-sm" />
         </Row>
       </Col>
-      <Col xs="12" md="6" className="small">
+      <Col xs="12" lg="6" className="small">
+        {uploadState === uploadStatus.ERROR ? (
+          <UncontrolledAlert
+            color="secondary"
+            className="mt-1 my-sm-0 text-center text-muted border"
+          >
+            Something went wrong
+          </UncontrolledAlert>
+        ) : null}
         <ListGroup>
           <InputWithValidation
             onUpdate={e => setTitle(e)}
@@ -66,7 +74,7 @@ const PictureUploader = ({ t, b64, onCancel }) => {
               color="primary"
             />
           </ListGroupItem>
-          <ListGroupItem tag="div" className="border-0 text-center">
+          <ListGroupItem className="border-0 text-center">
             <LoadingButton
               color="primary"
               className="mx-2"
