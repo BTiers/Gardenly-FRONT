@@ -38,16 +38,75 @@ export default withTranslation('chat')(({ chatRoom, setChatRoom, t }) => {
 
   const DEFAULT_INPUT_HEIGHT = 46;
   const [inputHeight, setInputHeight] = useState(DEFAULT_INPUT_HEIGHT);
+  const [messages, setMessages] = useState();
 
   useEffect(() => {
     if (lastMessageRef.current) lastMessageRef.current.scrollIntoView();
   });
 
+  useEffect(() => {
+    if (!chatRoom) return;
+
+    const newMessage = chatRoom.messages.map((message, idx) => {
+      if (message.user.username === me.data.getCurrentUser.username)
+        return (
+          <div
+            className="outgoing_msg "
+            key={message.id}
+            ref={idx === chatRoom.messages.length - 1 ? lastMessageRef : undefined}
+          >
+            <div className="sent_msg w-auto">
+              <p>
+                <span style={{ whiteSpace: 'pre-line', textAlign: 'right' }}>
+                  {message.content}
+                </span>
+              </p>
+              <span className="time_date text-right">
+                <Moment locale="fr" element="strong" fromNow>
+                  {message.createdAt}
+                </Moment>
+              </span>
+            </div>
+          </div>
+        );
+      return (
+        <div
+          className="incoming_msg p-3"
+          key={message.id}
+          ref={idx === chatRoom.messages.length - 1 ? lastMessageRef : undefined}
+        >
+          <div className="float-left">
+            <img
+              src="assets/img/avatars/1.jpg"
+              className="img-avatar float-left"
+              alt="admin@bootstrapmaster.com"
+            />
+          </div>
+          <div className="received_msg" style={{ display: 'table-cell' }}>
+            <div className="received_withd_msg" style={{ width: '100%' }}>
+              <p>
+                <span style={{ whiteSpace: 'pre-line' }}>{message.content}</span>
+              </p>
+              <span className="time_date">
+                <Moment locale="fr" element="strong" fromNow>
+                  {message.createdAt}
+                </Moment>
+              </span>
+            </div>
+          </div>
+        </div>
+      );
+    });
+    setMessages(newMessage);
+  }, [chatRoom]);
+
   function messageCheckSend() {
     const { value } = messageRef.current;
 
     if (value) {
-      sendMessage({ variables: { content: value, roomId: chatRoom.id } });
+      const trimedMessage = value.replace(/(\h+$|\n\h*\n)/g, '');
+      if (trimedMessage)
+        sendMessage({ variables: { content: trimedMessage, roomId: chatRoom.id } });
       setInputHeight(DEFAULT_INPUT_HEIGHT);
       messageRef.current.value = '';
     }
@@ -83,58 +142,7 @@ export default withTranslation('chat')(({ chatRoom, setChatRoom, t }) => {
             <table className="container h-auto">
               <tbody>
                 <tr className="collapse show">
-                  <td className="col-12">
-                    {chatRoom.messages.map((message, idx) => {
-                      if (message.user.username === me.data.getCurrentUser.username)
-                        return (
-                          <div
-                            className="outgoing_msg "
-                            key={message.id}
-                            ref={idx === chatRoom.messages.length - 1 ? lastMessageRef : undefined}
-                          >
-                            <div className="sent_msg w-auto">
-                              <p>
-                                <span style={{ whiteSpace: 'pre-line', textAlign: 'right' }}>
-                                  {message.content}
-                                </span>
-                              </p>
-                              <span className="time_date text-right">
-                                <Moment locale="fr" element="strong" fromNow>
-                                  {message.createdAt}
-                                </Moment>
-                              </span>
-                            </div>
-                          </div>
-                        );
-                      return (
-                        <div
-                          className="incoming_msg p-3"
-                          key={message.id}
-                          ref={idx === chatRoom.messages.length - 1 ? lastMessageRef : undefined}
-                        >
-                          <div className="float-left">
-                            <img
-                              src="assets/img/avatars/1.jpg"
-                              className="img-avatar float-left"
-                              alt="admin@bootstrapmaster.com"
-                            />
-                          </div>
-                          <div className="received_msg" style={{ display: 'table-cell' }}>
-                            <div className="received_withd_msg" style={{ width: '100%' }}>
-                              <p>
-                                <span style={{ whiteSpace: 'pre-line' }}>{message.content}</span>
-                              </p>
-                              <span className="time_date">
-                                <Moment locale="fr" element="strong" fromNow>
-                                  {message.createdAt}
-                                </Moment>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </td>
+                  <td className="col-12">{messages}</td>
                 </tr>
               </tbody>
             </table>
