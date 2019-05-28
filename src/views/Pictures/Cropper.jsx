@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 
 import { Col, Row, ListGroup, ListGroupItem, Button } from 'reactstrap';
 
-import ReactCrop, { makeAspectCrop } from 'react-image-crop';
+import ReactCrop from 'react-image-crop';
 import 'react-image-crop/lib/ReactCrop.scss';
 
 import LoadingButton from 'components/buttons/LoadingButton';
@@ -12,40 +12,59 @@ import PictureUploader from './PictureUploader';
 
 import STEPS from './_AddPictureSteps';
 
-function getCroppedImg(image, crop, fileName) {
+function prepareCanvas(width, height) {
   const canvas = document.createElement('canvas');
-  const scaleX = image.naturalWidth / image.width;
-  const scaleY = image.naturalHeight / image.height;
-  canvas.width = crop.width;
-  canvas.height = crop.height;
-  canvas.backgroundColor = '#f0f3f5';
-  const ctx = canvas.getContext('2d');
 
-  const getMargin = (axis, axisLength) => {
-    if (axisLength < 256) return axis + (256 - axisLength) / 2;
-    return axis;
-  };
+  canvas.width = width;
+  canvas.height = height;
+  return canvas;
+}
 
+function getMargin(axis, axisLength, minSize) {
+  if (axisLength < minSize) return axis + (minSize - axisLength) / 2;
+  return 0;
+}
+
+function drawImage(ctx, image, crop, scaleX, scaleY) {
   ctx.drawImage(
     image,
     crop.x * scaleX,
     crop.y * scaleY,
     crop.width * scaleX,
     crop.height * scaleY,
-    getMargin(crop.x * scaleX, image.width),
-    getMargin(crop.y * scaleY, image.height),
+    getMargin(crop.x * scaleX, image.width, crop.minWidth),
+    getMargin(crop.y * scaleY, image.height, crop.minWidth),
     crop.width,
     crop.height
   );
+}
+
+function getCroppedImg(image, crop, fileName) {
+  const mainCanvas = prepareCanvas(crop.width, crop.height);
+
+  const scaleX = image.naturalWidth / image.width;
+  const scaleY = image.naturalHeight / image.height;
+
+  const ctx = mainCanvas.getContext('2d');
+
+  ctx.fillStyle = '#f0f3f5';
+  ctx.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
+
+  if (image.naturalWidth < crop.minWidth || image.naturalHeight < crop.minWidth) {
+    const tmpCanvas = prepareCanvas(image.naturalWidth, image.naturalHeight);
+
+    tmpCanvas.getContext('2d').drawImage(image, 0, 0);
+    ctx.shadowOffsetX = 10;
+    ctx.shadowOffsetY = 10;
+    ctx.shadowColor = 'black';
+    ctx.shadowBlur = 30;
+
+    drawImage(ctx, tmpCanvas, crop, scaleX, scaleY);
+  } else drawImage(ctx, image, crop, scaleX, scaleY);
 
   return new Promise(resolve => {
-    canvas.toBlob(blob => {
-      if (!blob) return;
-      // eslint-disable-next-line no-param-reassign
-      blob.name = fileName;
-      const fileUrl = window.URL.createObjectURL(blob);
-      resolve(fileUrl);
-    }, 'image/jpeg');
+    const b64 = mainCanvas.toDataURL('image/jpeg');
+    resolve(b64);
   });
 }
 
@@ -55,17 +74,17 @@ const Cropper = React.memo(
     const [crop, setCrop] = useState(DEFAULT_CROP_STATE);
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(null);
-    const [resultingBlob, setResultingBlob] = useState(null);
+    const [resultingB64, setResultingB64] = useState(null);
 
     useEffect(() => onStepChange(STEPS.CROP), []);
 
-    if (resultingBlob !== null)
+    if (resultingB64 !== null)
       return (
         <PictureUploader
-          blob={resultingBlob}
+          b64={resultingB64}
           onCancel={() => {
-            URL.revokeObjectURL(resultingBlob);
-            setResultingBlob(null);
+            URL.revokeObjectURL(resultingB64);
+            setResultingB64(null);
             setCrop(DEFAULT_CROP_STATE);
             onStepChange(STEPS.CROP);
           }}
@@ -77,28 +96,33 @@ const Cropper = React.memo(
         <Row className="align-items-center h-100">
           <Col xs="12" md="9" className="p-0 p-sm-2 p-md-3 mx-auto">
             <ListGroup>
-              <ReactCrop
-                src={file.preview}
-                crop={crop}
-                onChange={newCrop => {
-                  if (newCrop.width >= 256) setCrop(newCrop);
-                }}
-                onImageLoaded={img => setImage(img)}
-                style={{ backgroundColor: '#f0f3f5', minWidth: 256, minHeight: 256 }}
-                imageStyle={{ maxHeight: 'fit-content' }}
-              />
+              <ListGroupItem
+                tag="div"
+                className="border-0 text-center"
+                style={{ minWidth: 256, minHeight: 256 }}
+              >
+                <ReactCrop
+                  src={file.preview}
+                  crop={crop}
+                  onChange={newCrop => {
+                    if (newCrop.width >= 256) setCrop(newCrop);
+                  }}
+                  onImageLoaded={img => setImage(img)}
+                  style={{ backgroundColor: '#f0f3f5' }}
+                  imageStyle={{ maxHeight: 'fit-content', margin: 'auto' }}
+                />
+              </ListGroupItem>
               <ListGroupItem tag="div" className="border-0 text-center">
                 <LoadingButton
                   color="primary"
                   className="mx-2"
                   loading={loading}
                   onClick={async () => {
-                    console.log(image, crop.width, crop.height);
                     if (image && crop.width && crop.height) {
                       setLoading(true);
                       const croppedImageUrl = await getCroppedImg(image, crop, file.name);
                       onStepChange(STEPS.UPLOAD);
-                      setResultingBlob(croppedImageUrl);
+                      setResultingB64(croppedImageUrl);
                       setLoading(false);
                     }
                   }}
