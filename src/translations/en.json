@@ -74,6 +74,8 @@
     "invalid_file_type": "Invalid file submitted, only .jpg .jpeg and .png are accepted",
     "error_loading_pic": "An error appear when loading your file, please retry",
     "successful_upload": "Picture successfully uploaded",
+    "successful_delete": "Picture successfully deleted",
+    "successful_update": "Picture successfully updated",
     "drag-and-drop-pic": "Drag and drop a picture",
     "or-click": "or click to upload it"
   },

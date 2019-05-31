@@ -20,19 +20,30 @@ const uploadStatus = {
   SUCCESS: 2
 };
 
-const PictureUploader = ({ t, b64, onCancel }) => {
+const PictureUploader = ({ t, b64, onCancel, onUpload }) => {
   const [uploadState, setUploadState] = useState(uploadStatus.NONE);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const createMedium = useMutation(CREATE_MEDIUM, {
+  const createM = useMutation(CREATE_MEDIUM, {
     variables: {
       picture: b64,
       title,
       description
     },
-    refetchQueries: [{ query: GET_ALL_USER_MEDIA }],
-    update: () => setUploadState(uploadStatus.SUCCESS)
+    // refetchQueries: [{ query: GET_ALL_USER_MEDIA }],
+    update: (cache, { data: { createMedium } }) => {
+      const query = GET_ALL_USER_MEDIA;
+      const { medium } = createMedium;
+
+      const data = cache.readQuery({ query });
+      const newMedium = { ...medium };
+
+      data.getCurrentUser.media = [...data.getCurrentUser.media, newMedium];
+
+      cache.writeQuery({ query, data });
+      onUpload();
+    }
   });
 
   const isAnyError = title === '' || title.trim() === '';
@@ -79,11 +90,11 @@ const PictureUploader = ({ t, b64, onCancel }) => {
               color="primary"
               className="mx-2"
               loading={uploadState === uploadStatus.LOADING}
-              disabled={isAnyError}
+              disabled={isAnyError || uploadState === uploadStatus.LOADING}
               onClick={() => {
                 if (!isAnyError) {
                   setUploadState(uploadStatus.LOADING);
-                  createMedium().then(null, () => {
+                  createM().then(null, () => {
                     setUploadState(uploadStatus.ERROR);
                   });
                 }
@@ -104,7 +115,8 @@ const PictureUploader = ({ t, b64, onCancel }) => {
 PictureUploader.propTypes = {
   t: PropTypes.func.isRequired,
   b64: PropTypes.string.isRequired,
-  onCancel: PropTypes.func.isRequired
+  onCancel: PropTypes.func.isRequired,
+  onUpload: PropTypes.func.isRequired
 };
 
 export default withTranslation('picture_gallery')(PictureUploader);

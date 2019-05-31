@@ -39,7 +39,7 @@ function drawImage(ctx, image, crop, scaleX, scaleY) {
   );
 }
 
-function getCroppedImg(image, crop, fileName) {
+function getCroppedImg(image, crop) {
   const mainCanvas = prepareCanvas(crop.width, crop.height);
 
   const scaleX = image.naturalWidth / image.width;
@@ -47,7 +47,7 @@ function getCroppedImg(image, crop, fileName) {
 
   const ctx = mainCanvas.getContext('2d');
 
-  ctx.fillStyle = '#f0f3f5';
+  ctx.fillStyle = '#fff';
   ctx.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
 
   if (image.naturalWidth < crop.minWidth || image.naturalHeight < crop.minWidth) {
@@ -69,7 +69,7 @@ function getCroppedImg(image, crop, fileName) {
 }
 
 const Cropper = React.memo(
-  ({ t, file, onCancel, onStepChange }) => {
+  ({ t, file, onCancel, onStepChange, onUpload }) => {
     const DEFAULT_CROP_STATE = { aspect: 1, minWidth: 256, width: 256, height: 256, x: 0, y: 0 };
     const [crop, setCrop] = useState(DEFAULT_CROP_STATE);
     const [loading, setLoading] = useState(false);
@@ -88,6 +88,7 @@ const Cropper = React.memo(
             setCrop(DEFAULT_CROP_STATE);
             onStepChange(STEPS.CROP);
           }}
+          onUpload={onUpload}
         />
       );
 
@@ -149,7 +150,8 @@ Cropper.propTypes = {
     name: PropTypes.string.isRequired
   }).isRequired,
   onCancel: PropTypes.func.isRequired,
-  onStepChange: PropTypes.func.isRequired
+  onStepChange: PropTypes.func.isRequired,
+  onUpload: PropTypes.func.isRequired
 };
 
 export default withTranslation('crop')(Cropper);

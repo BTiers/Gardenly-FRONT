@@ -7,9 +7,13 @@ import { Col, Row } from 'reactstrap';
 import { FiImage } from 'react-icons/fi';
 
 const DropZone = ({ t, getRootProps, getInputProps }) => (
-  <Col style={{ border: '1px dashed #73818f' }} xs="12" className="p-3" {...getRootProps()}>
+  <div
+    style={{ border: '1px dashed #73818f' }}
+    className="d-flex w-100 justify-content-center p-3"
+    {...getRootProps()}
+  >
     <input {...getInputProps()} />
-    <Row className="align-items-center h-100">
+    <Row className="align-items-center w-100 h-100">
       <Col xs="9" md="6" className="mx-auto">
         <div className="my-4 text-center">
           <span>
@@ -22,7 +26,7 @@ const DropZone = ({ t, getRootProps, getInputProps }) => (
         </div>
       </Col>
     </Row>
-  </Col>
+  </div>
 );
 
 DropZone.propTypes = {

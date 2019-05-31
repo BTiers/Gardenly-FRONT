@@ -9,7 +9,7 @@ import Spinner from 'reactstrap/lib/Spinner';
 // Use <span>Your text</span> instead
 
 const LoadingButton = React.memo(
-  ({ loading, timeout, children, ...rest }) => {
+  ({ loading, timeout, children, className, ...rest }) => {
     const [spin, setSpin] = useState(false);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const LoadingButton = React.memo(
     }, [loading]);
 
     return (
-      <Button {...rest} className="clearfix position-relative">
+      <Button {...rest} className={`clearfix position-relative ${className}`}>
         {loading && spin ? (
           <Spinner
             tag="span"

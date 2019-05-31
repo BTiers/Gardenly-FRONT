@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { withTranslation } from 'react-i18next';
-import { Row, Col, Modal, ModalBody, ModalHeader, Button, Badge } from 'reactstrap';
+import { Row, Col, Modal, ModalBody, ModalHeader, Badge } from 'reactstrap';
 import { FiPlus, FiImage } from 'react-icons/fi';
 
 import Dropzone from 'react-dropzone';
@@ -12,7 +12,7 @@ import Cropper from './Cropper';
 
 import STEPS from './_AddPictureSteps';
 
-function AddPicture({ t, asButton }) {
+function AddPicture({ t, asVignette, onUpload }) {
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState({ acceptedFiles: [], rejectedFiles: [] });
   const [currentStep, setStep] = useState(STEPS.DROP);
@@ -26,15 +26,35 @@ function AddPicture({ t, asButton }) {
 
   return (
     <React.Fragment>
-      {asButton ? (
-        <Button
-          className="position-absolute"
-          style={{ right: '1rem', bottom: '1rem' }}
-          color="primary"
+      {asVignette ? (
+        <Col
+          lg="2"
+          md="3"
+          sm="6"
+          xs="12"
+          className="p-2"
+          role="button"
+          tabIndex={0}
+          onKeyPress={toggle}
           onClick={toggle}
         >
-          <FiPlus />
-        </Button>
+          <Row
+            noGutters
+            style={{ outline: '1px dashed #73818f' }}
+            className="align-items-center h-100 p-3"
+          >
+            <Col xs="9" md="6" className="mx-auto">
+              <div className="my-4 text-center">
+                <span>
+                  <div>
+                    <FiPlus size={30} className="text-primary" />
+                  </div>
+                  <div className="m-1">{t('add_picture')}</div>
+                </span>
+              </div>
+            </Col>
+          </Row>
+        </Col>
       ) : (
         <Col xs="12" className="py-3" style={{ minHeight: 'calc(100vh - 204px)' }}>
           <Row
@@ -94,6 +114,10 @@ function AddPicture({ t, asButton }) {
                     <Cropper
                       file={files.acceptedFiles[0]}
                       onCancel={() => setFiles({ acceptedFiles: [], rejectedFiles: [] })}
+                      onUpload={() => {
+                        toggle();
+                        onUpload();
+                      }}
                       onStepChange={step => setStep(step)}
                     />
                   );
@@ -109,12 +133,13 @@ function AddPicture({ t, asButton }) {
 }
 
 AddPicture.defaultProps = {
-  asButton: false
+  asVignette: false
 };
 
 AddPicture.propTypes = {
   t: PropTypes.func.isRequired,
-  asButton: PropTypes.bool
+  asVignette: PropTypes.bool,
+  onUpload: PropTypes.func.isRequired
 };
 
 export default withTranslation('picture_gallery')(AddPicture);
