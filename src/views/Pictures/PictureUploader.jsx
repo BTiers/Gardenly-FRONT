@@ -31,7 +31,6 @@ const PictureUploader = ({ t, b64, onCancel, onUpload }) => {
       title,
       description
     },
-    // refetchQueries: [{ query: GET_ALL_USER_MEDIA }],
     update: (cache, { data: { createMedium } }) => {
       const query = GET_ALL_USER_MEDIA;
       const { medium } = createMedium;
