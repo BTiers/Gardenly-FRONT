@@ -35,9 +35,9 @@ export default function PicturesGallery({ history }) {
         <CardBody>
           <Row>
             {media.length > 0 ? null : <AddPicture />}
-            {media.map(picture => {
-              return <Picture picture={picture} key={picture.id} />;
-            })}
+            {media.map(picture => (
+              <Picture picture={picture} key={picture.id} />
+            ))}
           </Row>
         </CardBody>
       </Card>

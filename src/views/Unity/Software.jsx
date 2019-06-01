@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Unity, { UnityContent } from 'react-unity-webgl';
 import { Prompt } from 'react-router-dom';
-import ReactResizeDetector from 'react-resize-detector';
 import { withTranslation } from 'react-i18next';
 
 import gql from 'graphql-tag';
@@ -38,18 +37,6 @@ class Software extends Component {
     this.unityContent.on('unsavedWork', state => {
       this.setState({ readyToQuit: state === 1 });
     });
-  }
-
-  static onResize() {
-    const appContent = document.getElementById('AppContentWrapper');
-    const canvas = document.getElementById('#canvas');
-
-    if (canvas !== null && appContent !== null) {
-      if (canvas.width !== appContent.offsetWidth || canvas.height !== appContent.offsetHeight) {
-        canvas.width = appContent.offsetWidth;
-        canvas.height = appContent.offsetHeight;
-      }
-    }
   }
 
   render() {
@@ -97,15 +84,7 @@ class Software extends Component {
             });
           }}
         </ApolloConsumer>
-        <ReactResizeDetector
-          handleWidth
-          handleHeight
-          onResize={Software.onResize}
-          resizableElementId="AppContentWrapper"
-          refreshMode="debounce"
-          refreshRate={30}
-        />
-        <Unity unityContent={this.unityContent} />
+        <Unity unityContent={this.unityContent} width="100%" height="100%" />
       </React.Fragment>
     );
   }

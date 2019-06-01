@@ -35,9 +35,12 @@ function DefaultLayout(props) {
   const { data, error, loading } = useQuery(USER_GARDENS_NAMES);
   const { data: userData, error: userError, loading: userLoading } = useQuery(GET_USERS);
 
+  // FIXME: Looks to me a bit hacky to do this here
+  const isOnUnity = props.location.pathname.match(/\/garden\/.+\/edit/g);
+
   const logOut = useMutation(DELETE_SESSION, {
     update: () => {
-      cookie.set('isLoggedIn', "false", { path: '/' });
+      cookie.set('isLoggedIn', 'false', { path: '/' });
       props.history.push('/login');
     }
   });
@@ -89,8 +92,15 @@ function DefaultLayout(props) {
           <AppSidebarMinimizer />
         </AppSidebar>
         <main className="main">
-          <AppBreadcrumb appRoutes={routes} />
-          <Container fluid>
+          {isOnUnity ? null : <AppBreadcrumb appRoutes={routes} />}
+          <Container
+            fluid
+            style={{
+              padding: isOnUnity ? '0' : undefined,
+              height: isOnUnity ? 'calc(100vh - 55px)' : undefined,
+              overflowY: isOnUnity ? 'hidden' : undefined
+            }}
+          >
             <Suspense fallback={onLoading()}>
               <Switch>
                 {routes.map((route, idx) => {
@@ -128,11 +138,13 @@ function DefaultLayout(props) {
           </Suspense>
         </AppAside>
       </div>
-      <AppFooter>
-        <Suspense fallback={onLoading()}>
-          <DefaultFooter />
-        </Suspense>
-      </AppFooter>
+      {isOnUnity ? null : (
+        <AppFooter>
+          <Suspense fallback={onLoading()}>
+            <DefaultFooter />
+          </Suspense>
+        </AppFooter>
+      )}
     </div>
   );
 }
