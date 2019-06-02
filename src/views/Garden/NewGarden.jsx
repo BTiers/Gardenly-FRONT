@@ -1,55 +1,42 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import styled from 'styled-components';
+import { Card, CardBody, Col, Row } from 'reactstrap';
 import { FaTree } from 'react-icons/fa';
 
 import { withTranslation } from 'react-i18next';
 
+import ButtonAsAnchor from 'components/buttons/ButtonAsAnchor';
 import CreateGarden from './CreateGarden';
-
-const AbsDiv = styled.div`
-  min-height: 100%;
-  min-width: 100%;
-  display: flex;
-`;
-
-const CenterDiv = styled.div`
-  min-height: 100%;
-  width: 200px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-`;
-
-const LargeTree = styled(FaTree)`
-  margin: auto;
-  margin-bottom: 1rem;
-`;
-
-const InteractiveSpan = styled.span`
-  cursor: pointer;
-
-  &:hover {
-  }
-`;
 
 function NewGarden({ t, onCreate }) {
   const [open, toggleModal] = useState(false);
 
   return (
-    <AbsDiv>
-      <CenterDiv>
-        <LargeTree size={100} />
-        <h4 className="text-center">{t('new_garden')}</h4>
-        <h5 className="text-center">
-          <InteractiveSpan onClick={() => toggleModal(!open)}>{t('create_one')}</InteractiveSpan>
-        </h5>
-      </CenterDiv>
-      <CreateGarden open={open} toggleModal={toggleModal} onCreate={onCreate} />
-    </AbsDiv>
+    <div className="animated fadeIn">
+      <Card>
+        <CardBody style={{ minHeight: 'calc(100vh - 204px)' }}>
+          <Row
+            noGutters
+            className="align-items-center"
+            style={{ minHeight: 'calc(100vh - 204px)' }}
+          >
+            <Col className="text-center">
+              <span className="text-info text-center">
+                <FaTree size={100} className="mb-3" />
+              </span>
+              <h4>{t('new_garden')}</h4>
+              <h5>
+                <ButtonAsAnchor className="text-info" onClick={() => toggleModal(!open)}>
+                  {t('create_one')}
+                </ButtonAsAnchor>
+              </h5>
+              <CreateGarden open={open} toggleModal={toggleModal} onCreate={onCreate} />
+            </Col>
+          </Row>
+        </CardBody>
+      </Card>
+    </div>
   );
 }
 
