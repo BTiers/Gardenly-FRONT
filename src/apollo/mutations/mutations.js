@@ -44,10 +44,13 @@ export const CREATE_MEDIUM = gql`
   mutation CreateMedium($picture: String!, $title: String!, $description: String) {
     createMedium(input: { picture: $picture, title: $title, description: $description }) {
       medium {
-        description
         id
-        picture
         title
+        description
+        picture
+        width
+        height
+        thumbnail
       }
     }
   }
@@ -57,10 +60,13 @@ export const UPDATE_MEDIUM = gql`
   mutation UpdateMedium($id: ID!, $title: String!, $description: String) {
     updateMedium(input: { id: $id, title: $title, description: $description }) {
       medium {
-        description
         id
-        picture
         title
+        description
+        picture
+        width
+        height
+        thumbnail
       }
     }
   }
@@ -95,7 +101,11 @@ export const UPDATE_GARDEN = gql`
         country: $country
       }
     ) {
-      errors
+      garden {
+        id
+        data
+        name
+      }
     }
   }
 `;
@@ -125,7 +135,6 @@ export const CREATE_GARDEN = gql`
         country
         datas: data
       }
-      errors
     }
   }
 `;
