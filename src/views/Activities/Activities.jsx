@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Row, Col, Card, CardBody } from 'reactstrap';
+import ToolTips from '../../components/tooltips/tooltips';
 
 function FakeActivity() {
   return (
@@ -16,7 +17,9 @@ function FakeActivity() {
         <Col xs="8">
           <Row>
             <h4 className="text-uppercase">
-              <span className="text-primary">Arroser</span> mes roses
+              <ToolTips Name="rose" link="/flowers">
+                <span className="text-primary">Arroser</span> mes roses
+              </ToolTips>
             </h4>
           </Row>
           <Row>
@@ -41,12 +44,8 @@ function Activities() {
         <Col xs="12">
           <Card>
             <CardBody className="pb-0">
-              <h2 className="text-primary text-uppercase font-weight-bold">
-                Cette semaine
-              </h2>
-              <h4 className="text-dark text-uppercase font-weight-bold">
-                Mercredi 14 Juin 2019
-              </h4>
+              <h2 className="text-primary text-uppercase font-weight-bold">Cette semaine</h2>
+              <h4 className="text-dark text-uppercase font-weight-bold">Mercredi 14 Juin 2019</h4>
               <hr />
               <Row>
                 <FakeActivity />

@@ -81,7 +81,7 @@ export const GET_ALL_PLANTS = gql`
     $groundTypeIds: [ID!]
     $periodicityIds: [ID!]
     $typeIds: [ID!]
-    $first: Int!
+    $first: Int
     $after: String
   ) {
     getAllPlants(
