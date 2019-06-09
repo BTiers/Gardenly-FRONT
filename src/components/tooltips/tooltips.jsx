@@ -33,16 +33,14 @@ export default function ToolTips({ children, Name, link }) {
         <Popover placement="top" isOpen={tooltipsOpen} target={Name}>
           <PopoverHeader>{plants.edges[0].node.name}</PopoverHeader>
           <PopoverBody>
-            <div className="ToolTipsMedia">
-              <a href="#" className="pull-left">
-                <img
-                  src={plantTips.thumbnail}
-                  className="MediaObject"
-                  alt={plantTips.name}
-                  width="100%"
-                  height="100%"
-                />
-              </a>
+            <div className="ToolTipsMedia pull-left">
+              <img
+                src={plantTips.thumbnail}
+                className="MediaObject"
+                alt={plantTips.name}
+                width="100%"
+                height="100%"
+              />
               <div className="ToolTipsBody">
                 <p>{plantTips.description}</p>
               </div>
