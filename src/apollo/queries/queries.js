@@ -75,7 +75,7 @@ export const GET_LUNAR_PHASES = gql`
 `;
 
 export const GET_PLANT = gql`
-  query getPlant($id: String!) {
+  query getPlant($id: ID!) {
     getPlant(id: $id) {
       id
       name

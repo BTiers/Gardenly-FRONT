@@ -4,55 +4,52 @@ import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import Link from 'react-router-dom/Link';
 import { GET_PLANT } from 'apollo/queries/queries';
 
-export default function FlowerTooltip({ children, id, link }) {
+export default function FlowerTooltip({ children, id, link, plantId }) {
   const [tooltipsOpen, setTooltipsOpen] = useState(false);
-  const [plantThumbnail, setPlantThumbnail] = useState('');
-  const [body, setBody] = useState('');
-  const [plantName, setPlantName] = useState('');
 
-  const { data, loading, error } = useQuery(GET_PLANT, {
-    variables: {
-      id: id
-    }
-  });
+  function PopoverQuery({ id, plantId }) {
+    const { data, loading, error } = useQuery(GET_PLANT, {
+      variables: {
+        id: plantId
+      }
+    });
 
-  function initToolTip() {
-    setTooltipsOpen(true);
-    if (data) {
-      setBody(data.description);
-      setPlantThumbnail(data.thumbnail);
-      setPlantName(data.name);
-    } else {
-      if (error) setBody('Une erreur est survenue, reesayez plus tard.');
-      if (loading) setBody('Chargement.');
-      setPlantThumbnail('');
-      setPlantName('');
+    if (error) {
+      console.error(error);
+      return null;
     }
-    console.log(body);
+    if (loading) return null;
+
+    const {
+      getPlant: { name, description, thumbnail }
+    } = data;
+
+    return (
+      <Popover placement="top" isOpen={tooltipsOpen} target={id}>
+        <PopoverHeader>{name}</PopoverHeader>
+        <PopoverBody>
+          <div className="ToolTipsMedia pull-left">
+            <img src={thumbnail} className="MediaObject" alt={name} width="100%" height="100%" />
+            <div className="ToolTipsBody">
+              <p>{description}</p>
+            </div>
+          </div>
+        </PopoverBody>
+      </Popover>
+    );
   }
 
   return (
-    <div id={id} onMouseOver={initToolTip} onMouseOut={() => setTooltipsOpen(false)}>
-      <Link to={link}>{children}</Link>
-      {body ? (
-        <Popover placement="top" isOpen={tooltipsOpen} target={id}>
-          <PopoverHeader>{plantName}</PopoverHeader>
-          <PopoverBody>
-            <div className="ToolTipsMedia pull-left">
-              <img
-                src={plantThumbnail}
-                className="MediaObject"
-                alt={plantName}
-                width="100%"
-                height="100%"
-              />
-              <div className="ToolTipsBody">
-                <p>{body}</p>
-              </div>
-            </div>
-          </PopoverBody>
-        </Popover>
-      ) : null}
-    </div>
+    <>
+      <Link
+        id={id}
+        onMouseOver={() => setTooltipsOpen(true)}
+        onMouseOut={() => setTooltipsOpen(false)}
+        to={link}
+      >
+        {children}
+      </Link>
+      {tooltipsOpen ? <PopoverQuery id={id} plantId={plantId} /> : null}
+    </>
   );
 }

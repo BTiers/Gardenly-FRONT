@@ -18,7 +18,11 @@ function FakeActivity() {
           <Row>
             <h4 className="text-uppercase">
               <span className="text-primary">Arroser mes </span>
-              <FlowerTooltip id="58ec8c67-411e-4b4c-9bb0-e88ad18a8a1b" link="/flowers">
+              <FlowerTooltip
+                id="rose"
+                link="/flowers"
+                plantId="58ec8c67-411e-4b4c-9bb0-e88ad18a8a1b"
+              >
                 <span className="text-primary">roses</span>
               </FlowerTooltip>
             </h4>
