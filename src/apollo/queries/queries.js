@@ -74,6 +74,39 @@ export const GET_LUNAR_PHASES = gql`
   }
 `;
 
+export const GET_PLANT = gql`
+  query getPlant($id: String!) {
+    getPlant(id: $id) {
+      id
+      name
+      description
+      tips
+      thumbnail
+      rusticity
+      waterNeed
+      blossomingStart
+      blossomingEnd
+      updatedAt
+      colors {
+        name
+      }
+      groundTypes {
+        name
+      }
+      heightLow
+      heightHigh
+      periodicities {
+        name
+      }
+      shapes {
+        name
+      }
+      phRangeLow
+      phRangeHigh
+    }
+  }
+`;
+
 export const GET_ALL_PLANTS = gql`
   query getAllPlants(
     $name: String!
