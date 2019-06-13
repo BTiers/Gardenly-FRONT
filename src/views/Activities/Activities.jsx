@@ -3,7 +3,7 @@ import React from 'react';
 import { Row, Col, Card, CardBody } from 'reactstrap';
 import FlowerTooltip from '../../components/tooltips/FlowerTooltip';
 
-function FakeActivity() {
+function FakeActivity({ id }) {
   return (
     <Col s="12" md="6" xl="4" className="my-2">
       <Row>
@@ -18,11 +18,7 @@ function FakeActivity() {
           <Row>
             <h4 className="text-uppercase">
               <span className="text-primary">Arroser mes </span>
-              <FlowerTooltip
-                id="rose"
-                link="/flowers"
-                plantId="58ec8c67-411e-4b4c-9bb0-e88ad18a8a1b"
-              >
+              <FlowerTooltip id={id} link="/flowers" plantId="58ec8c67-411e-4b4c-9bb0-e88ad18a8a1b">
                 <span className="text-primary">roses</span>
               </FlowerTooltip>
             </h4>
@@ -53,8 +49,8 @@ function Activities() {
               <h4 className="text-dark text-uppercase font-weight-bold">Mercredi 14 Juin 2019</h4>
               <hr />
               <Row>
-                <FakeActivity />
-                <FakeActivity />
+                <FakeActivity id="test1" />
+                <FakeActivity id="test2" />
               </Row>
               <h2 className="mt-3 text-primary text-uppercase font-weight-bold">
                 Les tâches à prevoir
@@ -64,8 +60,8 @@ function Activities() {
               </h4>
               <hr />
               <Row>
-                <FakeActivity />
-                <FakeActivity />
+                <FakeActivity id="test3" />
+                <FakeActivity id="test4" />
               </Row>
             </CardBody>
           </Card>
