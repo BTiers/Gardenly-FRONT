@@ -6,14 +6,14 @@ import { useQuery } from 'react-apollo-hooks';
 import { Container } from 'reactstrap';
 
 import Software from 'views/Unity/Software';
+import { USER_GARDENS } from 'apollo/queries/queries';
 import NewGarden from './NewGarden';
 import Garden from './Garden';
-import { USER_GARDENS } from 'apollo/queries/queries';
 
 function GardensPage({ history }) {
   const { data, error, loading } = useQuery(USER_GARDENS);
 
-  if (loading) return  <div className="animated fadeIn pt-1 text-center">Loading...</div>;
+  if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
   if (error) {
     console.error(error);
     return 'Error';
@@ -71,8 +71,7 @@ function GardensPage({ history }) {
                 country={foundEntry.country}
               />
             );
-//            history.push(`/404`);
-            return null;
+          return null;
         }}
       />
     </Switch>

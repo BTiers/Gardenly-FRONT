@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Card, CardBody, Col, Row } from 'reactstrap';
 import { FaTree } from 'react-icons/fa';
 
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import ButtonAsAnchor from 'components/buttons/ButtonAsAnchor';
 import CreateGarden from './CreateGarden';
@@ -41,8 +41,7 @@ function NewGarden({ t, onCreate }) {
 }
 
 NewGarden.propTypes = {
-  t: PropTypes.func.isRequired,
   onCreate: PropTypes.func.isRequired
 };
 
-export default withTranslation('gardens')(NewGarden);
+export default NewGarden;

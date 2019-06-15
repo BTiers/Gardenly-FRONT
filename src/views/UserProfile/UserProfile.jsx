@@ -282,7 +282,7 @@ export default function UserProfile() {
   return (
     <div className="animated fadeIn">
       <Card>
-        <CardBody>
+        <CardBody style={{ minHeight: 'calc(100vh - 204px)' }}>
           <Row>
             <Col sm="3" className="font-weight-bold small border-right border-secondary">
               <ListGroup className="list-group-accent list-group-item-action" tag="div">
