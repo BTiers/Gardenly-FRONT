@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
@@ -6,8 +7,10 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+
 import ActionCable from 'actioncable';
 import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink';
+
 // import Cookies from 'universal-cookie';
 
 export default function Store({ children }) {
@@ -36,7 +39,7 @@ export default function Store({ children }) {
 
   const client = new ApolloClient({
     link,
-    cache: new InMemoryCache()
+    cache: new InMemoryCache({ dataIdFromObject: o => o.id })
   });
 
   return (

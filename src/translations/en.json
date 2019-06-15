@@ -62,14 +62,22 @@
     "back": "Back",
     "upload": "Upload",
     "choose_title": "Choose the picture title",
-    "description": "Description",
+    "description": "Description (Optional)",
     "choose_description": "Describe your picture",
     "delete_validation": "Delete this picture ?",
     "no_retrieve_warning": "You will not be able to retrieve it afterward",
+    "no_picture_yet": "No picture yet",
+    "get_started_uploading": "click to start uploading some",
     "add_picture": "Add a picture",
+    "crop-image": "Crop your image",
+    "infos": "Additional informations",
     "invalid_file_type": "Invalid file submitted, only .jpg .jpeg and .png are accepted",
     "error_loading_pic": "An error appear when loading your file, please retry",
-    "successful_upload": "Picture successfully uploaded"
+    "successful_upload": "Picture successfully uploaded",
+    "successful_delete": "Picture successfully deleted",
+    "successful_update": "Picture successfully updated",
+    "drag-and-drop-pic": "Drag and drop a picture",
+    "or-click": "or click to upload it"
   },
   "gardens": {
     "garden": "Garden",
@@ -103,5 +111,9 @@
     "more_info": "Select an element in the plan to display more information",
     "flowerbed_name": "Flowerbed name",
     "ground_type": "Ground type"
+  },
+  "crop": {
+    "validate": "Validate",
+    "cancel": "Cancel"
   }
 }

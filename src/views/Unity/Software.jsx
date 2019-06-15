@@ -69,6 +69,7 @@ class Software extends Component {
           {client => {
             this.unityContent.on('query', async payload => {
               const p_payload = JSON.parse(payload);
+
               const { data, errors } = await client.query({
                 query: gql`
                   ${p_payload.query}
