@@ -29,7 +29,9 @@ function PopoverContent({ id, plantId }) {
         <div className="tooltips-media pull-left">
           <img src={thumbnail} className="media-object" alt={name} width="100%" height="100%" />
           <div className="tooltips-body">
+            <br />
             <p>{description}</p>
+            <br />
           </div>
         </div>
       </PopoverBody>
