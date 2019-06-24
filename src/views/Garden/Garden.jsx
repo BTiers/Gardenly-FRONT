@@ -17,7 +17,7 @@ const SizedRow = styled(Row)`
   height: calc(100vh - 99px);
 `;
 
-function Garden({ t, name, data }) {
+function Garden({ t, data }) {
   const [focusElement, setFocusElement] = useState(null);
 
   return (
@@ -25,7 +25,7 @@ function Garden({ t, name, data }) {
       <SizedRow className="w-100 p-3" noGutters>
         <Col md="8" className="h-100">
           <Card className="h-100 mh-100">
-            <CardHeader>{name}</CardHeader>
+            <CardHeader>{data.name}</CardHeader>
             <CardBody>
               <GardenCanvas gardenData={data} onElementFocus={e => setFocusElement(e)} />
             </CardBody>
@@ -60,7 +60,7 @@ function Garden({ t, name, data }) {
         </Col>
       </SizedRow>
       <GardenActivity />
-      <Link to={`/garden/${name}/edit`}>
+      <Link to={`/garden/${data.name}/edit`}>
         <Button id="GoToEditor">
           <FiEdit />
         </Button>
@@ -74,7 +74,6 @@ function Garden({ t, name, data }) {
 
 Garden.propTypes = {
   t: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
   data: PropTypes.shape({}).isRequired
 };
 
