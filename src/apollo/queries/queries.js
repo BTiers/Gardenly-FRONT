@@ -7,7 +7,35 @@ export const USER_GARDENS = gql`
         id
         name
         country
-        datas: data
+        slug
+        tiles {
+          id
+          key
+          name
+          data
+          groundType {
+            id
+            name
+          }
+        }
+        staticElements {
+          id
+          key
+          data
+        }
+        plants {
+          id
+          data
+          key
+          age
+          plant {
+            id
+            name
+          }
+          sunExposition
+          age
+        }
+        data
       }
     }
   }
@@ -19,6 +47,7 @@ export const USER_GARDENS_NAMES = gql`
       nodes {
         id
         name
+        slug
       }
     }
   }

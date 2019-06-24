@@ -19,7 +19,7 @@ const StageContainer = styled.div`
 `;
 
 export default function GardenCanvas({ onElementFocus, gardenData: { garden, boundaries } }) {
-  const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
+/*  const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
   const [scale, setScale] = useState({ factor: 1, offset: { x: 0, y: 0 } });
   const [focus, setFocus] = useState(null);
   const [bounds] = useBounds(boundaries);
@@ -35,10 +35,10 @@ export default function GardenCanvas({ onElementFocus, gardenData: { garden, bou
     const offsetY = (stageSize.height + PADDING - bounds.height * calcScale) / 2;
 
     setScale({ factor: calcScale, offset: { x: offsetX, y: offsetY } });
-  }, [bounds, stageSize]);
+  }, [bounds, stageSize]);*/
 
-  return (
-    <React.Fragment>
+  return (null);
+/*    <React.Fragment>
       <StageContainer id="StageContainer">
         <Stage
           width={stageSize.width}
@@ -76,7 +76,7 @@ export default function GardenCanvas({ onElementFocus, gardenData: { garden, bou
         resizableElementId="StageContainer"
       />
     </React.Fragment>
-  );
+  );*/
 }
 
 GardenCanvas.propTypes = {

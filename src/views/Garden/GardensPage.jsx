@@ -41,11 +41,7 @@ function GardensPage({ history }) {
               }
               return (
                 <Container fluid className="h-100 w-100">
-                  <Garden
-                    name={foundEntry.name}
-                    data={JSON.parse(foundEntry.datas)}
-                    key={`Garden${foundEntry.name}`}
-                  />
+                  <Garden data={foundEntry} key={`Garden${foundEntry.slug}`} />
                 </Container>
               );
             }
@@ -66,7 +62,7 @@ function GardensPage({ history }) {
             return (
               <Software
                 id={foundEntry.id}
-                data={foundEntry.datas}
+                data={foundEntry}
                 name={foundEntry.name}
                 country={foundEntry.country}
               />

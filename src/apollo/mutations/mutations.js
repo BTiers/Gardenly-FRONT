@@ -87,6 +87,9 @@ export const UPDATE_GARDEN = gql`
     $id: ID!
     $name: String
     $data: String
+    $additions: String
+    $modifications: String
+    $deletions: String
     $latitude: String
     $longitude: String
     $country: String
@@ -96,6 +99,9 @@ export const UPDATE_GARDEN = gql`
         id: $id
         name: $name
         data: $data
+        additions: $additions
+        modifications: $modifications
+        deletions: $deletions
         latitude: $latitude
         longitude: $longitude
         country: $country
@@ -103,8 +109,37 @@ export const UPDATE_GARDEN = gql`
     ) {
       garden {
         id
-        data
         name
+        country
+        slug
+        tiles {
+          id
+          key
+          name
+          data
+          groundType {
+            id
+            name
+          }
+        }
+        staticElements {
+          id
+          key
+          data
+        }
+        plants {
+          id
+          data
+          key
+          age
+          plant {
+            id
+            name
+          }
+          sunExposition
+          age
+        }
+        data
       }
     }
   }

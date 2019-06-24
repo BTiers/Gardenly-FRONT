@@ -9,7 +9,8 @@ import { useTranslation } from 'react-i18next';
 import ButtonAsAnchor from 'components/buttons/ButtonAsAnchor';
 import CreateGarden from './CreateGarden';
 
-function NewGarden({ t, onCreate }) {
+function NewGarden({ onCreate }) {
+  const [t] = useTranslation('gardens');
   const [open, toggleModal] = useState(false);
 
   return (
