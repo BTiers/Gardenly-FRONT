@@ -190,7 +190,7 @@ function FlowerDB({ t }) {
         {query ? (
           <FlowersTable query={query} />
         ) : (
-          <FlowersEmptyTable message="Saisissez votre recherce" />
+          <FlowersEmptyTable message="Saisissez votre recherche" />
         )}
       </CardBody>
     </Card>
