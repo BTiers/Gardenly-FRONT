@@ -35,6 +35,7 @@ import {
 } from 'utils/input_validation/input_validation';
 
 import InputWithValidation from 'components/input/InputWithValidation';
+import FriendsView from './FriendsView';
 import { GET_USERS } from '../../apollo/queries/queries';
 import LoadingButton from '../../components/buttons/LoadingButton';
 
@@ -326,6 +327,16 @@ export default function UserProfile() {
                     <span className="font-weight-bold text-muted text-uppercase">Compte</span>
                   </NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={classNames({
+                      active: activeTab === '3'
+                    })}
+                    onClick={() => setActiveTab('3')}
+                  >
+                    <span className="font-weight-bold text-muted text-uppercase">Friends</span>
+                  </NavLink>
+                </NavItem>
               </Nav>
               <TabContent
                 activeTab={activeTab}
@@ -336,6 +347,9 @@ export default function UserProfile() {
                 </TabPane>
                 <TabPane tabId="2">
                   <AccountOverview />
+                </TabPane>
+                <TabPane tabId="3">
+                  <FriendsView />
                 </TabPane>
               </TabContent>
             </Col>
