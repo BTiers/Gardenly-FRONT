@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useSubscription } from 'react-apollo-hooks';
 import { GET_USER_ROOMS_WITH_MESSAGES } from 'apollo/queries/queries';
 import { CHAT_SUBSCRIPTION } from 'apollo/subscriptions/chat';
+import useMedia from 'hooks/UseMedia';
 
 export default function AsideChatPreview({ setChatRoom, chatRoom }) {
   const { data, error, loading } = useQuery(GET_USER_ROOMS_WITH_MESSAGES);
@@ -48,6 +49,8 @@ function Rooms({ rooms: initialRooms, chatRoom, setChatRoom }) {
   };
 
   const faker = require('faker');
+  const mobile = useMedia('(max-width: 768px)');
+
   return (
     <React.Fragment>
       {rooms.map(room => {
@@ -57,8 +60,16 @@ function Rooms({ rooms: initialRooms, chatRoom, setChatRoom }) {
         };
 
         return (
-          <React.Fragment>
-            <div className="message clearfix" key={room.id} onClick={() => setChatRoom(room)}>
+          <React.Fragment key={room.id}>
+            <div
+              className="message clearfix"
+              onClick={() => {
+                if (mobile) {
+                  document.body.classList.remove('aside-menu-show');
+                }
+                setChatRoom(room);
+              }}
+            >
               <div className="py-3 mr-3 float-left">
                 <div className="avatar">
                   <img

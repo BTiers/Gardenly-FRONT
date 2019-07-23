@@ -112,6 +112,10 @@
     "flowerbed_name": "Flowerbed name",
     "ground_type": "Ground type"
   },
+  "chat": {
+    "send": "Send",
+    "enter_message": "Type your message here..."
+  },
   "crop": {
     "validate": "Validate",
     "cancel": "Cancel"

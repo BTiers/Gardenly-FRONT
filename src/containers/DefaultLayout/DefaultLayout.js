@@ -1,10 +1,10 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import Cookies from 'universal-cookie';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 
-import { USER_GARDENS_NAMES } from 'apollo/queries/queries';
+import { USER_GARDENS_NAMES, GET_USERS } from 'apollo/queries/queries';
 import { DELETE_SESSION } from 'apollo/mutations/mutations';
 
 import {
@@ -23,7 +23,6 @@ import {
 import navigation from '../../_nav';
 // routes config
 import routes from '../../routes';
-import { GET_USERS } from '../../apollo/queries/queries';
 
 const cookie = new Cookies();
 
@@ -32,6 +31,7 @@ const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 function DefaultLayout(props) {
+  const [asideActiveTab, asideSetActiveTab] = useState('1');
   const { data, error, loading } = useQuery(USER_GARDENS_NAMES);
   const { data: userData, error: userError, loading: userLoading } = useQuery(GET_USERS);
 
@@ -78,7 +78,11 @@ function DefaultLayout(props) {
     <div className="app">
       <AppHeader fixed>
         <Suspense fallback={onLoading()}>
-          <DefaultHeader onLogout={e => signOut(e)} history={props.history} />
+          <DefaultHeader
+            asideSetActiveTab={asideSetActiveTab}
+            onLogout={e => signOut(e)}
+            history={props.history}
+          />
         </Suspense>
       </AppHeader>
       <div className="app-body">
@@ -132,9 +136,9 @@ function DefaultLayout(props) {
             </Suspense>
           </Container>
         </main>
-        <AppAside fixed>
+        <AppAside>
           <Suspense fallback={onLoading()}>
-            <DefaultAside />
+            <DefaultAside activeTab={asideActiveTab} setActiveTab={asideSetActiveTab} />
           </Suspense>
         </AppAside>
       </div>

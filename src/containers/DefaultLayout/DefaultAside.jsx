@@ -1,15 +1,13 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { Nav, NavItem, NavLink, TabContent, TabPane, ListGroup, ListGroupItem } from 'reactstrap';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { AppSwitch } from '@coreui/react';
 import AsideChatPreview from './AsideChatPreview';
 import Chat from './Chat';
 
-export default function DefaultAside() {
+export default function DefaultAside({ activeTab, setActiveTab }) {
   const faker = require('faker');
   const [chatRoom, setChatRoom] = useState();
-  const [activeTab, setActiveTab] = useState('1');
 
   function toggle(tab) {
     if (activeTab !== tab) {

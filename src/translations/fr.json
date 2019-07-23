@@ -109,6 +109,10 @@
     "flowerbed_name": "Nom du parterre",
     "ground_type": "Type de sol"
   },
+  "chat": {
+    "send": "Envoyer",
+    "enter_message": "Entrez votre message ici..."
+  },
   "crop": {
     "validate": "Valider",
     "cancel": "Annuler"
