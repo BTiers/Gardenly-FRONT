@@ -8,11 +8,14 @@ import {
   CHANGE_RELATION,
   DELETE_RELATION
 } from 'apollo/queries/relations';
+import { GET_USER_ROOMS_WITH_MESSAGES } from 'apollo/queries/queries';
+import { CREATE_ROOM } from 'apollo/mutations/chat';
 
 export default function FollowersView() {
   const sendFriendRequest = useMutation(CREATE_RELATION);
   const changeRelation = useMutation(CHANGE_RELATION);
   const deleteRelation = useMutation(DELETE_RELATION);
+  const createRoom = useMutation(CREATE_ROOM);
 
   const { loading, data, error } = useQuery(USER_RELATIONS);
   const [friendName, setFriendName] = useState('');
@@ -24,10 +27,7 @@ export default function FollowersView() {
   }
   if (loading) return <p>Loading</p>;
 
-  console.log({ data, error, loading });
-
   function friendRequest() {
-    console.log('Friend Requested ??');
     sendFriendRequest({
       variables: { username: friendName, state: 0 },
       update: (cache, mutationResult) => {
@@ -35,8 +35,6 @@ export default function FollowersView() {
         const data = cache.readQuery({ query });
 
         data.user.relations.push(mutationResult.data.createRelation.relation);
-
-        console.log('Before writeQuery', { data });
 
         cache.writeQuery({ query, data });
       }
@@ -53,8 +51,28 @@ export default function FollowersView() {
     );
   }
 
-  function acceptFriend(id) {
-    changeRelation({ variables: { id, state: 1 } }).then(
+  function acceptFriend(relationId, friendId, name) {
+    const users = [friendId];
+    changeRelation({
+      variables: { id: relationId, state: 1 },
+      update: () =>
+        createRoom({
+          variables: { name, users },
+          update: (cache, mutationResult) => {
+            const query = GET_USER_ROOMS_WITH_MESSAGES;
+            const data = cache.readQuery({ query });
+
+            data.getAllUserRooms.nodes.push(mutationResult.data.createRoom.room);
+
+            cache.writeQuery({ query, data });
+          }
+        }).then(
+          result => {},
+          error => {
+            console.error(error);
+          }
+        )
+    }).then(
       result => {},
       error => {
         console.error(error);
@@ -120,11 +138,11 @@ export default function FollowersView() {
         </Alert>
       ) : null}
       <hr />
-      <Container>
+      <Container className="p-0">
         {friends.length === 0 ? <div>You have no friends</div> : null}
         {friends.map(e => (
-          <Row key={e.id}>
-            <span className="ml-0 mt-auto mb-auto">{e.username}</span>
+          <Row className="m-0" key={e.id}>
+            <Button className="ml-0 mt-auto mb-auto">{e.username}</Button>
             <Button
               onClick={() => deleteFriend(e.relation_id)}
               className="r-0 mr-0 ml-auto mt-auto mb-auto"
@@ -135,19 +153,21 @@ export default function FollowersView() {
           </Row>
         ))}
         <hr />
-        <h4>Pending Friend Request</h4>
+        <h5>Pending Friend Request</h5>
+        {myFriendRequests.length === 0 ? <div>You have no pending friend Request</div> : null}
         {myFriendRequests.map(e => (
-          <Row key={e.id}>
-            <span className="ml-0 mt-auto mb-auto">{e.username}</span>
+          <Row className="m-0" key={e.id}>
+            <h6 className="ml-0 mt-auto mb-auto">{e.username}</h6>
           </Row>
         ))}
         <hr />
-        <h4>Received Friend Request</h4>
+        <h5>Received Friend Request</h5>
+        {gotenFriendRequests.length === 0 ? <div>You didn't receive a friend Request</div> : null}
         {gotenFriendRequests.map(e => (
-          <Row key={e.id}>
+          <Row className="m-0" key={e.id}>
             <span className="ml-0 mt-auto mb-auto">{e.username}</span>
             <Button
-              onClick={() => acceptFriend(e.relation_id)}
+              onClick={() => acceptFriend(e.relation_id, e.id, e.username)}
               className="r-0 mr-0 ml-auto mt-auto mb-auto"
               color="primary"
             >

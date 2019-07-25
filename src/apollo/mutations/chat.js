@@ -14,3 +14,24 @@ export const CREATE_MESSAGE = gql`
     }
   }
 `;
+
+export const CREATE_ROOM = gql`
+  mutation createRoom($name: String!, $users: [ID!]!) {
+    createRoom(input: { name: $name, users: $users }) {
+      room {
+        id
+        name
+        messages {
+          user {
+            id
+            username
+            avatar
+          }
+          id
+          content
+          createdAt
+        }
+      }
+    }
+  }
+`;
