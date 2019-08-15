@@ -138,7 +138,7 @@ export default withTranslation('chat')(({ chatRoom, setChatRoom, t }) => {
           className="flex-grow-1"
           style={{ height: `calc(100vh - ${55 + 46 + (mobile ? 0 : 46) + inputHeight}px - 2rem)` }}
         >
-          <PerfectScrollbar style={{ height: '100%' }}>
+          <PerfectScrollbar style={{ height: '100%' }} className="w-100">
             <table className="container h-auto">
               <tbody>
                 <tr className="collapse show">
