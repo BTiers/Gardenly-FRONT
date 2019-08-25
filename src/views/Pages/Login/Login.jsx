@@ -124,9 +124,11 @@ function Login({ t, registrationCompleted }) {
                         />
                       </Col>
                       <Col xs="6" className="text-right">
-                        <Button color="link" className="px-0">
-                          {t('forgot_pass')}
-                        </Button>
+                        <Link to="/lostpassword">
+                          <Button color="link" className="px-0">
+                            {t('forgot_pass')}
+                          </Button>
+                        </Link>
                       </Col>
                     </Row>
                   </Form>

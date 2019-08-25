@@ -18,6 +18,8 @@ const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout/Defaul
 // Pages
 const Login = React.lazy(() => import('views/Pages/Login'));
 const Register = React.lazy(() => import('views/Pages/Register'));
+const ForgotPassword = React.lazy(() => import('./views/Pages/ForgotPassword/ForgotPassword'));
+const ResetPassword = React.lazy(() => import('./views/Pages/ResetPassword/ResetPassword'));
 const Page404 = React.lazy(() => import('views/Pages/Page404'));
 const Page500 = React.lazy(() => import('views/Pages/Page500'));
 
@@ -52,6 +54,23 @@ const App = () => {
                   return <Register {...props} onCompleted={() => setSuccessfullyRegister(true)} />;
                 }}
               />
+              <Route
+                exact
+                path="/lostpassword"
+                name="Forgot Password"
+                render={props => <ForgotPassword {...props} />}
+              />
+              <Route
+                exact
+                path="/resetpassword"
+                name="Reset password"
+                render={props => { /*
+                  const isLoggedIn = cookie.get('isLoggedIn') || 'false'; // RAJOUTER UN STATE DANS LE COOKIE POUR LE LOGGING SPECIAL
+
+                  if (isLoggedIn === 'true')  return <ResetPassword {...props} />;*/
+                  return <ResetPassword {...props} />;
+                }}
+              />
               <Route exact path="/404" name="Page 404" render={props => <Page404 {...props} />} />
               <Route exact path="/500" name="Page 500" render={props => <Page500 {...props} />} />
               <Route path="/" name="Home" render={props => <DefaultLayout {...props} />} />
@@ -61,7 +80,6 @@ const App = () => {
       </Client>
     </I18nextProvider>
   );
-}
-
+};
 
 export default App;

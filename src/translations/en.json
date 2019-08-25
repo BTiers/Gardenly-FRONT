@@ -15,6 +15,20 @@
     "new_garden": "New garden",
     "loading": "Loading"
   },
+  "lostpassword": {
+    "forgot_pass_title": "Forgot Password",
+    "email": "Email",
+    "validate": "Recover password",
+    "bad_email": "We could not find a member account with that email address"
+  },
+  "resetpassword": {
+    "forgot_pass_title": "Please enter your new password",
+    "pswd": "Password",
+    "bad_password": "Password must be minimum eight characters, at least one uppercase letter, one lowercase letter, one number and a special caractere",
+    "valid_psw": "Confirm password",
+    "bad_valid_psw": "The two password aren't the same",
+    "submit": "Validate your new password"
+  },
   "register": {
     "login_to_gdl": "Login to Gardenly",
     "login": "Login",
