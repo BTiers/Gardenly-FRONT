@@ -19,6 +19,7 @@ import {
   TabContent,
   TabPane,
   Modal,
+  ModalHeader,
   ModalBody
 } from 'reactstrap';
 
@@ -36,8 +37,9 @@ import {
 
 import InputWithValidation from 'components/input/InputWithValidation';
 import FriendsView from './FriendsView';
-import { GET_USERS } from '../../apollo/queries/queries';
+import { GET_USER } from '../../apollo/queries/queries';
 import LoadingButton from '../../components/buttons/LoadingButton';
+import PicturesGallery from '../Pictures/PicturesGallery';
 
 const GardenDetails = React.memo(({ name, updatedAt, createdAt, country }) => (
   <Col md="12" lg="6" className="mb-3">
@@ -54,13 +56,15 @@ const GardenDetails = React.memo(({ name, updatedAt, createdAt, country }) => (
       </div>
       <p className="small text-muted pt-3 pb-1">
         <span className="float-left">
-          Créé le{' '}
+          Créé le
+{' '}
           <Moment locale="fr" format="DD/MM/YYYY" element="strong">
             {createdAt}
           </Moment>
         </span>
         <span className="float-right">
-          Mis à jour il y a{' '}
+          Mis à jour il y a
+{' '}
           <Moment locale="fr" fromNow ago element="strong">
             {updatedAt}
           </Moment>
@@ -180,7 +184,6 @@ const AccountOverview = React.memo(() => (
 
 const AccountQuickAccess = withTranslation('register')(
   ({ t, username: defaultUsername, email: defaultEmail, bio: defaultBio }) => {
-    // const updateUser = useMutation();
     const defaultState = {
       username: defaultUsername,
       bio: defaultBio,
@@ -259,29 +262,40 @@ const AccountQuickAccess = withTranslation('register')(
   }
 );
 
-export default function UserProfile() {
-  const { data, loading, error } = useQuery(GET_USERS);
+export default withTranslation('register')(({ t }) => {
+  const { data, loading, error } = useQuery(GET_USER);
   const [activeTab, setActiveTab] = useState('1');
+  const [avartarModal, setAvatarModal] = useState(false);
 
   if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
   if (error) return <div className="animated fadeIn pt-1 text-center">Error</div>;
 
   const {
-    id,
+    // id,
     username,
-    firstName,
-    lastName,
+    // firstName,
+    // lastName,
     email,
-    phoneNumber,
-    age,
-    dateOfBirth,
-    address,
+    // phoneNumber,
+    // age,
+    // dateOfBirth,
+    // address,
     avatar,
     gardens
   } = data.getCurrentUser;
 
   return (
     <div className="animated fadeIn">
+      <Modal size="lg" isOpen={avartarModal} toggle={() => setAvatarModal(!avartarModal)}>
+        <ModalHeader>{t('selectavatar')}</ModalHeader>
+        <ModalBody>
+          <PicturesGallery
+            toggle={() => setAvatarModal(!avartarModal)}
+            className="w-100"
+            mode="avatarselector"
+          />
+        </ModalBody>
+      </Modal>
       <Card>
         <CardBody style={{ minHeight: 'calc(100vh - 204px)' }}>
           <Row>
@@ -289,14 +303,14 @@ export default function UserProfile() {
               <ListGroup className="list-group-accent list-group-item-action" tag="div">
                 <ListGroupItem tag="a" className="border-left-0">
                   <div style={{ maxWidth: 256 }} className="mx-auto">
-                    <img
-                      src="https://api.adorable.io/avatars/285/abott@adorable.png"
-                      alt="Avatar"
-                      className="rounded-top img-fluid"
-                    />
-                    <Button block color="primary rounded-0 border-top-0">
+                    <img src={avatar} alt="Avatar" className="rounded-top img-fluid" />
+                    <Button
+                      onClick={() => setAvatarModal(true)}
+                      block
+                      color="primary rounded-0 border-top-0"
+                    >
                       <i className="icon-cloud-upload mr-2" />
-                      Upload une image
+                      Changer d'image
                     </Button>
                   </div>
                 </ListGroupItem>
@@ -358,4 +372,4 @@ export default function UserProfile() {
       </Card>
     </div>
   );
-}
+});

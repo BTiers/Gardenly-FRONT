@@ -4,7 +4,7 @@ import { Container } from 'reactstrap';
 import Cookies from 'universal-cookie';
 import { useQuery, useMutation, useApolloClient } from 'react-apollo-hooks';
 
-import { USER_GARDENS_NAMES, GET_USERS } from 'apollo/queries/queries';
+import { USER_GARDENS_NAMES, GET_USER } from 'apollo/queries/queries';
 import { DELETE_SESSION } from 'apollo/mutations/mutations';
 
 import {
@@ -33,7 +33,7 @@ const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 function DefaultLayout(props) {
   const [asideActiveTab, asideSetActiveTab] = useState('1');
   const { data, error, loading } = useQuery(USER_GARDENS_NAMES);
-  const { data: userData, error: userError, loading: userLoading } = useQuery(GET_USERS);
+  const { data: userData, error: userError, loading: userLoading } = useQuery(GET_USER);
 
   // FIXME: Looks to me a bit hacky to do this here
   const isOnUnity = props.location.pathname.match(/\/garden\/.+\/edit/g);
@@ -81,6 +81,7 @@ function DefaultLayout(props) {
       <AppHeader fixed>
         <Suspense fallback={onLoading()}>
           <DefaultHeader
+            avatar={!userLoading && !userError ? userData.getCurrentUser.thumbnail : null}
             asideSetActiveTab={asideSetActiveTab}
             onLogout={e => signOut(e)}
             history={props.history}

@@ -53,7 +53,7 @@ export const USER_GARDENS_NAMES = gql`
   }
 `;
 
-export const GET_USERS = gql`
+export const GET_USER = gql`
   query getUser {
     getCurrentUser {
       isModerator
@@ -67,6 +67,7 @@ export const GET_USERS = gql`
       dateOfBirth
       address
       avatar
+      thumbnail
       gardens {
         name
         updatedAt

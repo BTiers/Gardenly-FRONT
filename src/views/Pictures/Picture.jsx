@@ -6,8 +6,8 @@ import { Row, Col, Modal, ModalBody, ModalFooter, ModalHeader, ListGroup } from 
 import { withTranslation } from 'react-i18next';
 import { useMutation } from 'react-apollo-hooks';
 
-import { UPDATE_MEDIUM, DELETE_MEDIUM } from 'apollo/mutations/mutations';
-import { GET_ALL_USER_MEDIA } from 'apollo/queries/queries';
+import { UPDATE_MEDIUM, DELETE_MEDIUM, UPDATE_USER } from 'apollo/mutations/mutations';
+import { GET_ALL_USER_MEDIA, GET_USER } from 'apollo/queries/queries';
 
 import CenterY from 'components/image/CenterY';
 import InputWithValidation from 'components/input/InputWithValidation';
@@ -31,7 +31,9 @@ function Picture({
   picture: { title, description, id, picture, thumbnail },
   t,
   onDelete,
-  onUpdate
+  onUpdate,
+  mode,
+  toggleParrent
 }) {
   const [selected, setSelected] = useState(false);
   const [open, setOpen] = useState(false);
@@ -67,6 +69,108 @@ function Picture({
     setSelected(false);
   };
 
+  const updateUser = useMutation(UPDATE_USER, {
+    variables: { avatar: picture },
+    update: (cache, mutationResult) => {
+      const query = GET_USER;
+      const data = cache.readQuery({ query });
+
+      data.getCurrentUser.avatar = picture;
+      data.getCurrentUser.thumbnail = [
+        picture.slice(0, -41),
+        'thumbnail_',
+        picture.slice(-41)
+      ].join('');
+
+      cache.writeQuery({ query, data });
+      setUpdating(false);
+      toggle();
+      toggleParrent();
+    }
+  });
+
+  if (mode === 'gallery')
+    return (
+      <Col
+        lg="2"
+        md="3"
+        sm="6"
+        xs="12"
+        className="p-2"
+        onMouseEnter={() => setSelected(true)}
+        onMouseLeave={() => setSelected(false)}
+      >
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+        <div
+          className="w-100 h-100 rounded mx-auto my-auto text-center align-middle"
+          role="button"
+          tabIndex={0}
+          onClick={() => toggle()}
+        >
+          <CenterY>
+            <img src={thumbnail} alt={title} className="img-fluid" />
+          </CenterY>
+          <PictureActionsLayout className="p-2" active={selected ? 1 : 0} />
+          <Modal centered isOpen={open} toggle={toggle} className="modal-lg">
+            <ModalHeader toggle={toggle}>
+              <span className="small text-uppercase">{title}</span>
+            </ModalHeader>
+            <ModalBody>
+              <Row className="justify-content-center mt-3">
+                <img className="img-fluid" src={picture} alt={title} />
+              </Row>
+              <hr />
+              <ListGroup className="small">
+                <InputWithValidation
+                  onUpdate={e => setTitleState(e)}
+                  validate={e => e !== '' && e.trim() !== ''}
+                  type="text"
+                  title={t('title')}
+                  feedBack="Un titre est nécessaire"
+                  defaultValue={title}
+                />
+                <InputWithValidation
+                  onUpdate={e => setDescState(e)}
+                  validate={() => true}
+                  type="text"
+                  title={t('description')}
+                  defaultValue={description}
+                />
+              </ListGroup>
+            </ModalBody>
+            <ModalFooter>
+              <Col xs="6">
+                <LoadingButton
+                  color="danger"
+                  disabled={deleting}
+                  onClick={() => {
+                    setDeleting(true);
+                    deleteM();
+                  }}
+                  loading={deleting}
+                >
+                  <span>{t('delete')}</span>
+                </LoadingButton>
+              </Col>
+              <Col xs="6">
+                <LoadingButton
+                  className="float-right"
+                  color="primary"
+                  onClick={() => {
+                    setUpdating(true);
+                    updateMedium();
+                  }}
+                  loading={updating}
+                >
+                  <span>{t('save')}</span>
+                </LoadingButton>
+              </Col>
+            </ModalFooter>
+          </Modal>
+        </div>
+      </Col>
+    );
+
   return (
     <Col
       lg="2"
@@ -97,52 +201,19 @@ function Picture({
               <img className="img-fluid" src={picture} alt={title} />
             </Row>
             <hr />
-            <ListGroup className="small">
-              <InputWithValidation
-                onUpdate={e => setTitleState(e)}
-                validate={e => e !== '' && e.trim() !== ''}
-                type="text"
-                title={t('title')}
-                feedBack="Un titre est nécessaire"
-                defaultValue={title}
-              />
-              <InputWithValidation
-                onUpdate={e => setDescState(e)}
-                validate={() => true}
-                type="text"
-                title={t('description')}
-                defaultValue={description}
-              />
-            </ListGroup>
-          </ModalBody>
-          <ModalFooter>
-            <Col xs="6">
+            <Col className="text-center">
               <LoadingButton
-                color="danger"
-                disabled={deleting}
-                onClick={() => {
-                  setDeleting(true);
-                  deleteM();
-                }}
-                loading={deleting}
-              >
-                <span>{t('delete')}</span>
-              </LoadingButton>
-            </Col>
-            <Col xs="6">
-              <LoadingButton
-                className="float-right"
                 color="primary"
                 onClick={() => {
                   setUpdating(true);
-                  updateMedium();
+                  updateUser();
                 }}
                 loading={updating}
               >
-                <span>{t('save')}</span>
+                <span>{t('selectProfilPic')}</span>
               </LoadingButton>
             </Col>
-          </ModalFooter>
+          </ModalBody>
         </Modal>
       </div>
     </Col>
@@ -151,11 +222,17 @@ function Picture({
 
 Picture.propTypes = {
   picture: PropTypes.shape({
-    picture: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    picture: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string.isRequired
   }).isRequired,
   t: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
+  mode: PropTypes.string.isRequired,
+  toggleParrent: PropTypes.func.isRequired
 };
 
 export default withTranslation('picture_gallery')(Picture);

@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-
+import PropTypes from 'prop-types';
 import { Row, Card, CardBody } from 'reactstrap';
 import { useQuery } from 'react-apollo-hooks';
+import { Redirect } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { GET_ALL_USER_MEDIA } from 'apollo/queries/queries';
-import { Redirect } from 'react-router-dom';
-
 import Snackbar from 'components/snackbar/Snackbar';
-
-import { useTranslation } from 'react-i18next';
 import Picture from './Picture';
 import AddPicture from './AddPicture';
 
@@ -19,7 +17,7 @@ const snackType = {
   UPDATE_S: 'successful_update'
 };
 
-export default function PicturesGallery() {
+export default function PicturesGallery({ mode, toggle }) {
   const [t] = useTranslation('picture_gallery');
   const { data, error, loading } = useQuery(GET_ALL_USER_MEDIA);
   const [snackState, setSnackState] = useState(snackType.NONE);
@@ -32,24 +30,27 @@ export default function PicturesGallery() {
   } = data;
 
   const hasMedia = media.length > 0;
-
   return (
     <div className="animated fadeIn">
       <Card>
         <CardBody style={{ minHeight: 'calc(100vh - 204px)' }}>
           <Row noGutters>
-            <AddPicture asVignette={hasMedia} onUpload={() => setSnackState(snackType.UPLOAD_S)} />
-            {media.length > 0
-              ? media.map(picture => (
-                  // eslint-disable-next-line react/jsx-indent
-                  <Picture
-                    picture={picture}
-                    key={picture.id}
-                    onUpdate={() => setSnackState(snackType.UPDATE_S)}
-                    onDelete={() => setSnackState(snackType.DELETE_S)}
-                  />
-                ))
-              : null}
+            {mode === 'gallery' ? (
+              <AddPicture
+                asVignette={hasMedia}
+                onUpload={() => setSnackState(snackType.UPLOAD_S)}
+              />
+            ) : null}
+            {media.map(picture => (
+              <Picture
+                mode={mode}
+                toggleParrent={toggle}
+                picture={picture}
+                key={picture.id}
+                onUpdate={() => setSnackState(snackType.UPDATE_S)}
+                onDelete={() => setSnackState(snackType.DELETE_S)}
+              />
+            ))}
             <Snackbar
               autoHideDuration={6000}
               onClose={() => setSnackState(snackType.NONE)}
@@ -63,4 +64,11 @@ export default function PicturesGallery() {
   );
 }
 
-PicturesGallery.propTypes = {};
+PicturesGallery.propTypes = {
+  mode: PropTypes.string,
+  toggle: PropTypes.func.isRequired
+};
+
+PicturesGallery.defaultProps = {
+  mode: 'gallery'
+};
