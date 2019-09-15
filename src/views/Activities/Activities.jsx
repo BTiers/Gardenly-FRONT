@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Row, Col, Card, CardBody } from 'reactstrap';
+import { GenericWeather } from 'react-weather';
 import FlowerTooltip from '../../components/tooltips/FlowerTooltip';
 
 function FakeActivity({ id }) {
@@ -38,7 +39,11 @@ function FakeActivity({ id }) {
   );
 }
 
+//function GardenActivities({ id }) {}
+
 function Activities() {
+  const date = new Date();
+
   return (
     <div className="animated fadeIn">
       <Row>
@@ -46,12 +51,30 @@ function Activities() {
           <Card>
             <CardBody className="pb-0">
               <h2 className="text-primary text-uppercase font-weight-bold">Cette semaine</h2>
-              <h4 className="text-dark text-uppercase font-weight-bold">Mercredi 14 Juin 2019</h4>
+              <h4 className="text-dark text-uppercase font-weight-bold">
+                {`Aujourd'hui : ${new Intl.DateTimeFormat('fr-FR', { weekday: 'long' }).format(
+                  date
+                )} ${date.getDate()} ${new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(
+                  date
+                )}`}
+              </h4>
               <hr />
+              <Row>
+                <GenericWeather city="Paris" status="sun" />
+              </Row>
               <Row>
                 <FakeActivity id="test1" />
                 <FakeActivity id="test2" />
               </Row>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+    </div>
+  );
+}
+
+/*
               <h2 className="mt-3 text-primary text-uppercase font-weight-bold">
                 Les tâches à prevoir
               </h2>
@@ -63,12 +86,6 @@ function Activities() {
                 <FakeActivity id="test3" />
                 <FakeActivity id="test4" />
               </Row>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-    </div>
-  );
-}
+*/
 
 export default Activities;
