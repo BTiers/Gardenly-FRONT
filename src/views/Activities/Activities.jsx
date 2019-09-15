@@ -3,11 +3,14 @@ import React from 'react';
 import { Row, Col, Card, CardBody } from 'reactstrap';
 import FlowerTooltip from '../../components/tooltips/FlowerTooltip';
 
+import GenericWeather from '../../components/Weather/GenericWeather';
+
 function FakeActivity({ id }) {
   return (
     <Col s="12" md="6" xl="4" className="my-2">
       <Row>
         <Col xs="4">
+          <GenericWeather />
           <img
             src="https://s3.greefine.ovh/dev/7ddab77e73276eba7637da8b54e28423c330ef26/5d6ed914-3478-466c-be4c-9a67f188f3b1.png"
             className="img-fluid"
