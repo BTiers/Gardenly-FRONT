@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Row, Col, Card, CardBody } from 'reactstrap';
 import { GenericWeather } from 'react-weather';
 import FlowerTooltip from '../../components/tooltips/FlowerTooltip';
