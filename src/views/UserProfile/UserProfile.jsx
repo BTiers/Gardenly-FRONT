@@ -31,8 +31,8 @@ import { UPDATE_USER } from 'apollo/mutations/mutations';
 import {
   validateEmail,
   validatePassword,
-  validateUsername,
-  validateLastAndFirstName
+  validateUsername
+  // validateLastAndFirstName
 } from 'utils/input_validation/input_validation';
 
 import InputWithValidation from 'components/input/InputWithValidation';
@@ -56,15 +56,13 @@ const GardenDetails = React.memo(({ name, updatedAt, createdAt, country }) => (
       </div>
       <p className="small text-muted pt-3 pb-1">
         <span className="float-left">
-          Créé le
-{' '}
+          {'Créé le '}
           <Moment locale="fr" format="DD/MM/YYYY" element="strong">
             {createdAt}
           </Moment>
         </span>
         <span className="float-right">
-          Mis à jour il y a
-{' '}
+          {'Mis à jour il y a '}
           <Moment locale="fr" fromNow ago element="strong">
             {updatedAt}
           </Moment>
@@ -85,9 +83,9 @@ const GardenOverview = React.memo(({ gardens }) => (
 ));
 
 const ChangePassword = React.memo(() => {
-  const [password, setPassword] = useState('');
+  const [, setPassword] = useState('');
   const [newpassword, setNewpassword] = useState('');
-  const [rptpassword, setRptpassword] = useState('');
+  const [, setRptpassword] = useState('');
 
   return (
     <Col xs="6" className="mb-3">

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Nav, NavItem, NavLink, TabContent, TabPane, ListGroup, ListGroupItem } from 'reactstrap';
 import classNames from 'classnames';
-import { AppSwitch } from '@coreui/react';
 import AsideChatPreview from './AsideChatPreview';
 import Chat from './Chat';
 
