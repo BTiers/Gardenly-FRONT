@@ -41,6 +41,37 @@ export const USER_GARDENS = gql`
   }
 `;
 
+export const GET_USER_GARDEN_ACT = gql`
+  query getAllUserGardens {
+    gardens: getAllUserGardens {
+      nodes {
+        id
+        name
+        plants {
+          plant {
+            createdAt
+            id
+            name
+            photo
+            blossomingStart
+            blossomingEnd
+            description
+            heightHigh
+            heightLow
+            periodicities {
+              name
+            }
+            waterNeed
+            tips
+            rusticity
+            sunNeed
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const USER_GARDENS_NAMES = gql`
   query gardenlist {
     gardens: getAllUserGardens {

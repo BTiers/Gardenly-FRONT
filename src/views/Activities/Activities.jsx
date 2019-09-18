@@ -1,6 +1,10 @@
 import React from 'react';
 import { Row, Col, Card, CardBody } from 'reactstrap';
-import { GenericWeather } from 'react-weather';
+import Link from 'react-router-dom/Link';
+
+import { useQuery } from 'react-apollo-hooks';
+import { GET_USER_GARDEN_ACT } from '../../apollo/queries/queries';
+
 import FlowerTooltip from '../../components/tooltips/FlowerTooltip';
 
 function FakeActivity({ id }) {
@@ -38,10 +42,69 @@ function FakeActivity({ id }) {
   );
 }
 
-//function GardenActivities({ id }) {}
+// ROAD TO GARDEN : /garden/TestDB
+
+function GardenActivities({ nodes: { name, plants } }) {
+  return (
+    <div>
+      <Row>
+        <Col>
+          <h2 className="text-primary text-uppercase font-weight-bold">Mon jardin : {name} </h2>
+          {plants.length !== 0 ? (
+            <h4 className="text-dark text-uppercase font-weight-bold">
+              Vous avez {plants.length} plantes à entretenir en cette journee
+            </h4>
+          ) : (
+            <h4 className="text-muted text-uppercase font-weight-bold">
+              Savez vous plantez des choux ? Votre jardin est vide pour le moment.
+            </h4>
+          )}
+          {plants.length !== 0 ? (
+            <Col className="col-6 col-md-4">
+              <Row>
+                <img src={plants[0].plant.photo} className="img-fluid" alt={plants[0].plant.name} />
+                <h4 className="text-uppercase">
+                  <FlowerTooltip
+                    id={plants[0].plant.name}
+                    link="/flowers"
+                    plantId={plants[0].plant.id}
+                  >
+                    <span className="text-primary">{plants[0].plant.name}</span>
+                  </FlowerTooltip>
+                </h4>
+              </Row>
+              <h4>
+                Planté le :{' '}
+                {new Intl.DateTimeFormat('fr-FR', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: '2-digit'
+                }).format(new Date(plants[0].plant.createdAt))}
+              </h4>
+              <h8>Des informations utiles : {plants[0].plant.tips}</h8>
+            </Col>
+          ) : (
+            <Link to={'/garden/' + name}>
+              <br />
+              <h4 className="text-primary text-center text-uppercase font-weight-bold">
+                Allez editer votre jardin maintenant.
+              </h4>
+            </Link>
+          )}
+        </Col>
+      </Row>
+      <hr />
+    </div>
+  );
+}
 
 function Activities() {
   const date = new Date();
+
+  const { data, loading, error } = useQuery(GET_USER_GARDEN_ACT);
+
+  if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
+  if (error) return <div className="animated fadeIn pt-1 text-center">Error</div>;
 
   return (
     <div className="animated fadeIn">
@@ -58,13 +121,17 @@ function Activities() {
                 )}`}
               </h4>
               <hr />
-              <Row>
-                <GenericWeather city="Paris" status="sun" />
-              </Row>
-              <Row>
-                <FakeActivity id="test1" />
-                <FakeActivity id="test2" />
-              </Row>
+              <h2 className="text-primary text-center text-uppercase font-weight-bold">
+                Meteo de la journee
+              </h2>
+              <hr />
+              {data ? (
+                data.gardens.nodes.map(nodes => {
+                  return <GardenActivities key={nodes.id} nodes={nodes} />;
+                })
+              ) : (
+                <h2 className="text-primary text-center text-uppercase font-weight-bold">Prout</h2>
+              )}
             </CardBody>
           </Card>
         </Col>
@@ -72,19 +139,5 @@ function Activities() {
     </div>
   );
 }
-
-/*
-              <h2 className="mt-3 text-primary text-uppercase font-weight-bold">
-                Les tâches à prevoir
-              </h2>
-              <h4 className="text-dark text-uppercase font-weight-bold">
-                Pour les semaines à venir
-              </h4>
-              <hr />
-              <Row>
-                <FakeActivity id="test3" />
-                <FakeActivity id="test4" />
-              </Row>
-*/
 
 export default Activities;
