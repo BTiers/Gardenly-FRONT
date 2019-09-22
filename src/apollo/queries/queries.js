@@ -47,6 +47,7 @@ export const GET_USER_GARDEN_ACT = gql`
       nodes {
         id
         name
+        country
         plants {
           plant {
             createdAt

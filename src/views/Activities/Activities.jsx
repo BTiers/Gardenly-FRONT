@@ -6,6 +6,7 @@ import { useQuery } from 'react-apollo-hooks';
 import { GET_USER_GARDEN_ACT } from '../../apollo/queries/queries';
 
 import { FillableDroplet } from '../../components/icons/FillableIcon';
+import { GardenWeather } from '../../components/weather/weather';
 
 import FlowerTooltip from '../../components/tooltips/FlowerTooltip';
 
@@ -91,6 +92,8 @@ function Activities() {
   if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
   if (error) return <div className="animated fadeIn pt-1 text-center">Error</div>;
 
+  console.log(data.gardens.nodes[0].country);
+
   return (
     <div className="animated fadeIn">
       <Row>
@@ -109,13 +112,26 @@ function Activities() {
               <h2 className="text-primary text-center text-uppercase font-weight-bold">
                 Meteo de la journee
               </h2>
+              {data ? (
+                <GardenWeather
+                  city={data.gardens.nodes[0].country}
+                  APIKEY="6e7323f336a75fd0267574487b9f5c85"
+                />
+              ) : (
+                <GardenWeather city="France" APIKEY="6e7323f336a75fd0267574487b9f5c85" />
+              )}
               <hr />
               {data ? (
                 data.gardens.nodes.map(nodes => {
                   return <GardenActivities key={nodes.id} nodes={nodes} />;
                 })
               ) : (
-                <h2 className="text-primary text-center text-uppercase font-weight-bold">Prout</h2>
+                <Link to="/garden/create">
+                  <br />
+                  <h4 className="text-primary text-center text-uppercase font-weight-bold">
+                    Allez creer votre premier jardin maintenant.
+                  </h4>
+                </Link>
               )}
             </CardBody>
           </Card>
