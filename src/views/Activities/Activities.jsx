@@ -5,44 +5,49 @@ import Link from 'react-router-dom/Link';
 import { useQuery } from 'react-apollo-hooks';
 import { GET_USER_GARDEN_ACT } from '../../apollo/queries/queries';
 
+import { FillableDroplet } from '../../components/icons/FillableIcon';
+
 import FlowerTooltip from '../../components/tooltips/FlowerTooltip';
 
-function FakeActivity({ id }) {
+function WaterNeed(scale, id) {
+  const output = [];
+  const dropCount = scale / 3;
+
+  for (let i = dropCount; i >= 0; i -= 1) {
+    output.push(<FillableDroplet color="#63c2de" fillAt={10} size={18} id={id} key={id + i} />);
+  }
+
+  for (let j = 1; j + dropCount < 4; j += 1) {
+    output.push(<FillableDroplet color="#63c2de" fillAt={0} size={18} id={id + j} key={id + -j} />);
+  }
+
+  return output;
+}
+
+function GardenPlantInfo({ plant: { name, id, createdAt, tips, photo, waterNeed } }) {
   return (
-    <Col s="12" md="6" xl="4" className="my-2">
+    <Col className="col-sm-4">
       <Row>
-        <Col xs="4">
-          <img
-            src="https://s3.greefine.ovh/dev/7ddab77e73276eba7637da8b54e28423c330ef26/5d6ed914-3478-466c-be4c-9a67f188f3b1.png"
-            className="img-fluid"
-            alt="admin@bootstrapmaster.com"
-          />
-        </Col>
-        <Col xs="8">
-          <Row>
-            <h4 className="text-uppercase">
-              <span className="text-primary">Arroser mes </span>
-              <FlowerTooltip id={id} link="/flowers" plantId="58ec8c67-411e-4b4c-9bb0-e88ad18a8a1b">
-                <span className="text-primary">roses</span>
-              </FlowerTooltip>
-            </h4>
-          </Row>
-          <Row>
-            <p>
-              <span className="text-muted">
-                Deux fois par semaine le premier mois s'il fait sec
-              </span>
-              <br />
-              <strong>Dernière fois: le lundi 12 juin 2017</strong>
-            </p>
-          </Row>
-        </Col>
+        <img src={photo} className="img-fluid" alt={name} />
+        <h4 className="text-uppercase">
+          <FlowerTooltip id={name} link="/flowers" plantId={id}>
+            <span className="text-primary">{name}</span>
+          </FlowerTooltip>
+        </h4>
       </Row>
+      <h4>
+        Planté le :{' '}
+        {new Intl.DateTimeFormat('fr-FR', {
+          year: 'numeric',
+          month: 'long',
+          day: '2-digit'
+        }).format(new Date(createdAt))}
+      </h4>
+      <div>Besoin en eau : {WaterNeed(waterNeed, id)}</div>
+      <h6>Des informations utiles : {tips}</h6>
     </Col>
   );
 }
-
-// ROAD TO GARDEN : /garden/TestDB
 
 function GardenActivities({ nodes: { name, plants } }) {
   return (
@@ -59,38 +64,18 @@ function GardenActivities({ nodes: { name, plants } }) {
               Savez vous plantez des choux ? Votre jardin est vide pour le moment.
             </h4>
           )}
-          {plants.length !== 0 ? (
-            <Col className="col-6 col-md-4">
-              <Row>
-                <img src={plants[0].plant.photo} className="img-fluid" alt={plants[0].plant.name} />
-                <h4 className="text-uppercase">
-                  <FlowerTooltip
-                    id={plants[0].plant.name}
-                    link="/flowers"
-                    plantId={plants[0].plant.id}
-                  >
-                    <span className="text-primary">{plants[0].plant.name}</span>
-                  </FlowerTooltip>
+          <Row>
+            {plants.length !== 0 ? (
+              plants.map(({ plant, id }) => <GardenPlantInfo key={id} plant={plant} />)
+            ) : (
+              <Link to={'/garden/' + name}>
+                <br />
+                <h4 className="text-primary text-center text-uppercase font-weight-bold">
+                  Allez editer votre jardin maintenant.
                 </h4>
-              </Row>
-              <h4>
-                Planté le :{' '}
-                {new Intl.DateTimeFormat('fr-FR', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: '2-digit'
-                }).format(new Date(plants[0].plant.createdAt))}
-              </h4>
-              <h8>Des informations utiles : {plants[0].plant.tips}</h8>
-            </Col>
-          ) : (
-            <Link to={'/garden/' + name}>
-              <br />
-              <h4 className="text-primary text-center text-uppercase font-weight-bold">
-                Allez editer votre jardin maintenant.
-              </h4>
-            </Link>
-          )}
+              </Link>
+            )}
+          </Row>
         </Col>
       </Row>
       <hr />
