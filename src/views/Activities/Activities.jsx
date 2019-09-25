@@ -37,15 +37,15 @@ function GardenPlantInfo({ plant: { name, id, createdAt, tips, photo, waterNeed 
         </h4>
       </Row>
       <h4>
-        Planté le :{' '}
+        {'Planté le : '}
         {new Intl.DateTimeFormat('fr-FR', {
           year: 'numeric',
           month: 'long',
           day: '2-digit'
         }).format(new Date(createdAt))}
       </h4>
-      <div>Besoin en eau : {WaterNeed(waterNeed, id)}</div>
-      <h6>Des informations utiles : {tips}</h6>
+      <div>{`Besoin en eau : ${WaterNeed(waterNeed, id)}`}</div>
+      <h6>{`Des informations utiles : ${tips}`}</h6>
     </Col>
   );
 }
@@ -55,10 +55,10 @@ function GardenActivities({ nodes: { name, plants } }) {
     <div>
       <Row>
         <Col>
-          <h2 className="text-primary text-uppercase font-weight-bold">Mon jardin : {name} </h2>
+          <h2 className="text-primary text-uppercase font-weight-bold">{`Mon jardin : ${name}`}</h2>
           {plants.length !== 0 ? (
             <h4 className="text-dark text-uppercase font-weight-bold">
-              Vous avez {plants.length} plantes à entretenir en cette journee
+              {`Vous avez ${plants.length} plantes à entretenir en cette journee`}
             </h4>
           ) : (
             <h4 className="text-muted text-uppercase font-weight-bold">
@@ -69,7 +69,7 @@ function GardenActivities({ nodes: { name, plants } }) {
             {plants.length !== 0 ? (
               plants.map(({ plant, id }) => <GardenPlantInfo key={id} plant={plant} />)
             ) : (
-              <Link to={'/garden/' + name}>
+              <Link to={`/garden/${name}`}>
                 <br />
                 <h4 className="text-primary text-center text-uppercase font-weight-bold">
                   Allez editer votre jardin maintenant.
@@ -92,8 +92,7 @@ function Activities() {
   if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
   if (error) return <div className="animated fadeIn pt-1 text-center">Error</div>;
 
-  console.log(data.gardens.nodes[0].country);
-
+  // console.log(data.gardens.nodes[0].country);
   return (
     <div className="animated fadeIn">
       <Row>
@@ -112,19 +111,14 @@ function Activities() {
               <h2 className="text-primary text-center text-uppercase font-weight-bold">
                 Meteo de la journee
               </h2>
-              {data ? (
-                <GardenWeather
-                  city={data.gardens.nodes[0].country}
-                  APIKEY="6e7323f336a75fd0267574487b9f5c85"
-                />
+              {data.gardens.nodes.length ? (
+                <GardenWeather city={data.gardens.nodes[0].country} />
               ) : (
-                <GardenWeather city="France" APIKEY="6e7323f336a75fd0267574487b9f5c85" />
+                <GardenWeather city="France" />
               )}
               <hr />
-              {data ? (
-                data.gardens.nodes.map(nodes => {
-                  return <GardenActivities key={nodes.id} nodes={nodes} />;
-                })
+              {data.gardens.nodes.length ? (
+                data.gardens.nodes.map(nodes => <GardenActivities key={nodes.id} nodes={nodes} />)
               ) : (
                 <Link to="/garden/create">
                   <br />
