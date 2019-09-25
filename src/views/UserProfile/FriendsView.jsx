@@ -51,13 +51,13 @@ export default function FollowersView() {
     );
   }
 
-  function acceptFriend(relationId, friendId, name) {
+  function acceptFriend(relationId, friendId, chatRoomName) {
     const users = [friendId];
     changeRelation({
       variables: { id: relationId, state: 1 },
       update: () =>
         createRoom({
-          variables: { name, users },
+          variables: { name: chatRoomName, users },
           update: (cache, mutationResult) => {
             const query = GET_USER_ROOMS_WITH_MESSAGES;
             const data = cache.readQuery({ query });
@@ -106,7 +106,10 @@ export default function FollowersView() {
   const friends = [];
   data.user.relations.map(e => {
     const user = e.user.id === data.user.id ? e.friend : e.user;
+    const friend = e.user.id === data.user.id ? e.user : e.friend;
     user.relation_id = e.id;
+    user.friend = friend;
+
     if (e.state === 0) {
       if (e.user.id === data.user.id) {
         myFriendRequests.push(user);
@@ -167,7 +170,9 @@ export default function FollowersView() {
           <Row className="m-0" key={e.id}>
             <span className="ml-0 mt-auto mb-auto">{e.username}</span>
             <Button
-              onClick={() => acceptFriend(e.relation_id, e.id, e.username)}
+              onClick={() =>
+                acceptFriend(e.relation_id, e.id, `${e.username} and ${e.friend.username}`)
+              }
               className="r-0 mr-0 ml-auto mt-auto mb-auto"
               color="primary"
             >

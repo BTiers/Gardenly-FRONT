@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import styled from 'styled-components';
-import { Stage, Layer } from 'react-konva';
-import ReactResizeDetector from 'react-resize-detector';
+// import styled from 'styled-components';
+// import { Stage, Layer } from 'react-konva';
+// import ReactResizeDetector from 'react-resize-detector';
 
-import useBounds from 'hooks/canvas/UseBounds';
+// import useBounds from 'hooks/canvas/UseBounds';
 
-import ItemFactory from './ItemsFactory';
-import House from './House';
-import Bounds from './Bounds';
+// import ItemFactory from './ItemsFactory';
+// import House from './House';
+// import Bounds from './Bounds';
 
-const StageContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  line-height: 0px;
-  background-color: white;
-`;
+// const StageContainer = styled.div`
+//   width: 100%;
+//   height: 100%;
+//   line-height: 0px;
+//   background-color: white;
+// `;
 
-export default function GardenCanvas({ onElementFocus, gardenData: { garden, boundaries } }) {
-/*  const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
+// { onElementFocus, gardenData: { garden, boundaries } }
+export default function GardenCanvas() {
+  /*  const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
   const [scale, setScale] = useState({ factor: 1, offset: { x: 0, y: 0 } });
   const [focus, setFocus] = useState(null);
   const [bounds] = useBounds(boundaries);
@@ -35,10 +36,10 @@ export default function GardenCanvas({ onElementFocus, gardenData: { garden, bou
     const offsetY = (stageSize.height + PADDING - bounds.height * calcScale) / 2;
 
     setScale({ factor: calcScale, offset: { x: offsetX, y: offsetY } });
-  }, [bounds, stageSize]);*/
+  }, [bounds, stageSize]); */
 
-  return (null);
-/*    <React.Fragment>
+  return null;
+  /*    <React.Fragment>
       <StageContainer id="StageContainer">
         <Stage
           width={stageSize.width}
@@ -76,7 +77,7 @@ export default function GardenCanvas({ onElementFocus, gardenData: { garden, bou
         resizableElementId="StageContainer"
       />
     </React.Fragment>
-  );*/
+  ); */
 }
 
 GardenCanvas.propTypes = {

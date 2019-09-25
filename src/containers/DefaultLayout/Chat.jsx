@@ -5,7 +5,7 @@ import useMedia from 'hooks/UseMedia';
 
 import { useMutation, useQuery } from 'react-apollo-hooks';
 import { CREATE_MESSAGE } from 'apollo/mutations/chat';
-import { GET_USERS } from 'apollo/queries/queries';
+import { GET_USER } from 'apollo/queries/queries';
 
 import { Col, Row, InputGroup, Input, InputGroupAddon, Button } from 'reactstrap';
 import { FiSend } from 'react-icons/fi';
@@ -34,7 +34,7 @@ export default withTranslation('chat')(({ chatRoom, setChatRoom, t }) => {
   const lastMessageRef = useRef();
 
   const sendMessage = useMutation(CREATE_MESSAGE);
-  const me = useQuery(GET_USERS);
+  const me = useQuery(GET_USER);
 
   const DEFAULT_INPUT_HEIGHT = 46;
   const [inputHeight, setInputHeight] = useState(DEFAULT_INPUT_HEIGHT);

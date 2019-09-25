@@ -184,6 +184,7 @@ export const UPDATE_USER = gql`
     $address: String
     $dateOfBirth: String
     $phoneNumber: String
+    $avatar: String
   ) {
     updateUser(
       input: {
@@ -195,6 +196,7 @@ export const UPDATE_USER = gql`
         address: $address
         dateOfBirth: $dateOfBirth
         phoneNumber: $phoneNumber
+        avatar: $avatar
       }
     ) {
       user {
