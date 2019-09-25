@@ -1,44 +1,98 @@
 import React from 'react';
-
 import { Row, Col, Card, CardBody } from 'reactstrap';
+import Link from 'react-router-dom/Link';
+
+import { useQuery } from 'react-apollo-hooks';
+import { GET_USER_GARDEN_ACT } from '../../apollo/queries/queries';
+
+import { FillableDroplet } from '../../components/icons/FillableIcon';
+import { GardenWeather } from '../../components/weather/weather';
+
 import FlowerTooltip from '../../components/tooltips/FlowerTooltip';
 
-function FakeActivity({ id }) {
+function WaterNeed(scale, id) {
+  const output = [];
+  const dropCount = scale / 3;
+
+  for (let i = dropCount; i >= 0; i -= 1) {
+    output.push(<FillableDroplet color="#63c2de" fillAt={10} size={18} id={id} key={id + i} />);
+  }
+
+  for (let j = 1; j + dropCount < 4; j += 1) {
+    output.push(<FillableDroplet color="#63c2de" fillAt={0} size={18} id={id + j} key={id + -j} />);
+  }
+
+  return output;
+}
+
+function GardenPlantInfo({ plant: { name, id, createdAt, tips, photo, waterNeed } }) {
   return (
-    <Col s="12" md="6" xl="4" className="my-2">
+    <Col className="col-sm-4">
       <Row>
-        <Col xs="4">
-          <img
-            src="https://s3.greefine.ovh/dev/7ddab77e73276eba7637da8b54e28423c330ef26/5d6ed914-3478-466c-be4c-9a67f188f3b1.png"
-            className="img-fluid"
-            alt="admin@bootstrapmaster.com"
-          />
-        </Col>
-        <Col xs="8">
-          <Row>
-            <h4 className="text-uppercase">
-              <span className="text-primary">Arroser mes </span>
-              <FlowerTooltip id={id} link="/flowers" plantId="58ec8c67-411e-4b4c-9bb0-e88ad18a8a1b">
-                <span className="text-primary">roses</span>
-              </FlowerTooltip>
-            </h4>
-          </Row>
-          <Row>
-            <p>
-              <span className="text-muted">
-                Deux fois par semaine le premier mois s'il fait sec
-              </span>
-              <br />
-              <strong>Dernière fois: le lundi 12 juin 2017</strong>
-            </p>
-          </Row>
-        </Col>
+        <img src={photo} className="img-fluid" alt={name} />
+        <h4 className="text-uppercase">
+          <FlowerTooltip id={name} link="/flowers" plantId={id}>
+            <span className="text-primary">{name}</span>
+          </FlowerTooltip>
+        </h4>
       </Row>
+      <h4>
+        {'Planté le : '}
+        {new Intl.DateTimeFormat('fr-FR', {
+          year: 'numeric',
+          month: 'long',
+          day: '2-digit'
+        }).format(new Date(createdAt))}
+      </h4>
+      <div>{`Besoin en eau : ${WaterNeed(waterNeed, id)}`}</div>
+      <h6>{`Des informations utiles : ${tips}`}</h6>
     </Col>
   );
 }
 
+function GardenActivities({ nodes: { name, plants } }) {
+  return (
+    <div>
+      <Row>
+        <Col>
+          <h2 className="text-primary text-uppercase font-weight-bold">{`Mon jardin : ${name}`}</h2>
+          {plants.length !== 0 ? (
+            <h4 className="text-dark text-uppercase font-weight-bold">
+              {`Vous avez ${plants.length} plantes à entretenir en cette journee`}
+            </h4>
+          ) : (
+            <h4 className="text-muted text-uppercase font-weight-bold">
+              Savez vous plantez des choux ? Votre jardin est vide pour le moment.
+            </h4>
+          )}
+          <Row>
+            {plants.length !== 0 ? (
+              plants.map(({ plant, id }) => <GardenPlantInfo key={id} plant={plant} />)
+            ) : (
+              <Link to={`/garden/${name}`}>
+                <br />
+                <h4 className="text-primary text-center text-uppercase font-weight-bold">
+                  Allez editer votre jardin maintenant.
+                </h4>
+              </Link>
+            )}
+          </Row>
+        </Col>
+      </Row>
+      <hr />
+    </div>
+  );
+}
+
 function Activities() {
+  const date = new Date();
+
+  const { data, loading, error } = useQuery(GET_USER_GARDEN_ACT);
+
+  if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
+  if (error) return <div className="animated fadeIn pt-1 text-center">Error</div>;
+
+  // console.log(data.gardens.nodes[0].country);
   return (
     <div className="animated fadeIn">
       <Row>
@@ -46,23 +100,33 @@ function Activities() {
           <Card>
             <CardBody className="pb-0">
               <h2 className="text-primary text-uppercase font-weight-bold">Cette semaine</h2>
-              <h4 className="text-dark text-uppercase font-weight-bold">Mercredi 14 Juin 2019</h4>
-              <hr />
-              <Row>
-                <FakeActivity id="test1" />
-                <FakeActivity id="test2" />
-              </Row>
-              <h2 className="mt-3 text-primary text-uppercase font-weight-bold">
-                Les tâches à prevoir
-              </h2>
               <h4 className="text-dark text-uppercase font-weight-bold">
-                Pour les semaines à venir
+                {`Aujourd'hui : ${new Intl.DateTimeFormat('fr-FR', { weekday: 'long' }).format(
+                  date
+                )} ${date.getDate()} ${new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(
+                  date
+                )}`}
               </h4>
               <hr />
-              <Row>
-                <FakeActivity id="test3" />
-                <FakeActivity id="test4" />
-              </Row>
+              <h2 className="text-primary text-center text-uppercase font-weight-bold">
+                Meteo de la journee
+              </h2>
+              {data.gardens.nodes.length ? (
+                <GardenWeather city={data.gardens.nodes[0].country} />
+              ) : (
+                <GardenWeather city="France" />
+              )}
+              <hr />
+              {data.gardens.nodes.length ? (
+                data.gardens.nodes.map(nodes => <GardenActivities key={nodes.id} nodes={nodes} />)
+              ) : (
+                <Link to="/garden/create">
+                  <br />
+                  <h4 className="text-primary text-center text-uppercase font-weight-bold">
+                    Allez creer votre premier jardin maintenant.
+                  </h4>
+                </Link>
+              )}
             </CardBody>
           </Card>
         </Col>
