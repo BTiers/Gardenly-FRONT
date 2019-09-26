@@ -26,7 +26,7 @@ function Weather({ city, APIKEY, orderFlipped }) {
       return;
     }
 
-    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKEY}&units=metric`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKEY}&units=metric`)
       .catch(error => {
         console.error('whoops!', error);
         return;

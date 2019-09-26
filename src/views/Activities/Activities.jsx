@@ -25,13 +25,18 @@ function WaterNeed(scale, id) {
   return output;
 }
 
-function GardenPlantInfo({ plant: { name, id, createdAt, tips, photo, waterNeed } }) {
+function GardenPlantInfo({ plant: { name, id, createdAt, tips, photo, waterNeed }, Tipsid }) {
   return (
     <Col className="col-sm-4">
       <Row>
-        <img src={photo} className="img-fluid" alt={name} />
+        <img
+          src={photo}
+          className="img-fluid"
+          style={({ width: '250px' }, { height: '250px' })}
+          alt={name}
+        />
         <h4 className="text-uppercase">
-          <FlowerTooltip id={name} link="/flowers" plantId={id}>
+          <FlowerTooltip id={name + Tipsid} link="/flowers" plantId={id}>
             <span className="text-primary">{name}</span>
           </FlowerTooltip>
         </h4>
@@ -44,7 +49,10 @@ function GardenPlantInfo({ plant: { name, id, createdAt, tips, photo, waterNeed 
           day: '2-digit'
         }).format(new Date(createdAt))}
       </h4>
-      <div>{`Besoin en eau : ${WaterNeed(waterNeed, id)}`}</div>
+      <div>
+        {`Besoin en eau : `}
+        {WaterNeed(waterNeed, id)}
+      </div>
       <h6>{`Des informations utiles : ${tips}`}</h6>
     </Col>
   );
@@ -67,9 +75,11 @@ function GardenActivities({ nodes: { name, plants } }) {
           )}
           <Row>
             {plants.length !== 0 ? (
-              plants.map(({ plant, id }) => <GardenPlantInfo key={id} plant={plant} />)
+              plants.map(({ plant, id }) => {
+                return <GardenPlantInfo key={id} plant={plant} Tipsid={id} />;
+              })
             ) : (
-              <Link to={`/garden/${name}`}>
+              <Link to={`/garden/${name}/edit`}>
                 <br />
                 <h4 className="text-primary text-center text-uppercase font-weight-bold">
                   Allez editer votre jardin maintenant.
@@ -92,7 +102,6 @@ function Activities() {
   if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
   if (error) return <div className="animated fadeIn pt-1 text-center">Error</div>;
 
-  // console.log(data.gardens.nodes[0].country);
   return (
     <div className="animated fadeIn">
       <Row>
