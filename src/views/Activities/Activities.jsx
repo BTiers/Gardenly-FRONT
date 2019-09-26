@@ -29,7 +29,12 @@ function GardenPlantInfo({ plant: { name, id, createdAt, tips, photo, waterNeed 
   return (
     <Col className="col-sm-4">
       <Row>
-        <img src={photo} style={({ width: '250px' }, { height: '250px' })} alt={name} />
+        <img
+          src={photo}
+          className="img-fluid"
+          style={({ width: '250px' }, { height: '250px' })}
+          alt={name}
+        />
         <h4 className="text-uppercase">
           <FlowerTooltip id={name + Tipsid} link="/flowers" plantId={id}>
             <span className="text-primary">{name}</span>
@@ -74,7 +79,7 @@ function GardenActivities({ nodes: { name, plants } }) {
                 return <GardenPlantInfo key={id} plant={plant} Tipsid={id} />;
               })
             ) : (
-              <Link to={`/garden/${name}`}>
+              <Link to={`/garden/${name}/edit`}>
                 <br />
                 <h4 className="text-primary text-center text-uppercase font-weight-bold">
                   Allez editer votre jardin maintenant.
