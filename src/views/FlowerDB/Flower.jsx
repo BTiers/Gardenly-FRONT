@@ -45,7 +45,6 @@ function FlowerFull({ isOpen, flower }) {
   const [activeTab, setActiveTab] = useState('1');
 
   return (
-    <React.Fragment>
       <Collapse tag="tr" isOpen={isOpen}>
         <td className="col-12">
           <Row>
@@ -242,7 +241,6 @@ function FlowerFull({ isOpen, flower }) {
           </Row>
         </td>
       </Collapse>
-    </React.Fragment>
   );
 }
 

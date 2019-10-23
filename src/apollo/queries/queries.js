@@ -45,6 +45,7 @@ export const GET_USER_GARDEN_ACT = gql`
   query getAllUserGardens {
     gardens: getAllUserGardens {
       nodes {
+        updatedAt
         id
         name
         country

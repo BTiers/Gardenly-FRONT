@@ -29,14 +29,12 @@ function Weather({ city, APIKEY, orderFlipped }) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKEY}&units=metric`)
       .catch(error => {
         console.error('whoops!', error);
-        return;
       })
       .then(res => {
         res
           .json()
           .catch(error => {
             console.error('ok', error);
-            return;
           })
           .then(data => {
             if (data.cod === 401 || data.cod === '404') {
@@ -50,17 +48,20 @@ function Weather({ city, APIKEY, orderFlipped }) {
   }, []);
 
   return (
-    <>
+    // eslint-disable-next-line react/jsx-filename-extension
+    <React.Fragment>
       {!weather ? (
-        <>...</>
+        <React.Fragment>...</React.Fragment>
       ) : (
-        <div style={weatherContainerStyles}>
-          <h4 className="text-center" style={titleStyles}>{weather.name}</h4>
+        <div style={weatherContainerStyles} className="text-muted small">
           {getIcons(weather.weather[0].icon)}
-          <h4 className="text-center" style={titleStyles}>{weather.main.temp}°C</h4>
+          <br />
+          <span className="text-center" style={titleStyles}>
+            {weather.name === 'France' ? 'Non renseigné' : `${weather.main.temp} °C`}
+          </span>
         </div>
       )}
-    </>
+    </React.Fragment>
   );
 }
 
