@@ -25,12 +25,6 @@ export default {
       name: 'Jardinage'
     },
     {
-      name: 'Disabled',
-      url: '/dashboard',
-      icon: 'icon-ban',
-      attributes: { disabled: true }
-    },
-    {
       name: 'Jardins',
       url: '/garden',
       icon: 'icon-drop',
