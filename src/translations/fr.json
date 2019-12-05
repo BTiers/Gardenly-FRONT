@@ -32,8 +32,9 @@
     "bad_form": "Vous devez remplir le formulaire pour vous inscrire",
     "submit": "Je m'inscris",
     "successfully_register": "Votre compte a été créé avec succès, saisissez vos identifiants pour vous connecter",
-    "no_account": "Rejoignez Gardenly aujourd'hui."
-
+    "no_account": "Rejoignez Gardenly aujourd'hui.",
+    "about": "A propos",
+    "logo": "Avec Gardenly : pas besoin d'avoir la main verte pour paysager"
   },
   "routing": {
     "404error": "Ce n'est pas la page web que vous cherchez."
@@ -47,10 +48,31 @@
     "loading": "Chargement"
   },
   "about": {
-    "presentation": "Présentation",
-    "articles": "Articles",
-    "tools": "Outils",
-    "community": "Communauté"
+    "descrTitle": "Pas besoin d'avoir la main verte pour paysager",
+    "descrText": "Gardenly est une application web accessible depuis toutes les plateformes connectées, visant à faciliter et améliorer l’expérience des jardiniers amateurs",
+    "titleFirstPoint": "CRÉATION",
+    "textFirstPoint" : "Profitez de l’outil de création et de visualisation de votre jardin à son plein potentiel.",
+    "secondTextFirstPoint": "Partagez vos créations.",
+    "titleSecondPoint": "COMMUNAUTÉ",
+    "textSecondPoint" : "Gérez votre profil, partagez vos créations et demandez des conseils à la communauté.",
+    "secondTextSecondPoint": "Discutez avec vos amis de vos dernières avancées.",
+    "titleThirdPoint": "SUIVI CONTINU",
+    "textThirdPoint" : "Entretenez votre jardin grâce à nos conseils d’entretien.",
+    "secondTextThirdPoint": "Prévoyez son évolution au fil des saisons et de la météo.",
+    "titleProject": "Laissez parler votre créativité",
+    "textProject" : "Grâce à notre application, laissez parler votre imagination pour réaliser le jardin de vos rêves.",
+    "titleCard": "Créateur de jardin 3D",
+    "textCard" : "Libérez la main verte qui sommeille en vous, grâce a notre créateur de jardin 3D vous pourrez enfin réaliser et faire un pas vers le jardin de vos rêves.",
+    "titlePointCardOne": "Une bibliotheque de plante complete",
+    "textPointCardOne": "Grâce a notre bibliotheque de plante choissisez avec serainité la composition de votre futur jardin.",
+    "titlePointCardTwo": "Des conseils pour mieux s'occuper de son jardin",
+    "textPointCardOTwo": "Nous vous prodigons des conseils pour permettre a vos plantes de rester magnifique tout le long de l'année.",
+    "titlePointCardThree": "Un outil simple et intuitif",
+    "textPointCardThree": "Gardenly a été pensé et réaliser pour permettre à quiquonque de pouvoir utiliser un outil complet et performant de paysagiste.",
+    "titleLogin": "Convaincu ? Rejoignez-nous maintenant !",
+    "buttonLogin": "Inscrivez-vous",
+    "teamTitle": "Notre équipe",
+    "teamText": "Nous sommes des étudiants en cinquème année pour l'école EPITECH, Gardenly est notre projet de fin d'étude."
   },
   "picture_gallery": {
     "title": "Titre",
