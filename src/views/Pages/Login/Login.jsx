@@ -154,11 +154,11 @@ function Login({ t, registrationCompleted }) {
             <Row className="row align-items-end">
               <Col className="text-center">
                 <br />
-                <h6>Avec Gardenly : Plus besoin d’avoir la main verte pour paysager</h6>
+                <h6>{t('logo')}</h6>
                 <br />
                 <Link to="/about">
                   <button type="button" className="btn btn-secondary">
-                    A propos
+                    {t('about')}
                   </button>
                 </Link>
               </Col>
