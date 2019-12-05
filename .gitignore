@@ -3,5 +3,4 @@ build/
 .vscode/
 .yarn-integrity
 .env
-yarn\.lock
 git_commit_message.txt
