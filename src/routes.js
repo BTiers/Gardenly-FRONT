@@ -37,20 +37,70 @@ const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const GardenPage = React.lazy(() => import('./views/Garden/GardensPage'));
 const FlowerDB = React.lazy(() => import('./views/FlowerDB/FlowerDB'));
-const Activities = React.lazy(() => import ('./views/Activities/Activities'));
-const UserProfile = React.lazy(() => import ('./views/UserProfile/UserProfile'));
+const Activities = React.lazy(() => import('./views/Activities/Activities'));
+const UserProfile = React.lazy(() => import('./views/UserProfile/UserProfile'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
-  { path: '/activities', name: 'Activities', component: Activities, requireAuth: true, redirectTo: '/login' },
-  { path: '/dashboard', name: 'Dashboard', component: Dashboard, requireAuth: true, adminOnly: true, redirectTo: '/login' },
-  { path: '/pictures', exact: true, name: 'Pictures Gallery', component: PicturesGallery, requireAuth: true, redirectTo: '/login' },
-  { path: '/pictures/user', name: 'Pictures Gallery', component: PicturesGallery, requireAuth: true, redirectTo: '/login' },
-  { path: '/garden/:name', name: 'Garden Details', component: GardenPage, requireAuth: true, redirectTo: '/login' },
-  { path: '/garden/:name/edit', name: 'Garden Builder', component: GardenPage, requireAuth: true, redirectTo: '/login' },
-  { path: '/flowers', name: 'Flowers', component: FlowerDB, requireAuth: true, redirectTo: '/login' },
-  { path: '/profile', name: 'Profile', component: UserProfile, requireAuth: true, redirectTo: '/login' },
+  {
+    path: '/activities',
+    name: 'Activities',
+    component: Activities,
+    requireAuth: true,
+    redirectTo: '/about'
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+    requireAuth: true,
+    adminOnly: true,
+    redirectTo: '/about'
+  },
+  {
+    path: '/pictures',
+    exact: true,
+    name: 'Pictures Gallery',
+    component: PicturesGallery,
+    requireAuth: true,
+    redirectTo: '/about'
+  },
+  {
+    path: '/pictures/user',
+    name: 'Pictures Gallery',
+    component: PicturesGallery,
+    requireAuth: true,
+    redirectTo: '/about'
+  },
+  {
+    path: '/garden/:name/',
+    name: 'Garden Details',
+    component: GardenPage,
+    requireAuth: true,
+    redirectTo: '/about'
+  },
+  {
+    path: '/garden/:name/edit',
+    name: 'Garden Builder',
+    component: GardenPage,
+    requireAuth: true,
+    redirectTo: '/about'
+  },
+  {
+    path: '/flowers',
+    name: 'Flowers',
+    component: FlowerDB,
+    requireAuth: true,
+    redirectTo: '/about'
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: UserProfile,
+    requireAuth: true,
+    redirectTo: '/about'
+  },
   { path: '/theme/typography', name: 'Typography', component: Typography },
   { path: '/base', exact: true, name: 'Base', component: Cards },
   { path: '/base/cards', name: 'Cards', component: Cards },
@@ -86,8 +136,8 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/widgets', name: 'Widgets', component: Widgets },
   { path: '/charts', name: 'Charts', component: Charts },
-  { path: '/users', exact: true,  name: 'Users', component: Users },
-  { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/users', exact: true, name: 'Users', component: Users },
+  { path: '/users/:id', exact: true, name: 'User Details', component: User }
 ];
 
 export default routes;
