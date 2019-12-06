@@ -113,7 +113,7 @@ function Login({ t, registrationCompleted }) {
                       <FormFeedback invalid={1}>{t('password_invalid')}</FormFeedback>
                     </FormGroup>
                     <Row className="align-items-center">
-                      <Col xs="6">
+                      <Col xs="12">
                         <LoginSubmit
                           t={t}
                           states={{
@@ -122,11 +122,6 @@ function Login({ t, registrationCompleted }) {
                           }}
                           setAccountCredState={setAccountCredState}
                         />
-                      </Col>
-                      <Col xs="6" className="text-right">
-                        <Button color="link" className="px-0">
-                          {t('forgot_pass')}
-                        </Button>
                       </Col>
                     </Row>
                   </Form>
