@@ -40,6 +40,10 @@ export default withTranslation('chat')(({ chatRoom, setChatRoom, t }) => {
   const [inputHeight, setInputHeight] = useState(DEFAULT_INPUT_HEIGHT);
   const [messages, setMessages] = useState();
 
+  function validURL(url) {
+    return url.match(/(https:\/\/s3\.gardenly\.app\/dev\/).*\.(jpeg|jpg|gif|png)$/) != null;
+  }
+
   useEffect(() => {
     if (lastMessageRef.current) lastMessageRef.current.scrollIntoView();
   });
@@ -48,6 +52,20 @@ export default withTranslation('chat')(({ chatRoom, setChatRoom, t }) => {
     if (!chatRoom) return;
 
     const newMessage = chatRoom.messages.map((message, idx) => {
+      if (validURL(message.content))
+        return (
+          <img
+            key={message.id}
+            width="90%"
+            height="40%"
+            alt=""
+            onError={e => {
+              e.target.onerror = null;
+              e.target.src = 'https://www.labaleine.fr/sites/baleine/files/image-not-found.jpg';
+            }}
+            src={message.content}
+          />
+        );
       if (message.user.username === me.data.getCurrentUser.username)
         return (
           <div
@@ -77,9 +95,10 @@ export default withTranslation('chat')(({ chatRoom, setChatRoom, t }) => {
         >
           <div className="float-left">
             <img
-              src="assets/img/avatars/1.jpg"
+              src={message.user.avatar}
+              style={{ height: '50px' }}
               className="img-avatar float-left"
-              alt="admin@bootstrapmaster.com"
+              alt=""
             />
           </div>
           <div className="received_msg" style={{ display: 'table-cell' }}>
