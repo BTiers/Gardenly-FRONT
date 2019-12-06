@@ -15,8 +15,8 @@ class DefaultFooter extends Component {
 
     return (
       <React.Fragment>
-        <span><a href="https://google.com">Gardenly</a> &copy; 2020 EIP.</span>
-        <span className="ml-auto">Powered by <a href="https://google.com">EPITECH</a></span>
+        <span><a href="https://gardenly.app">Gardenly</a> &copy; 2020 EIP.</span>
+        <span className="ml-auto">Powered by <a href="https://gardenly.app">EPITECH</a></span>
       </React.Fragment>
     );
   }

@@ -39,11 +39,8 @@ function GardensPage({ history }) {
                 history.push(`/garden/${foundEntry.name}/edit`); // FIXME: Re render Error
                 return null;
               }
-              return (
-                <Container fluid className="h-100 w-100">
-                  <Garden data={foundEntry} key={`Garden${foundEntry.slug}`} />
-                </Container>
-              );
+              history.push(`/garden/${foundEntry.name}/edit`);
+              return null;
             }
 
             history.push(`/404`);
