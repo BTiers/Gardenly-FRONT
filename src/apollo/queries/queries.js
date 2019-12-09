@@ -28,6 +28,9 @@ export const USER_GARDENS = gql`
           data
           key
           age
+          tile {
+            id
+          }
           plant {
             id
             name
