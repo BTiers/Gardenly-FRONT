@@ -39,6 +39,7 @@ const GardenPage = React.lazy(() => import('./views/Garden/GardensPage'));
 const FlowerDB = React.lazy(() => import('./views/FlowerDB/FlowerDB'));
 const Activities = React.lazy(() => import('./views/Activities/Activities'));
 const UserProfile = React.lazy(() => import('./views/UserProfile/UserProfile'));
+const News = React.lazy(() => import('./views/Pages/News/News'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -101,6 +102,8 @@ const routes = [
     requireAuth: true,
     redirectTo: '/about'
   },
+  { path: '/news', exact: true, name: 'news page', component: News },
+
   { path: '/theme/typography', name: 'Typography', component: Typography },
   { path: '/base', exact: true, name: 'Base', component: Cards },
   { path: '/base/cards', name: 'Cards', component: Cards },
