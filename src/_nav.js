@@ -13,12 +13,17 @@ export default {
     {
       name: 'Activitées',
       url: '/activities',
-      icon: 'icon-camera'
+      icon: 'icon-grid'
     },
     {
       name: 'Photos',
       url: '/pictures',
       icon: 'icon-camera'
+    },
+    {
+      name: 'News',
+      url: '/news',
+      icon: 'icon-book-open'
     },
     {
       title: true,

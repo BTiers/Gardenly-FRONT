@@ -26,7 +26,7 @@ export default function News() {
 
   function parseArticles(elem, index) {
     return (
-      <Card key={index}>
+      <Card style={{ width: '80%' }} key={index}>
         <CardHeader>{elem.title}</CardHeader>
         <CardImg src={elem.urlToImage} />
         <CardBody>
