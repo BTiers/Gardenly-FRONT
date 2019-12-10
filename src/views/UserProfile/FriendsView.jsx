@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, InputGroup, Input, Button, Alert } from 'reactstrap';
-import { useQuery, useMutation } from 'react-apollo-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import {
   USER_RELATIONS,
@@ -12,10 +12,10 @@ import { GET_USER_ROOMS_WITH_MESSAGES } from 'apollo/queries/queries';
 import { CREATE_ROOM } from 'apollo/mutations/chat';
 
 export default function FollowersView() {
-  const sendFriendRequest = useMutation(CREATE_RELATION);
-  const changeRelation = useMutation(CHANGE_RELATION);
-  const deleteRelation = useMutation(DELETE_RELATION);
-  const createRoom = useMutation(CREATE_ROOM);
+  const [sendFriendRequest] = useMutation(CREATE_RELATION);
+  const [changeRelation] = useMutation(CHANGE_RELATION);
+  const [deleteRelation] = useMutation(DELETE_RELATION);
+  const [createRoom] = useMutation(CREATE_ROOM);
 
   const { loading, data, error } = useQuery(USER_RELATIONS);
   const [friendName, setFriendName] = useState('');

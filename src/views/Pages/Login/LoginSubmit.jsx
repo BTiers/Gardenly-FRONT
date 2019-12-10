@@ -3,14 +3,14 @@ import Cookies from 'universal-cookie';
 import { withRouter } from 'react-router-dom';
 import { CREATE_SESSION } from 'apollo/mutations/mutations';
 import { objectOf, object, func, shape } from 'prop-types';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 import LoadingButton from 'components/buttons/LoadingButton';
 
 const cookie = new Cookies();
 
 function LoginSubmit({ t, states: { passwordState, emailState }, setAccountCredState, history }) {
-  const createSession = useMutation(CREATE_SESSION, {
+  const [createSession] = useMutation(CREATE_SESSION, {
     variables: {
       email: emailState.value,
       password: passwordState.value

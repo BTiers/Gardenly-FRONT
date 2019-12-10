@@ -6,7 +6,7 @@ import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
-import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks';
 
 import ActionCable from 'actioncable';
 import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink';

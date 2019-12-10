@@ -24,7 +24,7 @@ import {
 } from 'reactstrap';
 
 import { withTranslation } from 'react-i18next';
-import { useQuery, useMutation } from 'react-apollo-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { UPDATE_USER } from 'apollo/mutations/mutations';
 
@@ -193,7 +193,7 @@ const AccountQuickAccess = withTranslation('register')(
 
     const [loading, setLoading] = useState(false);
 
-    const updateUser = useMutation(UPDATE_USER, {
+    const [updateUser] = useMutation(UPDATE_USER, {
       variables: { username, email },
       update: () => setLoading(false)
     });

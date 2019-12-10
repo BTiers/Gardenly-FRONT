@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import Link from 'react-router-dom/Link';
 import { GET_PLANT } from 'apollo/queries/queries';

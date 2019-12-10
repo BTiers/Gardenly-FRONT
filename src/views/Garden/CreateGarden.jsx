@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { withTranslation } from 'react-i18next';
 
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import styled from 'styled-components';
 import {
   Row,
@@ -33,7 +33,7 @@ function CreateGarden({ t, open, toggleModal, onCreate }) {
     country: ''
   });
   const [error, setError] = useState({ active: false, reason: '' });
-  const createGarden = useMutation(CREATE_GARDEN, {
+  const [createGarden] = useMutation(CREATE_GARDEN, {
     variables: {
       name,
       latitude: location.latitude,

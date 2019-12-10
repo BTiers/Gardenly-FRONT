@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery, useSubscription } from 'react-apollo-hooks';
+import { useQuery, useSubscription } from '@apollo/react-hooks';
 import { GET_USER_ROOMS_WITH_MESSAGES } from 'apollo/queries/queries';
 import { CHAT_SUBSCRIPTION } from 'apollo/subscriptions/chat';
 import useMedia from 'hooks/UseMedia';

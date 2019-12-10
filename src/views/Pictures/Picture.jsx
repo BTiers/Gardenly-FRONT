@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Row, Col, Modal, ModalBody, ModalFooter, ModalHeader, ListGroup } from 'reactstrap';
 import { withTranslation } from 'react-i18next';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 import { UPDATE_MEDIUM, DELETE_MEDIUM, UPDATE_USER } from 'apollo/mutations/mutations';
 import { GET_ALL_USER_MEDIA, GET_USER } from 'apollo/queries/queries';
@@ -42,7 +42,7 @@ function Picture({
   const [deleting, setDeleting] = useState(false);
   const [updating, setUpdating] = useState(false);
 
-  const deleteM = useMutation(DELETE_MEDIUM, {
+  const [deleteM] = useMutation(DELETE_MEDIUM, {
     variables: { id },
     update: (cache, { data: { deleteMedium } }) => {
       const query = GET_ALL_USER_MEDIA;
@@ -56,7 +56,7 @@ function Picture({
       onDelete();
     }
   });
-  const updateMedium = useMutation(UPDATE_MEDIUM, {
+  const [updateMedium] = useMutation(UPDATE_MEDIUM, {
     variables: { id, title: titleState, description: descState },
     update: () => {
       setUpdating(false);
@@ -69,7 +69,7 @@ function Picture({
     setSelected(false);
   };
 
-  const updateUser = useMutation(UPDATE_USER, {
+  const [updateUser] = useMutation(UPDATE_USER, {
     variables: { avatar: picture },
     update: (cache, mutationResult) => {
       const query = GET_USER;

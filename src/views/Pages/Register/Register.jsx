@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, CardBody, Col, Container, Form, Row, CardImg, ListGroup } from 'reactstrap';
 
 import { withTranslation } from 'react-i18next';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 import GardenlyLogo from 'assets/img/brand/gardenly_black.png';
 
@@ -29,7 +29,7 @@ function Register({ t, history, onCompleted }) {
     passwordRepeat: { error: false, value: '', feedback: t('bad_valid_psw') }
   });
 
-  const createUser = useMutation(CREATE_USER, {
+  const [createUser] = useMutation(CREATE_USER, {
     variables: {
       username: inputStates.username.value,
       firstname: inputStates.firstname.value,

@@ -53,6 +53,7 @@ class Software extends Component {
         <Mutation mutation={UPDATE_GARDEN} refetchQueries={[{ query: USER_GARDENS }]}>
           {(updateGarden, { loading, error }) => {
             this.unityContent.on('save', datas => {
+              // try {
               const { modifications, additions, deletions, data } = JSON.parse(datas);
               const vMod = modifications ? JSON.stringify(modifications) : '';
               const vAdd = additions ? JSON.stringify(additions) : '';
@@ -74,6 +75,9 @@ class Software extends Component {
                 'OnSaveResult',
                 JSON.stringify({ success: !error })
               );
+              // } catch (err) {
+              //   console.error(err);
+              // }
             });
             return null;
           }}
@@ -94,7 +98,6 @@ class Software extends Component {
                 'DispatchQueryResult',
                 JSON.stringify({ data: { ...data } }) || JSON.stringify(errors)
               );
-
             });
           }}
         </ApolloConsumer>
@@ -112,7 +115,7 @@ Software.propTypes = {
   t: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  data: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
   country: PropTypes.string
 };
 

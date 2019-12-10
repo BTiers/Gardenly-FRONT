@@ -10,7 +10,7 @@ import {
   ButtonGroup,
 } from 'reactstrap';
 import { FiChevronDown } from 'react-icons/fi';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import {
   GET_PLANT_GROUNDTYPES,
   GET_PLANT_PERIODICITIES,

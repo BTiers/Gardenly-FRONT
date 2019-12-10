@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import useMedia from 'hooks/UseMedia';
 
-import { useMutation, useQuery } from 'react-apollo-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { CREATE_MESSAGE } from 'apollo/mutations/chat';
 import { GET_USER } from 'apollo/queries/queries';
 
@@ -33,7 +33,7 @@ export default withTranslation('chat')(({ chatRoom, setChatRoom, t }) => {
   const messageRef = useRef();
   const lastMessageRef = useRef();
 
-  const sendMessage = useMutation(CREATE_MESSAGE);
+  const [sendMessage] = useMutation(CREATE_MESSAGE);
   const me = useQuery(GET_USER);
 
   const DEFAULT_INPUT_HEIGHT = 46;

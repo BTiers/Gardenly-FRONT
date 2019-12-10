@@ -2,7 +2,7 @@ import React from 'react';
 import { func, shape } from 'prop-types';
 
 import { Route, Switch, withRouter } from 'react-router-dom';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import { Container } from 'reactstrap';
 
 import Software from 'views/Unity/Software';

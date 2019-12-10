@@ -2,7 +2,7 @@ import React, { Suspense, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import Cookies from 'universal-cookie';
-import { useQuery, useMutation, useApolloClient } from 'react-apollo-hooks';
+import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 
 import { USER_GARDENS_NAMES, GET_USER } from 'apollo/queries/queries';
 import { DELETE_SESSION } from 'apollo/mutations/mutations';
@@ -39,7 +39,7 @@ function DefaultLayout(props) {
   const isOnUnity = props.location.pathname.match(/\/garden\/.+\/edit/g);
   const client = useApolloClient();
 
-  const logOut = useMutation(DELETE_SESSION, {
+  const [logOut] = useMutation(DELETE_SESSION, {
     update: () => {
       client.resetStore();
       cookie.set('isLoggedIn', 'false', { path: '/' });

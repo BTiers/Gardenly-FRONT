@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, CardBody, Table, Collapse } from 'reactstrap';
 import Moment from 'react-moment';
 
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import { FiPlus, FiMinus } from 'react-icons/fi';
 import Link from 'react-router-dom/Link';
 import { GET_USER_GARDEN_ACT } from '../../apollo/queries/queries';

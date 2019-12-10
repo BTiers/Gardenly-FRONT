@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Card, CardBody } from 'reactstrap';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 

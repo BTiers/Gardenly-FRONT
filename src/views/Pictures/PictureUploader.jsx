@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 
 import { Row, Col, ListGroup, ListGroupItem, Button, UncontrolledAlert } from 'reactstrap';
 
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { CREATE_MEDIUM } from 'apollo/mutations/mutations';
 import { GET_ALL_USER_MEDIA } from 'apollo/queries/queries';
 
@@ -25,7 +25,7 @@ const PictureUploader = ({ t, b64, onCancel, onUpload }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const createM = useMutation(CREATE_MEDIUM, {
+  const [createM] = useMutation(CREATE_MEDIUM, {
     variables: {
       picture: b64,
       title,

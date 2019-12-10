@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { withTranslation } from 'react-i18next';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 
 import { Col, Row, Card, CardHeader, CardBody, Container, UncontrolledTooltip } from 'reactstrap';
 

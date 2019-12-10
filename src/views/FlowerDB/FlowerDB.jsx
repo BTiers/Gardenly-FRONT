@@ -16,7 +16,7 @@ import {
 } from 'reactstrap';
 import { FiSearch, FiChevronDown } from 'react-icons/fi';
 import { FaTree } from 'react-icons/fa';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 
 import { Mobile, Default } from 'components/responsive/responsive';
 import { GET_ALL_PLANTS } from '../../apollo/queries/queries';
@@ -28,11 +28,12 @@ function FlowersTable({ query: { query, variables } }) {
   const { data, loading, error, fetchMore } = useQuery(query, {
     variables: { ...variables, first: 20 }
   });
-  const { getAllPlants: plants } = data;
-
   if (error)
     return <FlowersEmptyTable message="Une erreur est survenue, essayez une autre recherche" />;
   if (loading) return <FlowersEmptyTable children={<Spinner color="primary" />} />;
+
+  const { getAllPlants: plants } = data;
+
   if (plants.edges.length === 0)
     return <FlowersEmptyTable message="Aucune plante connue ne correspond à votre recherche" />;
 
